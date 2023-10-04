@@ -1,0 +1,51 @@
+#!/bin/env sh
+# shellcheck disable=SC2034
+
+main() {
+  case "$1" in
+    (--help | -h | help) echo "bspwm things get reset, no themes or stuff." ;;
+    ('') al_wm_reset ;;
+    (*) echo Takes no arguments. >&2 && return 1 ;;
+  esac
+}
+
+al_wm_reset() {
+  al_wm_set_default_desktop_names
+  al_wm_set_default_rules
+}
+
+al_wm_set_default_desktop_names() {
+  bspc monitor -d main web manual terminal media spotify temporary
+}
+
+al_wm_set_default_rules_help="For which windows go where."
+al_wm_set_default_rules() {
+  # Class (middle) is the first of the 2 WM_CLASS fields of xprop.
+  # The second of the 2 WM_CLASS fields goes to the first of these.
+  al_wm_reset_rule 'Battery widget:*:*' state=floating focus=off
+  al_wm_reset_rule   'Clock widget:*:*' state=floating focus=off
+  al_wm_reset_rule        'Zathura:*:*' state=tiled
+  al_wm_reset_rule          '*:emacs:*' state=tiled
+
+  # al_wm_reset_rule           '*:sxiv:*' desktop=media   follow=on
+  # al_wm_reset_rule             '*:gl:*' desktop=media   follow=on
+  # al_wm_reset_rule    '*:qutebrowser:*' desktop=web     follow=on
+  # al_wm_reset_rule        'Spotify:*:*' desktop=spotify
+}
+
+al_wm_raise_upcoming_above_all() {
+  :
+}
+al_wm_raise_upcoming_above_all_not_working() {
+  # https://github.com/baskerville/bspwm/issues/301
+  al_wm_last_raised_window="$(bspc subscribe -c 1 node_add | awk '{print $NF}')"
+  xdo above -t "$(xdo id -N Bspwm -n root | sort | head -n 1)" "$al_wm_last_raised_window"
+}
+
+al_wm_reset_rule_help="Unset the rules for that window, and set them."
+al_wm_reset_rule() {
+  bspc rule --remove "$1"
+  bspc rule --add "$@"
+}
+
+main "$@" || exit 1

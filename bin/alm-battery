@@ -1,0 +1,318 @@
+#! /bin/python
+
+import sys
+import os
+
+
+stay_alive_for = 0.6
+danger_level = 30
+label_pre_arg_parse = "DEFAULT"
+bolt_pre_arg_parse = "d"
+size = 0.7
+windowless_mode = False
+
+with open("/sys/class/power_supply/BAT1/capacity", 'r') as f:
+    capacity = int(f.readline())
+
+with open("/sys/class/power_supply/BAT1/status", 'r') as f:
+    charging_state = f.readline()
+
+c = os.getenv("AL_WIDGETS_CONFIG_FILE")
+if c != None:
+    config_file = c
+else:
+    c = os.getenv("XDG_CONFIG_HOME")
+    if c != None:
+        config_file = c + "/al/widgets.ini"
+    else:
+        c = os.getenv("HOME")
+        if c != None:
+            config_file = c + "/.config/al/widgets.ini"
+        else:
+            raise Exception("No HOME env")
+
+with open(config_file) as f:
+    for l in f:
+        if l.startswith("battery_danger_level="):
+            danger_level = int(l[len("battery_danger_level="):])
+
+usage = '''
+usage:  alm-battery [-w] [-t TIMEOUT] [-c CAPACITY]
+                    [-s SIZE] [-d DANGER_LEVEL]
+                    [-l LABEL] [-b y/n/d]
+where the capacity argument is for testing.
+-w       don't spawn a window
+TIMEOUT  in seconds
+CAPACITY [0, 100]
+DANGER_LEVEL [0, 100]
+SIZE     [0, 1] the size of the icon
+LABEL    any text, or DEFAULT for default
+-b       bolt y(es) n(o) d(efault)
+'''
+next_arg_type = ""
+for arg in sys.argv[1:]:
+
+    if arg == "--help":
+        print(usage)
+        exit(0)
+
+    if not next_arg_type:
+        if arg == '-w':
+            windowless_mode = True
+        else:
+            next_arg_type = arg
+        continue
+
+    if next_arg_type == '-t':
+        stay_alive_for = float(arg)
+    elif next_arg_type == '-c':
+        capacity = int(arg)
+    elif next_arg_type == '-s':
+        size = float(arg)
+    elif next_arg_type == '-d':
+        danger_level = int(arg)
+    elif next_arg_type == '-l':
+        label_pre_arg_parse = arg
+    elif next_arg_type == '-b':
+        bolt_pre_arg_parse = arg
+    else:
+        print(usage)
+        break
+
+    next_arg_type = ""
+
+
+if windowless_mode:
+    print(capacity)
+    print(charging_state)
+    exit(0)
+
+import time
+import tkinter
+from tkinter import Tk, Canvas
+
+
+# the window
+W = 600
+H = 1080
+
+# the battery
+x_off = W/2 * (1 - size)
+middle = H/2
+half_h = W - 2 * x_off
+line_w = 70 * size
+rad_cut = 0.25 * line_w
+separator_w = 8
+forced_show_label = False
+
+if label_pre_arg_parse == "DEFAULT":
+    label = capacity
+else:
+    forced_show_label = True
+    label = label_pre_arg_parse
+
+if bolt_pre_arg_parse == "y":
+    should_show_bolt = True
+elif bolt_pre_arg_parse == "n":
+    should_show_bolt = False
+else:
+    should_show_bolt = (charging_state == "Charging\n")
+
+root = Tk(className="Battery widget")
+canv = Canvas(root, bg="#15161E", width=W, height=H, highlightthickness=0)
+
+dark_blue_color = "#f0a0ff"
+pink_color = "#303251"
+red_color = "#bb1b1b"
+blue_color = "#9097c3"
+black_color = "#000608"
+
+line_fill = blue_color
+empty_fill = black_color
+alarm_fill = red_color
+
+capacity_fill = line_fill
+if capacity <= danger_level:
+    capacity_fill = alarm_fill
+
+
+def create_border_straights(x1, y1, x2, y2, w, chop, color):
+    c = canv.create_rectangle
+    c(x1 + chop, y2, x2 - chop, y2 + w, fill=color, width=0)
+    c(x1 + chop, y1 - w, x2 - chop, y1, fill=color, width=0)
+    c(x1 - w, y2 - chop, x1, y1 + chop, fill=color, width=0)
+    c(x2, y2 - chop, x2 + w, y1 + chop, fill=color, width=0)
+
+
+def create_round_corner(x, y, r, line_width, color, angle):
+    canv.create_arc(
+            x, y, x + r, y + r,
+            start=angle, extent=90,
+            style=tkinter.ARC, outline=color, width=line_width)
+
+
+def create_border(x1, y1, x2, y2, line_width, border_radius, color):
+    create_border_straights(x1, y1, x2, y2, line_width, border_radius, color)
+
+    corner_x1 = x1 - line_width / 2
+    corner_x2 = x2 - line_width / 2 - 2 * border_radius - 1
+    corner_y1 = y1 - line_width / 2
+    corner_y2 = y2 - line_width / 2 - 2 * border_radius - 1
+    r = line_width + 2 * border_radius
+    create_round_corner(corner_x2, corner_y1, r, line_width, color, 0)
+    create_round_corner(corner_x1, corner_y1, r, line_width, color, 90)
+    create_round_corner(corner_x1, corner_y2, r, line_width, color, 180)
+    create_round_corner(corner_x2, corner_y2, r, line_width, color, 270)
+
+
+def create_borders():
+    x1 = x_off
+    x2 = W - x_off
+    y1 = H / 2 - half_h
+    y2 = H / 2 + half_h
+    create_border(x1, y1, x2, y2, line_w, rad_cut, capacity_fill)
+    create_border(x1, y1, x2, y2,
+                  separator_w, 1.5 * rad_cut, empty_fill)
+
+
+def create_tip():
+    tip_w = (W - 2 * x_off) * 0.4
+    tip_h = tip_w / 4
+
+    x1 = W / 2 - tip_w / 2
+    x2 = W / 2 + tip_w / 2
+    y1 = H / 2 - half_h - line_w - tip_h
+    y2 = H / 2 - half_h
+    w = line_w / 4
+    create_border(
+            x1, y1, x2, y2, w, w / 2, capacity_fill)
+    canv.create_rectangle(
+            x1, y1, x2, y2, fill=capacity_fill, width=0)
+
+
+def create_empty_inside_part():
+    canv.create_rectangle(
+            x_off, middle + half_h, W - x_off, middle - half_h,
+            fill=empty_fill, width=0)
+
+
+def create_liquid_inside_part():
+    canv.create_rectangle(
+            x_off, middle + half_h, W - x_off,
+            middle + half_h - 2 * half_h * capacity / 100,
+            fill=capacity_fill, width=0)
+
+
+def create_grill_line(x1, x2, y):
+    canv.create_rectangle(
+            x1, y - separator_w / 2,
+            x2, y + separator_w / 2, fill=empty_fill, width=0)
+
+
+def create_grill_lines():
+    create_grill_line(x_off, W - x_off, H / 2 - half_h / 2)
+    create_grill_line(x_off, W - x_off, H / 2)
+    create_grill_line(x_off, W - x_off, H / 2 + half_h / 2)
+
+
+def get_bolt_offsets(scale):
+    m = H / 2 * scale
+    tips_off = m * 0.15
+    tips_distance = m * 0.7
+    shoulder_off = m * 0.1
+    shoulder_distance = m * 0.3
+
+    offsets = [
+            tips_off, -tips_distance,
+            0, shoulder_off,
+            -shoulder_distance, 0
+            ]
+
+    return offsets
+
+
+def create_half_bolt_outline(offsets, border_width, border_color):
+    for (i0, i1, i2, i3) in [(0,1,2,3), (2,3,4,5), (4,5,0,1)]:
+        canv.create_line(
+                W / 2 + offsets[i0], H / 2 + offsets[i1],
+                W / 2 + offsets[i2], H / 2 + offsets[i3],
+                width=border_width, fill=border_color)
+        canv.create_oval(
+                W / 2 + offsets[i0] - border_width / 2, H / 2 + offsets[i1] - border_width / 2,
+                W / 2 + offsets[i0] + border_width / 2, H / 2 + offsets[i1] + border_width / 2,
+                fill=border_color, width=0
+                )
+
+
+def create_half_bolt_fill(offsets, color):
+    canv.create_polygon(
+            W / 2 + offsets[0], H / 2 + offsets[1],
+            W / 2 + offsets[2], H / 2 + offsets[3],
+            W / 2 + offsets[4], H / 2 + offsets[5],
+            fill=color,
+            )
+
+
+def create_bolt_custom(scale, border_width, color, border_color):
+
+    offsets = get_bolt_offsets(scale)
+    mirrors = get_bolt_offsets(-scale)
+
+    create_half_bolt_outline(offsets, border_width, border_color)
+    create_half_bolt_outline(mirrors, border_width, border_color)
+
+    create_half_bolt_fill(offsets, color)
+    create_half_bolt_fill(mirrors, color)
+
+
+def create_bolt():
+    create_bolt_custom(0.7, separator_w * 2, capacity_fill, empty_fill)
+
+
+def create_number_custom(text, x_offset, y_offset, color):
+    canv.create_text(
+            W/2 + x_offset, H/2 + y_offset,
+            text=text,
+            font=("Fira Code", int(W * size * 0.6), ""),
+            fill=color)
+
+
+def create_number_outlined(text, fill_color, border_color):
+    create_number_custom(text, +separator_w, +separator_w, border_color)
+    create_number_custom(text, +separator_w, -separator_w, border_color)
+    create_number_custom(text, -separator_w, +separator_w, border_color)
+    create_number_custom(text, -separator_w, -separator_w, border_color)
+    create_number_custom(text, 0, 0, fill_color)
+
+
+def create_number_hollow(text):
+    create_number_outlined(text, empty_fill, capacity_fill)
+
+
+def create_number_colored(text):
+    create_number_outlined(text, capacity_fill, empty_fill)
+
+
+create_tip()
+create_empty_inside_part()
+create_liquid_inside_part()
+create_borders()
+
+if capacity < 80:
+    create_grill_lines()
+
+if should_show_bolt:
+    create_bolt()
+
+if capacity <= danger_level + 10:
+    create_number_colored(label)
+elif capacity > 90:
+    create_number_hollow(label)
+elif forced_show_label:
+    create_number_colored(label)
+
+canv.pack()
+
+root.update()
+time.sleep(stay_alive_for)
+

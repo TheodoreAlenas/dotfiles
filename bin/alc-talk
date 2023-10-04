@@ -1,0 +1,337 @@
+#!/bin/env sh
+
+my_name="$(basename "$0")"
+lemonbar_file="${LEMONBAR_FILE:-/tmp/lemonbar}"
+
+explain_usage() {
+cat <<EOM
+usage: $my_name [OPTIONS] ACTION MESSAGE
+the INTERACTIVE variable ('$INTERACTIVE' now)
+defines whether or not it uses the GUI.
+Interactive means 'in the terminal'.
+
+OPTIONS:
+  -d, --default=DEFAULT
+
+ACTION:
+
+  graphical-init, ini: call upon X init
+
+  get-line, gl: the default option.
+  say-line, sl: display one stdin line
+  get-paragraph, gp: get multiple lines
+  say-paragraph, sp: display multiple lines
+
+  say-error, se: display lines of error
+  say-bar, sb: display one line on the dock
+  note-bar, nb: add a bit of info on dock
+  say-stdout-gui-bar, sob: debugging
+
+  get-image-in, gii: image from dir
+  get-image, gi: get an image filename
+  recommend, r: provide auto completion
+  preview, p: the first line is preview script
+  get-rest, gr: get the continuation
+  get-number, gn: get an option by number
+  demand, d: same, but demand exact match
+  confirm, c: yes/no, the exit code matters
+
+Alternative arguments:
+  -h, --help
+EOM
+}
+
+
+read_some_lines() {
+  i=0
+  while read -r line
+  do printf "%s\n" "$line" > /dev/tty
+    if [ "$((i += 1))" -ge 10 ]
+    then return 1
+    fi
+  done
+}
+
+ask_to_read_more_lines() {
+  printf "Show more? (y/N) " > /dev/tty
+  read -r a < /dev/tty
+  if [ "$a" = n ] || [ "$a" = N ] || ! [ "$a" ]
+  then return 1
+  else return 0
+  fi
+}
+
+fzf_message() {
+  fzf --cycle --height=20 --border --border-label=" $message "
+}
+
+prompt_input() {
+  printf "%s" "$1" > /dev/tty
+  read -r line < /dev/tty && printf "%s\n" "$line"
+}
+
+show_more() {
+  read_some_lines && return 0
+  while ask_to_read_more_lines
+  do read_some_lines
+  done
+}
+
+graphical_init() {
+  echo 'alc-talk%{c}lemonbar initialized' > "$lemonbar_file"
+  killall lemonbar 2> /dev/null
+  font='-misc-fira code medium-medium-r-normal--30-0-0-0-m-0-ibm-cp866'
+  font='-misc-fira code medium-medium-r-normal--25-0-0-0-m-0-ibm-cp866'
+  font='Roboto Medium'
+  font='SourceCodePro-Medium'
+  tail -F "$lemonbar_file" | lemonbar -b -B '#112229' -F '#aa9988' -f "$font"
+}
+
+say_stdout_gui_bar() {
+  printf "%s" "%{r}%{F#587}"
+  tail -15 /tmp/al/key-history | awk '{printf("%s > %s%s", "%{F#455}", "%{F#587}", $0)}'
+  printf "%s" "%{l}%{F#587}$message%{F-}"
+  alc-parse-colors lemonbar-center
+}
+
+is_one_of() {
+  printf "%s\n" "$2" | grep -x -F -q "$1"
+}
+
+run_interactive() {
+  command_name="$1" message="$2"
+  case "$command_name" in
+    graphical-init | ini)
+      graphical_init
+      ;;
+    get-line | gl | '')
+      prompt_input "$message> "
+      ;;
+    say-line | sl)
+      printf "%s\n" "$message" > /dev/tty
+      head -1 > /dev/tty
+      ;;
+    get-paragraph | gp)
+      tmp="$(mktemp "/tmp/alc-talk-$(printf %s "$message" | head -c 30 | tr / .)-XXXX")"
+      nvim "$tmp"
+      cat "$tmp" || exit 1
+      rm "$tmp"
+      ;;
+    say-paragraph | sp)
+      printf "%s\n" "$message" > /dev/tty
+      cat > /dev/tty
+      ;;
+    say-error | se)
+      printf "\033[0;31m%s\n" "$message" > /dev/tty
+      cat > /dev/tty
+      printf "\033[0m" > /dev/tty
+      ;;
+    say-bar | sb)
+      printf "\033[0;33m <%s> " "$message" > /dev/tty
+      alc-parse-colors ansi-terminal > /dev/tty
+      printf "\033[0m" > /dev/tty
+      ;;
+    note-bar | nb)
+      printf "\033[0;33m (%s) " "$message" > /dev/tty
+      cat > /dev/tty
+      printf "\033[0m" > /dev/tty
+      ;;
+    say-stdout-gui-bar | sob)
+      say_stdout_gui_bar
+      ;;
+    get-image-in | gii)
+      read -r dir || return 1
+      {
+        find "$dir" -type f
+        cat
+      } | fzf_message "$message" | sed "s|$dir/||"
+      ;;
+    get-image | gi)
+      fzf_message "$message"
+      ;;
+    recommend | r)
+      fzf_message "$message"
+      ;;
+    preview | p)
+      read -r previewer
+      fzf --preview="$previewer" --border --border-label=" $message "
+      ;;
+    get-rest | gr)
+      printf "%s:\n" "$message" > /dev/tty
+      sed "s|$message||" | column | show_more
+      ans="$(prompt_input "$message")"
+      printf "%s%s\n" "$message" "$ans"
+      ;;
+    get-number | gn)
+      printf "%s:\n" "$message" > /dev/tty
+      content="$(cat -n)"
+      printf "%s\n" "$content" | column | show_more
+      choice="$(prompt_input "$message> #")"
+      printf "%s\n" "$content" | sed -n "$choice"'s/^\s*\S*\s*//p'
+      ;;
+    demand | d)
+      options="$(cat)"
+      choice="$(printf "%s\n" "$options" | fzf_message "$message")"
+      while ! is_one_of "$choice" "$options"
+      do choice="$(printf "%s\n" "$options" | fzf_message "$message")"
+      done
+      printf "%s\n" "$choice"
+      ;;
+    confirm | c)
+      choice="$(prompt_input "$message (yes/no) ")"
+      while ! is_one_of "$choice" "$(printf "yes\nno\n")"
+      do choice="$(prompt_input "! $message (yes/no) ")"
+      done
+      test yes = "$choice" || return 1
+      ;;
+    *)
+      echo "Unknown or unimplemented action: $command_name" >&2
+      exit 1
+      ;;
+  esac
+}
+
+abbreviate() {
+  printf "%s\n" "$1" | sed -E 's/(.{5}).*(.{5})/\1...\2/'
+}
+
+run_gui() {
+  command_name="$1" message="$2"
+  case "$command_name" in
+    graphical-init | ini)
+      graphical_init
+      ;;
+    get-line | gl | '')
+      : | dmenu -i -p "$message"
+      ;;
+    say-line | sl)
+      dmenu -i -p "$message: $(head -1)" > /dev/null
+      ;;
+    get-paragraph | gp)
+      tmp="$(mktemp "/tmp/$(printf "%s\n" "$message" | head -c 30 | tr / .)-XXXX")"
+      alc-terminal --float -e nvim "$tmp"
+      cat "$tmp" || exit 1
+      rm "$tmp"
+      ;;
+    say-paragraph | sp)
+      tmp="$(mktemp "/tmp/ERROR-$(printf "%s\n" "$message" | head -c 30 | tr / .)-XXXX")"
+      cat - > "$tmp"
+      alc-terminal --float -e nvim "$tmp"
+      rm "$tmp"
+      ;;
+    say-error | se)
+      tmp="$(mktemp "/tmp/$(printf "%s\n" "$message" | head -c 30 | tr / .)-XXXX")"
+      cat - > "$tmp"
+      alc-terminal --float -e nvim "$tmp"
+      rm "$tmp"
+      ;;
+    say-bar | sb)
+      # awk buffers the whole line, so it reaches lemonbar whole
+      say_stdout_gui_bar | awk '{print $0}' >> "$lemonbar_file"
+      ;;
+    note-bar | nb)
+      new_line="$(tail -1 "$lemonbar_file" | tr -d '\n'; printf "%%{r}                %%{r}%%{F#555}%s%%{F-} " "$message"; cat;)"
+      printf "%s\n" "$new_line" >> "$lemonbar_file"
+      ;;
+    say-stdout-gui-bar | sob)
+      say_stdout_gui_bar
+      ;;
+    get-image-in | gii)
+      read -r dir || return 1
+      bspc rule --add '*:sxiv:*' --one-shot state=floating desktop=^
+      xargs sxiv -t -o "$dir" | sed "s|$dir/||"
+      ;;
+    get-image | gi)
+      bspc rule --add '*:sxiv:*' --one-shot state=floating desktop=^
+      xargs sxiv -t -o
+      ;;
+    recommend | r)
+      dmenu -i -p "$message"
+      ;;
+    preview | p)
+      read -r previewer
+      # shellcheck disable=SC2016
+      cmd='fzf --preview="$0" --border --border-label=" $1 " < "$2" > "$3"'
+      i="$(mktemp /tmp/alc-talk-preview-i-XXXXXX)"
+      o="$(mktemp /tmp/alc-talk-preview-o-XXXXXX)"
+      cat > "$i"
+      alc-terminal --fullscreen -e sh -c "$cmd" "$previewer" "$message" "$i" "$o"
+      cat "$o"
+      rm "$i" "$o"
+      ;;
+    get-rest | gr)
+      p="$(alc-tildify "$message")"
+      ans="$(sed "s|$message||" | dmenu -i -p "$p")"
+      printf "%s%s\n" "$message" "$ans"
+      ;;
+    get-number | gn)
+      cat -n | tr '\t' ' ' | dmenu -i -p "$message" | sed 's/^\s*\S*\s*//'
+      ;;
+    demand | d)
+      options="$(cat)"
+      choice="$(printf "%s\n" "$options" | dmenu -i -p "$message")"
+      while ! is_one_of "$choice" "$options"
+      do choice="$(printf "%s\n" "$options" | dmenu -i -p "! $message")"
+      done
+      printf "%s\n" "$choice"
+      ;;
+    confirm | c)
+      choice="$(: | dmenu -i -p "$message (yes/no)")"
+      while ! is_one_of "$choice" "$(printf "yes\nno\n")"
+      do choice="$(: | dmenu -i -p "! $message (yes/no)")"
+      done
+      test yes = "$choice" || return 1
+      ;;
+    *)
+      echo "Unknown or unimplemented action: $command_name" >&2
+      exit 1
+      ;;
+  esac
+}
+
+pack_message() {
+  message="$1" default="$2"
+  if [ "$default" = '' ]
+  then printf "%s\n" "$message"
+  else printf "%s\n" "$message (default: $(abbreviate "$default"))"
+  fi
+}
+
+get_answer_from_user() {
+  if [ "$INTERACTIVE" = no ]
+  then run_gui "$command_name" "$message" || return 1
+  else run_interactive "$command_name" "$message" || return 1
+  fi
+}
+
+if_empty_print_default() {
+  answer="$1" default="$2"
+
+  if [ "$answer" = '' ]
+  then return
+  fi
+
+  if [ "$answer" = '.' ] && [ "$default" ]
+  then printf "%s\n" "$default"
+  else printf "%s\n" "$answer"
+  fi
+}
+
+run() {
+  default=''
+  case "$1" in
+    -d | --default) default="$2"; shift 2 ;;
+  esac
+
+  command_name="$1"
+  message="$(pack_message "$2" "$default")"
+  answer="$(get_answer_from_user "$command_name" "$message")" || return 1
+  if_empty_print_default "$answer" "$default"
+}
+
+case "$1" in
+  -h | --help) explain_usage ;;
+  *) run "$@" || exit 1 ;;
+esac
+
+

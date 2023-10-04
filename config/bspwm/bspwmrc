@@ -1,0 +1,7 @@
+#!/bin/env sh
+
+alc-reset-bspwm-rules
+sleep 0.5
+printf "%s\n" "%{c}lemonbar initialized" >> /tmp/lemonbar
+
+(. /home/aleena/.config/al/scmd.sh && global_theme_set_bspwm_startup)

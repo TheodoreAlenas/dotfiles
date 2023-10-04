@@ -1,0 +1,231 @@
+#!/bin/env sh
+
+configs_dir="${AL_ALACRITTY_CONFIGS_DIR:-/tmp/alacritty-configs}"
+
+explain_usage() {
+cat <<EOM
+usage: $(basename "$0") [--float|--dock|--below|--fullscreen] [--dir PATH] [-e echo hi|-k 'echo hi']
+
+Alternative arguments:
+  -h, --help
+  -p, --preview-themes
+  -c, --get-config
+  -s, --set-config, --set-theme FILE
+  -d, --set-default-config, --set-default-theme, FILE
+    (FILE from ~/.config/alacritty/colors)
+EOM
+}
+
+type_these() {
+  sleep 0.3s
+  xdotool type "$1"
+  xdotool key enter
+}
+
+get_last_repo() {
+  alc-memory permanent get "last-repo"
+}
+cd_right() {
+  if [ "o$1" = o--dir ]
+  then cd "$2" ; return 0
+  else cd "$(get_last_repo)" ; return 1
+  fi
+}
+cd_and_open_terminal() {
+  config_file="$1"
+
+  shift
+  cd_right "$1" "$2" && shift 2
+  action="$1"
+
+  export INTERACTIVE=
+  case "$action" in
+    '')
+      alacritty --config-file "$config_file"
+      ;;
+    -e)
+      shift
+      alacritty --config-file "$config_file" -e "$@"
+      ;;
+    -k)
+      type_these "$2" &
+      alacritty --config-file "$config_file"
+      ;;
+    *) echo "Unexpected: $action" >&2; exit 1 ;;
+  esac
+}
+
+wait_and_send_tmux() {
+  sleep "$1"
+  tmux send-keys "$2" C-m
+}
+execute_here() {
+  dash -c "$1"
+}
+open_tmux_window_and_send() {
+  if [ "$TMUX" ]
+  then wait_and_send_tmux 0.3 "$1" & tmux split-window
+  else wait_and_send_tmux 0.5 "$1" & tmux
+  fi
+}
+
+cd_and_open_shell() {
+  cd_right "$1" "$2" && shift 2
+
+  action="$1"
+  command="$2"
+
+  case "$action" in
+    '') $SHELL ;;
+    -e) shift; "$@" ;;
+    -k) open_tmux_window_and_send "$command" ;;
+    *) echo "Unexpected: $action" >&2; exit 1 ;;
+  esac
+}
+
+store_window_id_as_variable_name() {
+  id="$(bspc subscribe --count 1 node_add | awk '{print $NF}')"
+  alc-memory temporary set "alacritty_windows-${id}-follows_default" "true"
+  alc-memory temporary set "alacritty_windows-${id}-config_file" "$1"
+  alc-memory temporary set "alacritty_wrapper-$$-wraps" "$id"
+}
+clean_up_window_variable() {
+  id="$(alc-memory temporary get "alacritty_wrapper-$$-wraps")"
+  alc-memory temporary clear "alacritty_windows-${id}-follows_default"
+  alc-memory temporary clear "alacritty_windows-${id}-config_file"
+  alc-memory temporary clear "alacritty_wrapper-$$-wraps"
+}
+
+get_config_file() {
+  id="${1:-"$(bspc query -N -n)"}"
+  alc-memory temporary get "alacritty_windows-${id}-config_file"
+}
+
+preview_themes() {
+  d=~/.config/alacritty/colors
+  win_id="$(bspc query -N -n)"
+  cmd="alc-terminal --set-theme $d/{} $win_id $*; exa -l ~"
+  ls $d | fzf --preview "$cmd" > /dev/null
+}
+
+set_config_on_one() {
+  alc-memory temporary mutate "alacritty_windows-${2}-follows_default" "false"
+  cat ~/.config/alacritty/head.yml "$1" > "$(get_config_file "$2")"
+}
+
+set_config_on_all() {
+  second_half="$1"
+  shift
+  for arg
+  do set_config_on_one "$second_half" "$arg"
+  done
+}
+
+set_config() {
+  second_half="$1"
+  shift
+  if [ $# = 0 ]
+  then set_config_on_one "$second_half" "$(bspc query -N -n)"
+  else set_config_on_all "$second_half" "$@"
+  fi
+}
+
+unset_config() {
+  ensure_the_configs_directory_exists
+
+  id="${1:-"$(bspc query -N -n)"}"
+  alc-memory temporary mutate "alacritty_windows-${id}-follows_default" "true"
+  cp "$configs_dir/default" "$(get_config_file "$id")"
+}
+
+ensure_the_configs_directory_exists() {
+  if ! [ -d "$configs_dir" ]
+  then mkdir -p "$configs_dir" || exit 1
+  fi
+}
+
+print_default_followers() {
+  re='^alacritty_windows-0x........-follows_default\s+true$'
+  print='printf("%s\0%s\0", "'"$configs_dir/default"'", $2)'
+  # if the previous line matched, print part of this one
+  awk "BEGIN {y = 0} y == 1 {$print; y = 0} /$re/{y = 1}" /tmp/al/vars
+}
+
+set_default_config() {
+  ensure_the_configs_directory_exists
+  cat ~/.config/alacritty/head.yml "$1" > "$configs_dir/default"
+  print_default_followers | xargs -0 -n 2 -r cp
+}
+
+create_config_file() {
+  ensure_the_configs_directory_exists
+
+  config_file="$(mktemp "$configs_dir/XXXX")"
+  cp "$configs_dir/default" "$config_file"
+
+  rm_config_file() {
+    rm "$config_file";
+  }
+  trap "rm_config_file" INT QUIT TERM
+
+  printf "%s\n" "$config_file"
+}
+
+apply_bspc_rule() {
+
+  case "$1" in
+    --float)
+      bspc rule --add '*:*:*' --one-shot state=floating
+      ;;
+    --dock)
+      bspc rule --add '*:*:*' --one-shot state=floating rectangle=1920x400+0+680
+      ;;
+    --below)
+      bspc rule --add '*:*:*' --one-shot split_dir=south
+      ;;
+    --fullscreen)
+      bspc rule --add '*:*:*' --one-shot state=fullscreen
+      ;;
+    *)
+      return 1
+      ;;
+  esac  # if you add another, don't forget to add it below too
+}
+
+non_interactive() {
+  config_file="$(create_config_file)"
+
+  apply_bspc_rule "$1" && shift
+  store_window_id_as_variable_name "$config_file" &
+  cd_and_open_terminal "$config_file" "$@"
+  clean_up_window_variable
+
+  rm "$config_file"
+}
+
+interactive() {
+  case "$1" in
+    --float | --dock | --below | --fullscreen) shift ;;  # ignoring, they're handy for non_interactive
+  esac
+  cd_and_open_shell "$@"
+}
+
+run() {
+  INTERACTIVE="${INTERACTIVE:-$(tty -s && echo yes || echo no)}"
+  if [ "$INTERACTIVE" = yes ]
+  then interactive "$@"
+  else non_interactive "$@"
+  fi
+}
+
+case "$1" in
+  -h | --help) explain_usage ;;
+  -c | --get-config) get_config_file ;;
+  -p | --preview-themes) shift; preview_themes "$@" ;;
+  -s | --set-config | --set-theme) shift; set_config "$@" ;;
+  -r | --unset-config | --unset-theme) shift; unset_config "$@" ;;
+  -d | --set-default-config | --set-default-theme) set_default_config "$2" ;;
+  *) run "$@" ;;
+esac
+
+

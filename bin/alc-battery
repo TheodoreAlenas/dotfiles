@@ -1,0 +1,20 @@
+#!/bin/env sh
+
+explain_usage() {
+  alm-battery --help
+}
+
+run() {
+  INTERACTIVE="${INTERACTIVE:-$(tty -s && echo yes || echo no)}"
+  if [ "$INTERACTIVE" = yes ]
+  then alm-battery -w "$@"
+  else alm-battery "$@" &
+  fi
+}
+
+case "$1" in
+  -h | --help) explain_usage ;;
+  *) run "$@" ;;
+esac
+
+

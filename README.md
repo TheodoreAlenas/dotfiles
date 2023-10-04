@@ -22,6 +22,7 @@ the exercises.
 - bspwm
 - picom
 - dmenu
+- lemonbar
 - alacritty
 - nvim
 - zsh

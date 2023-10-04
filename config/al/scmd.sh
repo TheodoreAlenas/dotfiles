@@ -1,3 +1,4 @@
+# License at the bottom
 # shellcheck disable=SC2016 disable=SC1090 disable=SC2012 disable=SC2120
 window_other() { bspc node next.local.leaf --focus; } #o
 window_replace() { bspc node --swap "$(win_dmenu)"; }
@@ -208,13 +209,13 @@ open_terminal() { alc-terminal; } #t
 open_terminal_below() { alc-terminal --below; }
 open_terminal_floating() { alc-terminal --float; }
 
-open_battery_widget() { alc-battery; } #u
-open_battery_widget_for() { alc-battery -t "$(:|dmenu)" -s 0.5; }
-open_battery_widget_longer() { alc-battery -t 3 -s 0.5; } #U
+open_battery_widget() { alm-battery; } #u
+open_battery_widget_for() { alm-battery -t "$(:|dmenu)" -s 0.5; }
+open_battery_widget_longer() { alm-battery -t 3 -s 0.5; } #U
 
-open_clock_widget() { alc-clock; } #h
-open_clock_widget_for() { alc-clock -t "$(:|dmenu)"; }
-open_clock_widget_longer() { alc-clock -t 5; } #H
+open_clock_widget() { alm-clock; } #h
+open_clock_widget_for() { alm-clock -t "$(:|dmenu)"; }
+open_clock_widget_longer() { alm-clock -t 5; } #H
 
 open_emacs() { emacs; } #em
 open_spotify() { spotify-launcher > /dev/null 2> /dev/null; }
@@ -275,3 +276,22 @@ in_vim() { alc-terminal --dock -e sh -c ". $(this_file) && $1 | vim -"; }
 in_terminal() { alc-terminal --dock -e sh -c "$1"; }
 this_file() { echo ~/.config/al/scmd.sh; }
 
+# Copyright (c) 2023 Dimakopoulos Theodoros
+# 
+# Permission is hereby granted, free of charge, to any person obtaining a copy
+# of this software and associated documentation files (the "Software"), to deal
+# in the Software without restriction, including without limitation the rights
+# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+# copies of the Software, and to permit persons to whom the Software is
+# furnished to do so, subject to the following conditions:
+# 
+# The above copyright notice and this permission notice shall be included in all
+# copies or substantial portions of the Software.
+# 
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+# SOFTWARE.

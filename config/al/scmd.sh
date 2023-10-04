@@ -202,6 +202,8 @@ screenshot_take_fullscreen_delay()   { sleep "$(:|dmenu)" && shotgun /tmp/screen
 screenshot_copy_in_clipboard()   { xclip -in -sel clipboard -t image/png < /tmp/screenshot.png; }
 screenshot_view()   { sxiv /tmp/screenshot.png; }
 
+clipboard_youtube_channel() { printf %s "https://www.youtube.com/@theodorealenas3171"|xclip -selection clipboard -in; }
+
 open_terminal() { alc-terminal; } #t
 open_terminal_below() { alc-terminal --below; }
 open_terminal_floating() { alc-terminal --float; }

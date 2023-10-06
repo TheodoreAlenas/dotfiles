@@ -2,7 +2,6 @@
 # License at the bottom
 
 import sys
-import os
 import time
 import datetime
 import math
@@ -50,61 +49,11 @@ def parse_args():
 stay_alive_for, hour, minute = parse_args()
 exact_hour = hour + minute/60
 
-
-def get_the_before_the_hash(line):
-    hash_split = line.split('#')
-    if len(hash_split) > 0:
-        return hash_split[0].strip()
-    else:
-        return ''
-
-
-def parse_minute_and_description(before_hash):
-    first = before_hash.split()[0]
-    if first.isnumeric():
-        return (int(first), before_hash[len(first):].strip())
-    else:
-        return (0, before_hash)
-
-
-def parse_line(tasks, hour, line):
-
-    if len(line.strip()) < 1:
-        return
-
-    before_hash = get_the_before_the_hash(line)
-    minute, description = parse_minute_and_description(before_hash)
-
-    tasks.append({
-        "hour": hour + minute / 60,
-        "minute": minute,
-        "task": description
-        })
-
-
-tasks = []
-
-for (hour_minus_one, text) in enumerate(sys.stdin.readlines()):
-    parse_line(tasks, hour_minus_one + 1, text)
-
-# upcoming tasks have priority to expired tasks
-hour_around = exact_hour + 0.25
-nearest = {"hour": 50, "minute": 0, "task": ""}
-for task in tasks:
-    if abs(task['hour'] - hour_around) < abs(nearest['hour'] - hour_around):
-        nearest = task
-
-displaying_task = True
-if abs(nearest['hour'] - hour_around) > 0.5:
-    nearest = {"hour": exact_hour, "minute": minute, "task": ""}
-    displaying_task = False
-
-
 # the window
 W = 800
 H = 1100
 
-# the battery
+# the clock
 middle = H/2
 rad = W * 0.4
 line_w = 30
@@ -135,24 +84,12 @@ canv.create_oval(
         W/2 + rad, 
         H/2 + rad, fill=black_fill, width=0)
 
-# task arc
-canv.create_arc(
-        W/2 - rad * 1.09, 
-        H/2 - rad * 1.09, 
-        W/2 + rad * 1.09, 
-        H/2 + rad * 1.09, 
-        start=  90 - 6 * minute,
-        extent= 360 * (exact_hour - nearest["hour"]),
-        style=tkinter.ARC, outline=task_fill, width=line_w)
-
 # outline
 canv.create_oval(
         W/2 - rad, 
         H/2 - rad, 
         W/2 + rad, 
         H/2 + rad, outline=line_fill, width=line_w)
-
-
 
 # spikes
 for i in [5, 10, 20, 25, 35, 40, 50, 55]:
@@ -171,9 +108,7 @@ for i in [0, 15, 30, 45]:
             perc_to_y(i/60, rad), fill=line_fill, width=line_w)
 
 
-pointer_fill = pale_fill
-if not displaying_task:
-    pointer_fill = orange_fill
+pointer_fill = orange_fill
 
 # rounded corner of hour indicator
 canv.create_oval(
@@ -184,13 +119,6 @@ canv.create_oval(
 
 hour_tip_x = perc_to_x(exact_hour/12, rad * 0.5)
 hour_tip_y = perc_to_y(exact_hour/12, rad * 0.5)
-
-## rounded tip of hour indicator
-#canv.create_oval(
-#        hour_tip_x - line_w / 2,
-#        hour_tip_y - line_w / 2,
-#        hour_tip_x + line_w / 2,
-#        hour_tip_y + line_w / 2, fill=alarm_fill, width=0)
 
 # hour
 canv.create_line(W/2, H/2,
@@ -220,14 +148,6 @@ canv.create_text(
         font=("Fira Code", int(hour_ind_w), ""),
         fill=bright_fill)
 
-
-# task label
-canv.create_text(
-        W/2, H/2 + rad * 1.4,
-        text=nearest["task"],
-        font=("Fira Code", int(hour_ind_w), ""),
-        fill=task_fill)
-        
 
 canv.pack()
 

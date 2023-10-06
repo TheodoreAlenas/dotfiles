@@ -37,8 +37,8 @@ hi StatusLineNC ctermfg=white ctermbg=NONE cterm=reverse
 hi StatusLineTerm ctermfg=white ctermbg=NONE cterm=bold,reverse
 hi StatusLineTermNC ctermfg=white ctermbg=NONE cterm=reverse
 hi VertSplit ctermfg=white ctermbg=NONE cterm=reverse
-hi Pmenu ctermfg=black ctermbg=darkcyan cterm=NONE
-hi PmenuSel ctermfg=black ctermbg=darkblue cterm=NONE
+hi Pmenu ctermfg=white ctermbg=black cterm=NONE
+hi PmenuSel ctermfg=white ctermbg=grey cterm=NONE
 hi PmenuSbar ctermfg=NONE ctermbg=NONE cterm=NONE
 hi PmenuThumb ctermfg=NONE ctermbg=grey cterm=NONE
 hi TabLine ctermfg=black ctermbg=grey cterm=NONE
@@ -66,7 +66,7 @@ hi WarningMsg ctermfg=darkred ctermbg=NONE cterm=bold
 hi MoreMsg ctermfg=darkyellow ctermbg=NONE cterm=bold
 hi Question ctermfg=darkyellow ctermbg=NONE cterm=bold
 hi Todo ctermfg=darkred ctermbg=darkmagenta cterm=NONE
-hi MatchParen ctermfg=white ctermbg=darkblue cterm=NONE
+hi MatchParen ctermfg=white ctermbg=black cterm=NONE
 hi Search ctermfg=black ctermbg=darkyellow cterm=NONE
 hi IncSearch ctermfg=NONE ctermbg=NONE cterm=reverse
 hi WildMenu ctermfg=black ctermbg=darkmagenta cterm=NONE

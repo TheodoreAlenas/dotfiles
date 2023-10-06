@@ -66,7 +66,7 @@ hi WarningMsg ctermfg=darkred ctermbg=NONE cterm=bold
 hi MoreMsg ctermfg=darkyellow ctermbg=NONE cterm=bold
 hi Question ctermfg=darkyellow ctermbg=NONE cterm=bold
 hi Todo ctermfg=darkred ctermbg=darkmagenta cterm=NONE
-hi MatchParen ctermfg=black ctermbg=darkblue cterm=NONE
+hi MatchParen ctermfg=white ctermbg=darkblue cterm=NONE
 hi Search ctermfg=black ctermbg=darkyellow cterm=NONE
 hi IncSearch ctermfg=NONE ctermbg=NONE cterm=reverse
 hi WildMenu ctermfg=black ctermbg=darkmagenta cterm=NONE

@@ -185,14 +185,14 @@ screen_brightness_set_9() { xrandr --output eDP-1 --brightness 0.9; }
 screen_brightness_set_normal()  { xrandr  --output eDP-1  --brightness 0.7; }
 screen_brightness_set_custom()  { xrandr  --output eDP-1  --brightness "$(:|dmenu)"; }
 
-goodones_open_under() { ( cd ~/images/good-ones/base/not-memes/ && mpv --pause "$(find . -type d | dmenu)" ); }
-goodones_open_tagged() { ( cd ~/images/good-ones/tag/ && mpv --pause "$(ls ~/images/good-ones/tag | dmenu)"/* ); }
-goodones_open_newest()   { find ~/images/good-ones/base -type f -printf "%B@\t%p\n"|sort -r|cut -f2|xargs mpv --pause; }
-goodones_open_accessed() { find ~/images/good-ones/base -type f -printf "%A@\t%p\n"|sort -r|cut -f2|xargs mpv --pause; }
-goodones_open_changed()  { find ~/images/good-ones/base -type f -printf "%C@\t%p\n"|sort -r|cut -f2|xargs mpv --pause; }
-goodones_open_shuffled() { find ~/images/good-ones/base -type f | shuf | xargs mpv --pause; } #g
-goodones_open_sorted()   { find ~/images/good-ones/base -type f | sort | xargs mpv --pause; }
-goodones_vim() { in_vim 'echo "mpv --no-terminal --pause"; find ~/images/good-ones/base -type f'; }
+goodones_open_under() { ( cd ~/g1/base/not-memes/ && mpv --pause "$(find . -type d | dmenu)" ); }
+goodones_open_tagged() { ( cd ~/g1/tag/ && mpv --pause "$(ls | dmenu)"/* ); }
+goodones_open_newest()   { find ~/g1/base -type f -printf "%B@\t%p\n"|sort -r|cut -f2|xargs mpv --pause; }
+goodones_open_accessed() { find ~/g1/base -type f -printf "%A@\t%p\n"|sort -r|cut -f2|xargs mpv --pause; }
+goodones_open_changed()  { find ~/g1/base -type f -printf "%C@\t%p\n"|sort -r|cut -f2|xargs mpv --pause; }
+goodones_open_shuffled() { find ~/g1/base -type f | shuf | xargs mpv --pause; } #g
+goodones_open_sorted()   { find ~/g1/base -type f | sort | xargs mpv --pause; }
+goodones_vim() { in_vim 'echo "mpv --no-terminal --pause"; find ~/g1/base -type f'; }
 
 screenshot_take_region()   { eval "shotgun $(slop -f '-i %i -g %g') /tmp/screenshot.png"; } #w
 screenshot_take_fullscreen()   { sleep 0.2s && shotgun /tmp/screenshot.png; }
@@ -231,7 +231,7 @@ switch_emacs_to_doom() { rm ~/.emacs.d; ln -s ~/.cache/emacs/doom/home-emacs-dot
 
 lemonbar_show_date() { date; } #cd
 lemonbar_show_free_disk() { df -h | awk '/e0n1p6/{print $4}'; } #cf
-lemonbar_show_memory() { free|awk 'NR>1{u=int($3/100000);f=int($4/100000);printf("[%" u "s>%"f"s] ","","")}';echo; } #cm
+lemonbar_show_memory() { free|awk 'NR>1{t=int($2/200000);u=int($3/200000);printf("[%"u"s>%"t-u"s]","","")}';echo; } #cm
 lemonbar_input_vim() { in_terminal "vi '+$' /tmp/lemonbar"; }
 
 preview_figlet_vim() { in_vim 'for f in /usr/share/figlet/fonts/*; do echo "$f"; figlet -f "$f" Figlet; done'; }

@@ -1,6 +1,7 @@
 PS1='$ '
 
 alias vi=nvim
+alias ls=eza
 alias xc='xclip -selection clipboard'
 
 # shellcheck disable=SC2164

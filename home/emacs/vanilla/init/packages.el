@@ -28,3 +28,14 @@
 (set-face-foreground 'git-gutter:deleted "brown2")
 
 ;; (eval-after-load *tetris* (define-key tetris-mode-map (kbd "<up>") 'tetris-rotate-next))
+
+(defun al/prepare-for-ligatures ()
+  "To Fira Code, for Haskell (ligatures are from a package)"
+  (set-face-attribute 'default nil :font "Hasklug Nerd Font"))
+
+(use-package haskell-mode :config
+  (add-to-list 'haskell-mode-hook 'al/prepare-for-ligatures)
+  (add-to-list 'haskell-mode-hook 'ligature-mode))
+
+(use-package ligature :config
+  (ligature-set-ligatures '(haskell-mode) '("->" "++" "/=" ">=" "<=" ">>=")))

@@ -9,6 +9,6 @@ cd_and_relink() {
     done
 }
 
-relink config ~/.config
+relink c ~/.config
 relink bin ~/.local/bin
 relink home ~/.config

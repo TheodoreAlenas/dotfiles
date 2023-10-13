@@ -209,7 +209,7 @@ open_terminal() { alc-terminal; } #t
 open_terminal_below() { alc-terminal --below; }
 open_terminal_floating() { alc-terminal --float; }
 
-open_battery_widget() { alm-battery; } #u
+open_battery_widget() { alm-battery -c "$(head /sys/class/power_supply/BAT1/capacity)"; } #u
 open_battery_widget_for() { alm-battery -t "$(:|dmenu)" -s 0.5; }
 open_battery_widget_longer() { alm-battery -t 3 -s 0.5; } #U
 

@@ -274,7 +274,7 @@ scmd_give_bar_test_1234() { for i in 1 2 3 4; do sleep 1 && echo "$i"; done; }
 
 in_vim() { alc-terminal --dock -e sh -c ". $(this_file) && $1 | vim -"; }
 in_terminal() { alc-terminal --dock -e sh -c "$1"; }
-this_file() { echo ~/.config/al/scmd.sh; }
+this_file() { echo ~/.config/scmd.sh; }
 
 # Copyright (c) 2023 Dimakopoulos Theodoros
 # 

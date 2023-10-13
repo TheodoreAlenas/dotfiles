@@ -37,5 +37,10 @@
   (add-to-list 'haskell-mode-hook 'al/prepare-for-ligatures)
   (add-to-list 'haskell-mode-hook 'ligature-mode))
 
+(setq al/haskell-ligature-strings
+      '("<*" "<*>" "<+>" "<$>" "***" "<|" "|>" "<|>" "!!" "||" "==="
+        "==>" "<<<" ">>>" "<>" "+++" "<-" "->" "=>" ">>" "<<" ">>="
+        "=<<" ".." "..." "::" "-<" ">-" "-<<" ">>-" "++" "/=" "=="))
+
 (use-package ligature :config
-  (ligature-set-ligatures '(haskell-mode) '("->" "++" "/=" ">=" "<=" ">>=")))
+  (ligature-set-ligatures '(haskell-mode) al/haskell-ligature-strings))

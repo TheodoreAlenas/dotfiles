@@ -242,6 +242,7 @@ reset_wifi_hard() { nmcli radio wifi off && nmcli radio wifi on; echo "done"; }
 poweroff_now() { in_terminal 'sudo shutdown now'; } #eq
 poweroff_in_5_minutes() { in_terminal 'sudo shutdown +5'; }
 poweroff_after_midnight() { in_terminal 'sudo shutdown 02:00'; }
+poweroff_reboot() { in_terminal 'sudo shutdown --reboot now'; }
 
 type_password_uni() { xdotool type --delay 30 "$(base64 -d ~/trust/passw/sdi1900048)"; } #zu
 type_password_test() { xdotool type --delay 30 "$(base64 -d ~/trust/passw/test)"; }
@@ -266,9 +267,10 @@ scmd_sxhkdrc() { scmd_ls_keys | awk "{ $(scmd_awk1) $(scmd_awk2) }"; }
 scmd_awk1() { printf %s 's = $1; gsub(/./, "; super + &", s); sub("; ", "", s); '; }
 scmd_awk2() { printf %s 'print(s); printf("\t. %s && scmd_with_bar_status %s\n\n", "'"$(this_file)"'", $2);'; }
 scmd_find() { printf "%s\n" "$(grep "^$1(" "$(this_file)")"; }
-scmd_with_bar_status() { cline="$(scmd_find "$1")"; scmd_give_bar "$cline"; "$@" 2>&1 | scmd_give_bar_stdout "$cline"; }
-scmd_give_bar() { printf "%s\n" " $1" >>/tmp/lemonbar; }
-scmd_give_bar_stdout() { while read -r l; do printf "%s\n" " $1  %{R}$l%{R}" >> /tmp/lemonbar; done; }
+scmd_with_bar_status() { cline="$(scmd_find "$1")"; (echo; "$@" 2>&1) | scmd_bar_fmt "$cline" >> /tmp/lemonbar; }
+scmd_bar_fmt() { while read -r l; do scmd_bar_paint "$1" "$l"; done; }
+scmd_bar_paint() { printf "%s\n" "%{c}  $(printf %s "$1" | scmd_bar_sed)  %{B#aa6}%{F#000}$2%{B-}%{F-}"; }
+scmd_bar_sed() { sed 's/\(^[^(]*\)\([^{]*{\)\(.*\)\(}[^}]*$\)/%{F#6a6}\1%{F#666}\2%{F#88e}\3%{F#666}\4%{F-}/'; }
 scmd_give_bar_color_swap_fix() { echo "%{R}"; }
 scmd_give_bar_test_1234() { for i in 1 2 3 4; do sleep 1 && echo "$i"; done; }
 

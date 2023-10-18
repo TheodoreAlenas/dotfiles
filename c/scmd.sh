@@ -114,6 +114,7 @@ terminal_theme_unset() { alc-terminal --unset-theme "$(bspc query -N -n)"; } #V
 global_theme_set_hell()  { global_theme_set hell; }
 global_theme_set_round()  { global_theme_set round; }
 global_theme_set_glass()  { global_theme_set glass; }
+global_theme_set_purple()  { global_theme_set purple; }
 global_theme_set_autumn()  { global_theme_set autumn; }
 global_theme_set_bright()  { global_theme_set bright; }
 global_theme_set_space()  { global_theme_set space; }
@@ -125,6 +126,7 @@ global_theme_set() { for t in terminal dmenu wallpaper picom bspwm lemonbar; do 
 picom_theme_set_hell()  { cp  ~/.config/picom/hell.conf  ~/.config/picom/picom.conf; }
 picom_theme_set_round()  { cp  ~/.config/picom/round.conf  ~/.config/picom/picom.conf; }
 picom_theme_set_glass()  { cp  ~/.config/picom/glass.conf  ~/.config/picom/picom.conf; }
+picom_theme_set_purple()  { cp  ~/.config/picom/glass.conf  ~/.config/picom/picom.conf; }
 picom_theme_set_autumn()  { cp  ~/.config/picom/autumn.conf  ~/.config/picom/picom.conf; }
 picom_theme_set_bright()  { cp  ~/.config/picom/space.conf  ~/.config/picom/picom.conf; }
 picom_theme_set_space()  { cp  ~/.config/picom/space.conf  ~/.config/picom/picom.conf; }
@@ -133,6 +135,7 @@ picom_theme_set_void()  { cp  ~/.config/picom/void.conf  ~/.config/picom/picom.c
 bspwm_theme_set_hell()  { sh ~/.config/bspwm/themes/hell.sh; }
 bspwm_theme_set_round()  { sh ~/.config/bspwm/themes/round.sh; }
 bspwm_theme_set_glass()  { sh ~/.config/bspwm/themes/glass.sh; }
+bspwm_theme_set_purple()  { sh ~/.config/bspwm/themes/silent.sh; }
 bspwm_theme_set_autumn()  { sh ~/.config/bspwm/themes/autumn.sh; }
 bspwm_theme_set_bright()  { sh ~/.config/bspwm/themes/glass.sh; }
 bspwm_theme_set_space()  { sh ~/.config/bspwm/themes/space.sh; }
@@ -141,6 +144,7 @@ bspwm_theme_set_void()  { sh ~/.config/bspwm/themes/void.sh; }
 lemonbar_theme_set_hell() {   kill_lmbr_tail_F lemonbar -f SourceCodePro-Medium -b -B '#05080c' -F '#aa1122'; }
 lemonbar_theme_set_round() {  kill_lmbr_tail_F lemonbar -f SourceCodePro-Medium -b -B '#112229' -F '#aa9988'; }
 lemonbar_theme_set_glass() {  kill_lmbr_tail_F lemonbar -f SourceCodePro-Medium -b -B '#112229' -F '#aa9988'; }
+lemonbar_theme_set_purple() { kill_lmbr_tail_F lemonbar -f SourceCodePro-Medium -b -B '#110611' -F '#44bb66'; }
 lemonbar_theme_set_autumn() { kill_lmbr_tail_F lemonbar -f SourceCodePro-Medium -b; }
 lemonbar_theme_set_bright() { kill_lmbr_tail_F lemonbar -f SourceCodePro-Medium -b -B '#05080c' -F '#aaaabb'; }
 lemonbar_theme_set_space() {  kill_lmbr_tail_F lemonbar -f SourceCodePro-Medium -b -B '#05080c' -F '#aaaabb'; }
@@ -152,6 +156,7 @@ kill_lmbr_tail_F() { killall lemonbar; tail -F /tmp/lemonbar | "$@"; }
 wallpaper_theme_set_hell() { feh --bg-fill ~/wp/rebecca-jansen.jpg; }
 wallpaper_theme_set_round() { feh --bg-scale ~/wp/gradient-blue-pink.jpg; }
 wallpaper_theme_set_glass() { feh --bg-scale ~/wp/abstract-glass-rings-blue.jpg; }
+wallpaper_theme_set_purple() { feh --bg-scale ~/wp/03-rails.jpg; }
 wallpaper_theme_set_autumn() { feh --bg-scale ~/wp/orange-leaves-autumn.jpg; }
 wallpaper_theme_set_bright() { feh --bg-scale ~/wp/flowers-space-yellow-dark.png; }
 wallpaper_theme_set_space() { feh --bg-scale ~/wp/flowers-space-yellow-dark.png; }
@@ -160,14 +165,29 @@ wallpaper_theme_set_void() { feh --bg-scale ~/wp/gradient-liquid-glass.jpg; }
 terminal_theme_set_hell() { alc-terminal --set-default-theme ~/.config/alacritty/colors/al_hell.conf; }
 terminal_theme_set_round() { alc-terminal --set-default-theme ~/.config/alacritty/colors/SeaShells.conf; }
 terminal_theme_set_glass() { alc-terminal --set-default-theme ~/.config/alacritty/colors/Blazer.conf; }
+terminal_theme_set_purple() { alc-terminal --set-default-theme ~/.config/alacritty/colors/Belafonte_Night.conf; }
 terminal_theme_set_autumn() { alc-terminal --set-default-theme ~/.config/alacritty/colors/FunForrest.conf; }
 terminal_theme_set_bright() { alc-terminal --set-default-theme ~/.config/alacritty/colors/3024_Day.conf; }
 terminal_theme_set_space() { alc-terminal --set-default-theme ~/.config/alacritty/colors/Glacier.conf; }
 terminal_theme_set_void() { alc-terminal --set-default-theme ~/.config/alacritty/colors/3024_Day.conf; }
 
+# experimental
+terminal_theme_new_way()  { (cd ~/.config/alacritty && sh color.sh > /tmp/alalc && alc-terminal -d /tmp/alalc); }
+terminal_theme_print_new_way()  { (cd ~/.config/alacritty && sh color.sh); }
+terminal_theme_print_new_way_vim()  { in_vim 'with_red_env terminal_theme_print_new_way'; }
+with_purple_env() { with_purple_basics_env with_purple_colors_env with_purple_bright_env "$@"; }
+with_purple_basics_env() { BG=20111a FG=958b83 "$@"; }
+with_purple_colors_env() { D=20111a R=bd100d G=858062 Y=e9a448 B=416978 M=96522b C=98999c W=958b83 "$@"; }
+with_purple_bright_env() { DB=5e5252 RB=bd100d GB=858062 YB=e9a448 BB=416978 MB=96522b CB=98999c WB=d4ccb9 "$@"; }
+dmenu_flags_env() { printf 'dmenu-legitimate -nf "%s" -nb "%s" -sf "%s" -sb "%s" "$@"\n' "#$FG" "#$BG" "#$G" "#$D"; }
+dmenu_flags_env_vim() { in_vim 'with_purple_env dmenu_flags_env'; }
+dmenu_theme_set_env() { printf "%s\n" '#!/bin/sh' "$(dmenu_flags_env)" > ~/.local/bin/dmenu-wrapper.sh; }
+x_theme_set_purple() { with_purple_env terminal_theme_new_way; with_purple_env dmenu_theme_set_env; }
+
 dmenu_theme_set_hell() { printf "%s\n" '#!/bin/sh' 'dmenu-legitimate -c red "$@"' > ~/.local/bin/dmenu-wrapper.sh; }
 dmenu_theme_set_round() { printf "%s\n" '#!/bin/sh' 'dmenu-legitimate -c blue "$@"' > ~/.local/bin/dmenu-wrapper.sh; }
 dmenu_theme_set_glass() { printf "%s\n" '#!/bin/sh' 'dmenu-legitimate -c blue "$@"' > ~/.local/bin/dmenu-wrapper.sh; }
+dmenu_theme_set_purple() { printf "%s\n" '#!/bin/sh' 'dmenu-legitimate -c red "$@"' > ~/.local/bin/dmenu-wrapper.sh; }
 dmenu_theme_set_autumn() { printf "%s\n" '#!/bin/sh' 'dmenu-legitimate -c blue "$@"' > ~/.local/bin/dmenu-wrapper.sh; }
 dmenu_theme_set_bright() { printf "%s\n" '#!/bin/sh' 'dmenu-legitimate -c black "$@"' > ~/.local/bin/dmenu-wrapper.sh; }
 dmenu_theme_set_space() { printf "%s\n" '#!/bin/sh' 'dmenu-legitimate -c black "$@"' > ~/.local/bin/dmenu-wrapper.sh; }
@@ -185,14 +205,13 @@ screen_brightness_set_9() { xrandr --output eDP-1 --brightness 0.9; }
 screen_brightness_set_normal()  { xrandr  --output eDP-1  --brightness 0.7; }
 screen_brightness_set_custom()  { xrandr  --output eDP-1  --brightness "$(:|dmenu)"; }
 
-goodones_open_under() { ( cd ~/g1/base/not-memes/ && mpv --pause "$(find . -type d | dmenu)" ); }
-goodones_open_tagged() { ( cd ~/g1/tag/ && mpv --pause "$(ls | dmenu)"/* ); }
-goodones_open_newest()   { find ~/g1/base -type f -printf "%B@\t%p\n"|sort -r|cut -f2|xargs mpv --pause; }
-goodones_open_accessed() { find ~/g1/base -type f -printf "%A@\t%p\n"|sort -r|cut -f2|xargs mpv --pause; }
-goodones_open_changed()  { find ~/g1/base -type f -printf "%C@\t%p\n"|sort -r|cut -f2|xargs mpv --pause; }
-goodones_open_shuffled() { find ~/g1/base -type f | shuf | xargs mpv --pause; } #g
-goodones_open_sorted()   { find ~/g1/base -type f | sort | xargs mpv --pause; }
-goodones_vim() { in_vim 'echo "mpv --no-terminal --pause"; find ~/g1/base -type f'; }
+goodones_open_under() { (cd ~/g1 && p="$(printf "%s\n" * */* | dmenu)" && mpv --pause "$p"); }
+goodones_open_newest()   { find ~/g1 -type f -printf "%B@\t%p\n"|sort -r|cut -f2|xargs mpv --pause; }
+goodones_open_accessed() { find ~/g1 -type f -printf "%A@\t%p\n"|sort -r|cut -f2|xargs mpv --pause; }
+goodones_open_changed()  { find ~/g1 -type f -printf "%C@\t%p\n"|sort -r|cut -f2|xargs mpv --pause; }
+goodones_open_shuffled() { find ~/g1 -type f | shuf | xargs mpv --pause; } #g
+goodones_open_sorted()   { find ~/g1 -type f | sort | xargs mpv --pause; }
+goodones_vim() { in_vim 'echo "mpv --no-terminal --pause"; find ~/g1 -type f'; }
 
 screenshot_take_region()   { eval "shotgun $(slop -f '-i %i -g %g') /tmp/screenshot.png"; } #w
 screenshot_take_fullscreen()   { sleep 0.2s && shotgun /tmp/screenshot.png; }
@@ -209,11 +228,11 @@ open_terminal() { alc-terminal; } #t
 open_terminal_below() { alc-terminal --below; }
 open_terminal_floating() { alc-terminal --float; }
 
-open_battery_widget() { alm-battery -c "$(head /sys/class/power_supply/BAT1/capacity)"; } #u
+open_battery_widget() { head /sys/class/power_supply/BAT1/capacity; alm-battery; } #u
 open_battery_widget_for() { alm-battery -t "$(:|dmenu)" -s 0.5; }
 open_battery_widget_longer() { alm-battery -t 3 -s 0.5; } #U
 
-open_clock_widget() { alm-clock; } #h
+open_clock_widget() { date; alm-clock; } #h
 open_clock_widget_for() { alm-clock -t "$(:|dmenu)"; }
 open_clock_widget_longer() { alm-clock -t 5; } #H
 
@@ -221,7 +240,9 @@ open_emacs() { emacs; } #em
 open_spotify() { spotify-launcher > /dev/null 2> /dev/null; }
 open_kdenlive() { kdenlive > /dev/null 2> /dev/null; }
 open_screenkey() { screenkey; }
+open_unclutter() { unclutter; }
 close_screenkey() { killall screenkey; }
+close_unclutter() { killall unclutter; }
 open_qutebrowser() { qutebrowser --loglevel critical; } #a
 open_last_recording() { mpv /tmp/rec.mkv; }
 open_zathura_in_downloads() { f="$(find ~/Downloads | dmenu)" && zathura "$f"; }
@@ -244,9 +265,7 @@ poweroff_in_5_minutes() { in_terminal 'sudo shutdown +5'; }
 poweroff_after_midnight() { in_terminal 'sudo shutdown 02:00'; }
 poweroff_reboot() { in_terminal 'sudo shutdown --reboot now'; }
 
-type_password_uni() { xdotool type --delay 30 "$(base64 -d ~/trust/passw/sdi1900048)"; } #zu
-type_password_test() { xdotool type --delay 30 "$(base64 -d ~/trust/passw/test)"; }
-type_password() { p=~/.local/share/al/type; xdotool type --delay 30 "$(base64 -d "$p/$(ls "$p"|dmenu)")"; } #zi
+type_password() { p=~/.local/share/al/type;c="$p/$(ls "$p"|dmenu)" && xdotool type --delay 30 "$(base64 -d "$c")"; } #zi
 
 open_webcam_floating() { webc_rule_sf; mpv av://v4l2:/dev/video0 --vf=lavfi=hflip --profile=low-latency --untimed; }
 open_webcam_tiled() { webc_rule_tiled; mpv av://v4l2:/dev/video0 --vf=lavfi=hflip --profile=low-latency --untimed; }

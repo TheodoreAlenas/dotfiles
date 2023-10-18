@@ -8,7 +8,10 @@ return require('packer').startup(function(use)
   use 'gpanders/editorconfig.nvim'
   use 'norcalli/nvim-colorizer.lua'
   use 'lewis6991/gitsigns.nvim'
-
+  use {
+      'nvim-telescope/telescope.nvim', tag = '0.1.x',
+      requires = { {'nvim-lua/plenary.nvim'} }
+  }
   use {
     'VonHeikemen/lsp-zero.nvim',
     requires = {

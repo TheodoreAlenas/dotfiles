@@ -1,5 +1,6 @@
 require "aleena.options"
-require "aleena.packer"
+require "aleena.maps"
 require "aleena.colors"
 
-require "aleena.maps"
+require "aleena.packer"
+require "aleena.telescope"

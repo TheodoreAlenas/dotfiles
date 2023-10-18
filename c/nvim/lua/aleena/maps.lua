@@ -4,8 +4,7 @@ vim.cmd[[abbreviate dn deez nuts]]
 vim.cmd[[abbreviate shec # shellcheck disable=SC2016]]
 
 function ToggleLineInfo()
-    local v = not vim.opt.number._value
-    vim.opt.number = v
+    local v = not vim.opt.cursorline._value
     vim.opt.cursorline = v
     vim.opt.cursorcolumn = v
 end

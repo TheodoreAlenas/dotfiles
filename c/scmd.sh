@@ -89,10 +89,10 @@ volume_set_8() { pacmd set-sink-volume 0 48000; } #m8
 volume_set_9() { pacmd set-sink-volume 0 54000; } #m9
 volume_set_custom() { pacmd set-sink-volume 0 "$(:|dmenu)"; }
 
-wallpaper_set_scale() { bspc_float; feh --bg-scale "$(find ~/wp/ -type f -print0 | xargs -0 sxiv -ot)"; }
-wallpaper_set_fill()  { bspc_float; feh --bg-fill  "$(find ~/wp/ -type f -print0 | xargs -0 sxiv -ot)"; }
-wallpaper_set_max()   { bspc_float; feh --bg-max   "$(find ~/wp/ -type f -print0 | xargs -0 sxiv -ot)"; }
-wallpaper_set_tile()  { bspc_float; feh --bg-tile  "$(find ~/wp/ -type f -print0 | xargs -0 sxiv -ot)"; }
+wallpaper_set_scale() { bspc_float; feh --bg-scale "$(find ~/p/i-wp/ -type f -print0 | xargs -0 sxiv -ot)"; }
+wallpaper_set_fill()  { bspc_float; feh --bg-fill  "$(find ~/p/i-wp/ -type f -print0 | xargs -0 sxiv -ot)"; }
+wallpaper_set_max()   { bspc_float; feh --bg-max   "$(find ~/p/i-wp/ -type f -print0 | xargs -0 sxiv -ot)"; }
+wallpaper_set_tile()  { bspc_float; feh --bg-tile  "$(find ~/p/i-wp/ -type f -print0 | xargs -0 sxiv -ot)"; }
 
 bspc_float() { bspc rule --add "${1:-"*:*:*"}" --one-shot state=floating; }
 
@@ -153,14 +153,14 @@ lemonbar_theme_set_void() {   kill_lmbr_tail_F lemonbar -f SourceCodePro-Medium 
 lemonbar_theme_set_large() {  kill_lmbr_tail_F lemonbar -f "Source Code Pro-18" -b -B '#112229' -F '#aa9988'; }
 kill_lmbr_tail_F() { killall lemonbar; tail -F /tmp/lemonbar | "$@"; }
 
-wallpaper_theme_set_hell() { feh --bg-fill ~/wp/rebecca-jansen.jpg; }
-wallpaper_theme_set_round() { feh --bg-scale ~/wp/gradient-blue-pink.jpg; }
-wallpaper_theme_set_glass() { feh --bg-scale ~/wp/abstract-glass-rings-blue.jpg; }
-wallpaper_theme_set_purple() { feh --bg-scale ~/wp/03-rails.jpg; }
-wallpaper_theme_set_autumn() { feh --bg-scale ~/wp/orange-leaves-autumn.jpg; }
-wallpaper_theme_set_bright() { feh --bg-scale ~/wp/flowers-space-yellow-dark.png; }
-wallpaper_theme_set_space() { feh --bg-scale ~/wp/flowers-space-yellow-dark.png; }
-wallpaper_theme_set_void() { feh --bg-scale ~/wp/gradient-liquid-glass.jpg; }
+wallpaper_theme_set_hell() { feh --bg-fill ~/p/i-wp/rebecca-jansen.jpg; }
+wallpaper_theme_set_round() { feh --bg-scale ~/p/i-wp/gradient-blue-pink.jpg; }
+wallpaper_theme_set_glass() { feh --bg-scale ~/p/i-wp/abstract-glass-rings-blue.jpg; }
+wallpaper_theme_set_purple() { feh --bg-scale ~/p/i-wp/03-rails.jpg; }
+wallpaper_theme_set_autumn() { feh --bg-scale ~/p/i-wp/orange-leaves-autumn.jpg; }
+wallpaper_theme_set_bright() { feh --bg-scale ~/p/i-wp/flowers-space-yellow-dark.png; }
+wallpaper_theme_set_space() { feh --bg-scale ~/p/i-wp/flowers-space-yellow-dark.png; }
+wallpaper_theme_set_void() { feh --bg-scale ~/p/i-wp/gradient-liquid-glass.jpg; }
 
 terminal_theme_set_hell() { alc-terminal --set-default-theme ~/.config/alacritty/colors/al_hell.conf; }
 terminal_theme_set_round() { alc-terminal --set-default-theme ~/.config/alacritty/colors/SeaShells.conf; }
@@ -256,7 +256,7 @@ lemonbar_show_memory() { free|awk 'NR>1{t=int($2/200000);u=int($3/200000);printf
 lemonbar_input_vim() { in_terminal "vi '+$' /tmp/lemonbar"; }
 
 preview_figlet_vim() { in_vim 'for f in /usr/share/figlet/fonts/*; do echo "$f"; figlet -f "$f" Figlet; done'; }
-copy_glyph_or_emoji() { printf %s "$(dmenu < ~/art/glyphs | cut -d' ' -f1)" | xclip -in -sel clipboard; }
+copy_glyph_or_emoji() { printf %s "$(dmenu < ~/p/art/glyphs | cut -d' ' -f1)" | xclip -in -sel clipboard; }
 
 reset_wifi_soft() { nmcli device connect wlo1; } #er
 reset_wifi_hard() { nmcli radio wifi off && nmcli radio wifi on; echo "done"; }

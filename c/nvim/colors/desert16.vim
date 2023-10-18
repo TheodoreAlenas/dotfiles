@@ -77,9 +77,9 @@ hi SpellBad ctermfg=darkred ctermbg=darkblue cterm=reverse
 hi SpellCap ctermfg=darkgreen ctermbg=grey cterm=reverse
 hi SpellLocal ctermfg=darkblue ctermbg=NONE cterm=reverse
 hi SpellRare ctermfg=darkyellow ctermbg=NONE cterm=reverse
-hi Comment ctermfg=darkcyan ctermbg=NONE cterm=bold
-hi Identifier ctermfg=darkgreen ctermbg=NONE cterm=NONE
-hi Statement ctermfg=darkblue ctermbg=NONE cterm=bold
+hi Comment ctermfg=darkred ctermbg=NONE cterm=bold
+hi Identifier ctermfg=darkcyan ctermbg=NONE cterm=NONE
+hi Statement ctermfg=darkgreen ctermbg=NONE cterm=bold
 hi Constant ctermfg=darkyellow ctermbg=NONE cterm=NONE
 hi PreProc ctermfg=darkred ctermbg=NONE cterm=NONE
 hi Type ctermfg=darkblue ctermbg=NONE cterm=bold

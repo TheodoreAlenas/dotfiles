@@ -43,7 +43,7 @@ font:
     y: 0
 
 window:
-  opacity: 0.95
+  opacity: 0.99
 
 # When true, bold text is drawn using the bright variant of colors.
 draw_bold_text_with_bright_colors: false

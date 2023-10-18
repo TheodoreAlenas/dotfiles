@@ -165,7 +165,7 @@ wallpaper_theme_set_void() { feh --bg-scale ~/p/i-wp/gradient-liquid-glass.jpg; 
 terminal_theme_set_hell() { alc-terminal --set-default-theme ~/.config/alacritty/colors/al_hell.conf; }
 terminal_theme_set_round() { alc-terminal --set-default-theme ~/.config/alacritty/colors/SeaShells.conf; }
 terminal_theme_set_glass() { alc-terminal --set-default-theme ~/.config/alacritty/colors/Blazer.conf; }
-terminal_theme_set_purple() { alc-terminal --set-default-theme ~/.config/alacritty/colors/Belafonte_Night.conf; }
+terminal_theme_set_purple() { alc-terminal --set-default-theme ~/.config/alacritty/colors/catppuccin-mocha.yml; }
 terminal_theme_set_autumn() { alc-terminal --set-default-theme ~/.config/alacritty/colors/FunForrest.conf; }
 terminal_theme_set_bright() { alc-terminal --set-default-theme ~/.config/alacritty/colors/3024_Day.conf; }
 terminal_theme_set_space() { alc-terminal --set-default-theme ~/.config/alacritty/colors/Glacier.conf; }

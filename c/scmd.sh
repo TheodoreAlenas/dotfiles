@@ -172,7 +172,9 @@ terminal_theme_set_bright() { cd ~/.config/alacritty/ && cat head.yml colors/CLR
 terminal_theme_set_space() { cd ~/.config/alacritty/ && cat head.yml colors/Glacier.conf          > alacritty.yml; }
 terminal_theme_set_void() { cd ~/.config/alacritty/ && cat head.yml colors/3024_Day.conf         > alacritty.yml; }
 
-dmenu_theme_set_hell() { printf "%s\n" '#!/bin/sh' 'dmenu-legitimate -c red "$@"' > ~/.local/bin/dmenu-wrapper.sh; }
+dm_wr_hell() { dmenu-legitimate -nf '#887766' -nb '#000000' -sf '#aaaaaa' -sb '#550000'; }
+dmenu_theme_set_hell() { printf '#!/bin/sh\n. %s&&dm_wr_hell "$@"' "$(this_file)" > ~/.local/bin/dmenu-wrapper.sh; }
+
 dmenu_theme_set_round() { printf "%s\n" '#!/bin/sh' 'dmenu-legitimate -c blue "$@"' > ~/.local/bin/dmenu-wrapper.sh; }
 dmenu_theme_set_glass() { printf "%s\n" '#!/bin/sh' 'dmenu-legitimate -c blue "$@"' > ~/.local/bin/dmenu-wrapper.sh; }
 dmenu_theme_set_purple() { printf "%s\n" '#!/bin/sh' 'dmenu-legitimate -c red "$@"' > ~/.local/bin/dmenu-wrapper.sh; }
@@ -274,7 +276,7 @@ scmd_awk2() { printf %s 'print(s); printf("\t. %s && scmd_with_bar_status %s\n\n
 scmd_find() { printf "%s\n" "$(grep "^$1(" "$(this_file)")"; }
 scmd_with_bar_status() { cline="$(scmd_find "$1")"; (echo; "$@" 2>&1) | scmd_bar_fmt "$cline" >> /tmp/lemonbar; }
 scmd_bar_fmt() { while read -r l; do scmd_bar_paint "$1" "$l"; done; }
-scmd_bar_paint() { printf "%s\n" "%{c}  $(printf %s "$1" | scmd_bar_sed)  %{R}$2%{R}"; }
+scmd_bar_paint() { printf "%s\n" "%{c}  $(printf %s "$1" | scmd_bar_sed) %{R} $2 %{R}"; }
 scmd_bar_sed() { sed 's/\(^[^(]*\)\([^{]*{\)\(.*\)\(}[^}]*$\)/\1%{F#666}\2%{F-}\3%{F#666}\4%{F-}/'; }
 scmd_give_bar_color_swap_fix() { echo "%{R}"; }
 scmd_give_bar_test_1234() { for i in 1 2 3 4; do sleep 1 && echo "$i"; done; }

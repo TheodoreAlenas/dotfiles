@@ -32,7 +32,7 @@ hi! link MessageWindow Pmenu
 hi! link PopupNotification Todo
 
 hi Normal ctermfg=NONE ctermbg=NONE cterm=NONE
-hi StatusLine ctermfg=darkblue ctermbg=NONE cterm=bold,reverse
+hi StatusLine ctermfg=darkblue ctermbg=NONE cterm=reverse
 hi StatusLineNC ctermfg=NONE ctermbg=NONE cterm=reverse
 hi StatusLineTerm ctermfg=NONE ctermbg=NONE cterm=bold,reverse
 hi StatusLineTermNC ctermfg=NONE ctermbg=NONE cterm=reverse

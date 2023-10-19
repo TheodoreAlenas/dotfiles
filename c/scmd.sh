@@ -143,9 +143,9 @@ bspwm_theme_set_space()  { sh ~/.config/bspwm/themes/space.sh; }
 bspwm_theme_set_void()  { sh ~/.config/bspwm/themes/void.sh; }
 
 lemonbar_theme_set_hell() {   kill_lmbr_tail_F lemonbar -f "Source Code Pro-14" -b -B '#05080c' -F '#aa1122'; }
-lemonbar_theme_set_round() {  kill_lmbr_tail_F lemonbar -f "Source Code Pro-14" -b -B '#112229' -F '#aa9988'; }
-lemonbar_theme_set_glass() {  kill_lmbr_tail_F lemonbar -f "Source Code Pro-14" -b -B '#112229' -F '#8899aa'; }
-lemonbar_theme_set_purple() { kill_lmbr_tail_F lemonbar -f "Source Code Pro-14" -b -B '#110611' -F '#44bb66'; }
+lemonbar_theme_set_round() {  kill_lmbr_tail_F lemonbar -f "Source Code Pro-14" -b -B '#08131a' -F '#1d4850'; }
+lemonbar_theme_set_glass() {  kill_lmbr_tail_F lemonbar -f "Source Code Pro-14" -b -B '#24283b' -F '#7aa2f7'; }
+lemonbar_theme_set_purple() { kill_lmbr_tail_F lemonbar -f "Source Code Pro-14" -b -B '#0e0c15' -F '#42a38c'; }
 lemonbar_theme_set_autumn() { kill_lmbr_tail_F lemonbar -f "Source Code Pro-14" -b -B '#05080c' -F '#aa1122'; }
 lemonbar_theme_set_bright() { kill_lmbr_tail_F lemonbar -f "Source Code Pro-14" -b -B '#05080c' -F '#aaaabb'; }
 lemonbar_theme_set_space() {  kill_lmbr_tail_F lemonbar -f "Source Code Pro-14" -b -B '#05080c' -F '#aaaabb'; }
@@ -172,12 +172,15 @@ terminal_theme_set_bright() { cd ~/.config/alacritty/ && cat head.yml colors/CLR
 terminal_theme_set_space() { cd ~/.config/alacritty/ && cat head.yml colors/Glacier.conf          > alacritty.yml; }
 terminal_theme_set_void() { cd ~/.config/alacritty/ && cat head.yml colors/3024_Day.conf         > alacritty.yml; }
 
+#awk '/foreground|background|black|blue/{print}' ~/.config/alacritty/colors/SeaShells.conf
 dm_wr_hell() { dmenu-legitimate -nf '#887766' -nb '#000000' -sf '#aaaaaa' -sb '#550000'; }
+dm_wr_round() { dmenu-legitimate -nf '#deb88d' -nb '#08131a' -sf '#deb88d' -sb '#1d4850'; }
+dm_wr_glass() { dmenu-legitimate -nf '#c0caf5' -nb '#24283b' -sf '#15161e' -sb '#7aa2f7'; }
+dm_wr_purple() { dmenu-legitimate -nf '#42a38c' -nb '#0e0c15' -sf '#cd751c' -sb '#0e0c15'; }
 dmenu_theme_set_hell() { printf '#!/bin/sh\n. %s&&dm_wr_hell "$@"' "$(this_file)" > ~/.local/bin/dmenu-wrapper.sh; }
-
-dmenu_theme_set_round() { printf "%s\n" '#!/bin/sh' 'dmenu-legitimate -c blue "$@"' > ~/.local/bin/dmenu-wrapper.sh; }
-dmenu_theme_set_glass() { printf "%s\n" '#!/bin/sh' 'dmenu-legitimate -c blue "$@"' > ~/.local/bin/dmenu-wrapper.sh; }
-dmenu_theme_set_purple() { printf "%s\n" '#!/bin/sh' 'dmenu-legitimate -c red "$@"' > ~/.local/bin/dmenu-wrapper.sh; }
+dmenu_theme_set_round() { printf '#!/bin/sh\n. %s&&dm_wr_round "$@"' "$(this_file)" > ~/.local/bin/dmenu-wrapper.sh; }
+dmenu_theme_set_glass() { printf '#!/bin/sh\n. %s&&dm_wr_glass "$@"' "$(this_file)" > ~/.local/bin/dmenu-wrapper.sh; }
+dmenu_theme_set_purple() { printf '#!/bin/sh\n. %s&&dm_wr_purple "$@"' "$(this_file)" > ~/.local/bin/dmenu-wrapper.sh; }
 dmenu_theme_set_autumn() { printf "%s\n" '#!/bin/sh' 'dmenu-legitimate -c blue "$@"' > ~/.local/bin/dmenu-wrapper.sh; }
 dmenu_theme_set_bright() { printf "%s\n" '#!/bin/sh' 'dmenu-legitimate -c black "$@"' > ~/.local/bin/dmenu-wrapper.sh; }
 dmenu_theme_set_space() { printf "%s\n" '#!/bin/sh' 'dmenu-legitimate -c black "$@"' > ~/.local/bin/dmenu-wrapper.sh; }
@@ -276,7 +279,7 @@ scmd_awk2() { printf %s 'print(s); printf("\t. %s && scmd_with_bar_status %s\n\n
 scmd_find() { printf "%s\n" "$(grep "^$1(" "$(this_file)")"; }
 scmd_with_bar_status() { cline="$(scmd_find "$1")"; (echo; "$@" 2>&1) | scmd_bar_fmt "$cline" >> /tmp/lemonbar; }
 scmd_bar_fmt() { while read -r l; do scmd_bar_paint "$1" "$l"; done; }
-scmd_bar_paint() { printf "%s\n" "%{c}  $(printf %s "$1" | scmd_bar_sed) %{R} $2 %{R}"; }
+scmd_bar_paint() { printf "%s\n" "%{c}  $(printf %s "$1" | scmd_bar_sed)  %{R}$2%{R}"; }
 scmd_bar_sed() { sed 's/\(^[^(]*\)\([^{]*{\)\(.*\)\(}[^}]*$\)/\1%{F#666}\2%{F-}\3%{F#666}\4%{F-}/'; }
 scmd_give_bar_color_swap_fix() { echo "%{R}"; }
 scmd_give_bar_test_1234() { for i in 1 2 3 4; do sleep 1 && echo "$i"; done; }

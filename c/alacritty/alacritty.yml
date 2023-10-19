@@ -1,3 +1,4 @@
+# License at the bottom
 # Font configuration (changes require restart)
 font:
   # The normal (roman) font face to use.
@@ -42,7 +43,7 @@ font:
     y: 0
 
 window:
-  opacity: 0.95
+  opacity: 0.99
 
 # When true, bold text is drawn using the bright variant of colors.
 draw_bold_text_with_bright_colors: false
@@ -50,37 +51,31 @@ draw_bold_text_with_bright_colors: false
 # Use custom cursor colors. If true, display the cursor in the cursor.foreground
 # and cursor.background colors, otherwise invert the colors of the cursor.
 custom_cursor_colors: false
-
-# Colors
 colors:
 
   # Default colors
   primary:
-    background: '0x0d1925'
-    foreground: '0xd9e5f1'
-
-  # Colors the cursor will use if `custom_cursor_colors` is true
-  cursor:
-    text: '0xd9e5f1'
-    #cursor: '0xd9e5f1'
+    background: '0x0e0c15'
+    foreground: '0xdbd0b9'
 
   # Normal colors
   normal:
-    black:   '0x000000'
-    red:     '0xb87979'
-    green:   '0x79b879'
-    yellow:  '0xb8b879'
-    blue:    '0x7979b8'
-    magenta: '0xb879b8'
-    cyan:    '0x79b8b8'
-    white:   '0xd9d9d9'
+    black:   '0x08002e'
+    red:     '0x64002c'
+    green:   '0x5d731a'
+    yellow:  '0xcd751c'
+    blue:    '0x1d6da1'
+    magenta: '0xb7077e'
+    cyan:    '0x42a38c'
+    white:   '0xf3e0b8'
+
   # Bright colors
   bright:
-    black:   '0x252525'
-    red:     '0xdabdbd'
-    green:   '0xbddabd'
-    yellow:  '0xdadabd'
-    blue:    '0xbdbdda'
-    magenta: '0xdabdda'
-    cyan:    '0xbddada'
-    white:   '0xffffff'
+    black:   '0x331d4c'
+    red:     '0xcf2062'
+    green:   '0xb3ce58'
+    yellow:  '0xfac357'
+    blue:    '0x40a4cf'
+    magenta: '0xf02aae'
+    cyan:    '0x62caa8'
+    white:   '0xfff5db'

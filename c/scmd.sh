@@ -96,20 +96,21 @@ wallpaper_set_tile()  { bspc_float; feh --bg-tile  "$(find ~/p/i-wp/ -type f -pr
 
 bspc_float() { bspc rule --add "${1:-"*:*:*"}" --one-shot state=floating; }
 
-terminal_set_opacity()     { sed -i "s/\bopacity:.*/opacity: $(:|dmenu)/" "$(alc-terminal --get-config)"; }
-terminal_set_opacity_0()   { sed -i "s/\bopacity:.*/opacity: 0.0/"  "$(alc-terminal --get-config)"; }
-terminal_set_opacity_10()  { sed -i "s/\bopacity:.*/opacity: 0.1/"  "$(alc-terminal --get-config)"; }
-terminal_set_opacity_20()  { sed -i "s/\bopacity:.*/opacity: 0.2/"  "$(alc-terminal --get-config)"; }
-terminal_set_opacity_50()  { sed -i "s/\bopacity:.*/opacity: 0.5/"  "$(alc-terminal --get-config)"; }
-terminal_set_opacity_60()  { sed -i "s/\bopacity:.*/opacity: 0.6/"  "$(alc-terminal --get-config)"; }
-terminal_set_opacity_70()  { sed -i "s/\bopacity:.*/opacity: 0.7/"  "$(alc-terminal --get-config)"; }
-terminal_set_opacity_80()  { sed -i "s/\bopacity:.*/opacity: 0.8/"  "$(alc-terminal --get-config)"; }
-terminal_set_opacity_90()  { sed -i "s/\bopacity:.*/opacity: 0.9/"  "$(alc-terminal --get-config)"; }
-terminal_set_opacity_95()  { sed -i "s/\bopacity:.*/opacity: 0.95/" "$(alc-terminal --get-config)"; }
-terminal_set_opacity_100() { sed -i "s/\bopacity:.*/opacity: 1.0/"  "$(alc-terminal --get-config)"; }
+terminal_set_opacity()     { sed -i "s/\bopacity:.*/opacity: $(:|dmenu)/" ~/.config/alacritty/alacritty.yml; }
+terminal_set_opacity_0()   { sed -i "s/\bopacity:.*/opacity: 0.0/"  ~/.config/alacritty/alacritty.yml; }
+terminal_set_opacity_10()  { sed -i "s/\bopacity:.*/opacity: 0.1/"  ~/.config/alacritty/alacritty.yml; }
+terminal_set_opacity_20()  { sed -i "s/\bopacity:.*/opacity: 0.2/"  ~/.config/alacritty/alacritty.yml; }
+terminal_set_opacity_50()  { sed -i "s/\bopacity:.*/opacity: 0.5/"  ~/.config/alacritty/alacritty.yml; }
+terminal_set_opacity_60()  { sed -i "s/\bopacity:.*/opacity: 0.6/"  ~/.config/alacritty/alacritty.yml; }
+terminal_set_opacity_70()  { sed -i "s/\bopacity:.*/opacity: 0.7/"  ~/.config/alacritty/alacritty.yml; }
+terminal_set_opacity_80()  { sed -i "s/\bopacity:.*/opacity: 0.8/"  ~/.config/alacritty/alacritty.yml; }
+terminal_set_opacity_90()  { sed -i "s/\bopacity:.*/opacity: 0.9/"  ~/.config/alacritty/alacritty.yml; }
+terminal_set_opacity_95()  { sed -i "s/\bopacity:.*/opacity: 0.95/" ~/.config/alacritty/alacritty.yml; }
+terminal_set_opacity_100() { sed -i "s/\bopacity:.*/opacity: 1.0/"  ~/.config/alacritty/alacritty.yml; }
 
-terminal_theme_set() { alc-terminal --dock -e alc-terminal --preview-themes "$(bspc query -N -n)"; } #v
-terminal_theme_unset() { alc-terminal --unset-theme "$(bspc query -N -n)"; } #V
+terminal_theme_set() { term_rule_dock; a=alacritty; cd ~/.config/$a/ && $a -e sh -c "$(term_fzf_prvw_cat)"; } #v
+term_rule_dock() { bspc rule --add '*:*:*' --one-shot state=floating -g 1900x500+10+500; }
+term_fzf_prvw_cat() { printf %s "ls colors/ | fzf --preview 'cat head.yml colors/{} > alacritty.yml'"; }
 
 global_theme_set_hell()  { global_theme_set hell; }
 global_theme_set_round()  { global_theme_set round; }
@@ -145,7 +146,7 @@ lemonbar_theme_set_hell() {   kill_lmbr_tail_F lemonbar -f SourceCodePro-Medium 
 lemonbar_theme_set_round() {  kill_lmbr_tail_F lemonbar -f SourceCodePro-Medium -b -B '#112229' -F '#aa9988'; }
 lemonbar_theme_set_glass() {  kill_lmbr_tail_F lemonbar -f SourceCodePro-Medium -b -B '#112229' -F '#aa9988'; }
 lemonbar_theme_set_purple() { kill_lmbr_tail_F lemonbar -f SourceCodePro-Medium -b -B '#110611' -F '#44bb66'; }
-lemonbar_theme_set_autumn() { kill_lmbr_tail_F lemonbar -f SourceCodePro-Medium -b; }
+lemonbar_theme_set_autumn() { kill_lmbr_tail_F lemonbar -f SourceCodePro-Medium -b -B '#05080c' -F '#aa1122'; }
 lemonbar_theme_set_bright() { kill_lmbr_tail_F lemonbar -f SourceCodePro-Medium -b -B '#05080c' -F '#aaaabb'; }
 lemonbar_theme_set_space() {  kill_lmbr_tail_F lemonbar -f SourceCodePro-Medium -b -B '#05080c' -F '#aaaabb'; }
 lemonbar_theme_set_void() {   kill_lmbr_tail_F lemonbar -f SourceCodePro-Medium -b -B '#05080c' -F '#aaaabb'; }
@@ -162,27 +163,14 @@ wallpaper_theme_set_bright() { feh --bg-scale ~/p/i-wp/flowers-space-yellow-dark
 wallpaper_theme_set_space() { feh --bg-scale ~/p/i-wp/flowers-space-yellow-dark.png; }
 wallpaper_theme_set_void() { feh --bg-scale ~/p/i-wp/gradient-liquid-glass.jpg; }
 
-terminal_theme_set_hell() { alc-terminal --set-default-theme ~/.config/alacritty/colors/al_hell.conf; }
-terminal_theme_set_round() { alc-terminal --set-default-theme ~/.config/alacritty/colors/SeaShells.conf; }
-terminal_theme_set_glass() { alc-terminal --set-default-theme ~/.config/alacritty/colors/Blazer.conf; }
-terminal_theme_set_purple() { alc-terminal --set-default-theme ~/.config/alacritty/colors/catppuccin-mocha.yml; }
-terminal_theme_set_autumn() { alc-terminal --set-default-theme ~/.config/alacritty/colors/FunForrest.conf; }
-terminal_theme_set_bright() { alc-terminal --set-default-theme ~/.config/alacritty/colors/3024_Day.conf; }
-terminal_theme_set_space() { alc-terminal --set-default-theme ~/.config/alacritty/colors/Glacier.conf; }
-terminal_theme_set_void() { alc-terminal --set-default-theme ~/.config/alacritty/colors/3024_Day.conf; }
-
-# experimental
-terminal_theme_new_way()  { (cd ~/.config/alacritty && sh color.sh > /tmp/alalc && alc-terminal -d /tmp/alalc); }
-terminal_theme_print_new_way()  { (cd ~/.config/alacritty && sh color.sh); }
-terminal_theme_print_new_way_vim()  { in_vim 'with_red_env terminal_theme_print_new_way'; }
-with_purple_env() { with_purple_basics_env with_purple_colors_env with_purple_bright_env "$@"; }
-with_purple_basics_env() { BG=20111a FG=958b83 "$@"; }
-with_purple_colors_env() { D=20111a R=bd100d G=858062 Y=e9a448 B=416978 M=96522b C=98999c W=958b83 "$@"; }
-with_purple_bright_env() { DB=5e5252 RB=bd100d GB=858062 YB=e9a448 BB=416978 MB=96522b CB=98999c WB=d4ccb9 "$@"; }
-dmenu_flags_env() { printf 'dmenu-legitimate -nf "%s" -nb "%s" -sf "%s" -sb "%s" "$@"\n' "#$FG" "#$BG" "#$G" "#$D"; }
-dmenu_flags_env_vim() { in_vim 'with_purple_env dmenu_flags_env'; }
-dmenu_theme_set_env() { printf "%s\n" '#!/bin/sh' "$(dmenu_flags_env)" > ~/.local/bin/dmenu-wrapper.sh; }
-x_theme_set_purple() { with_purple_env terminal_theme_new_way; with_purple_env dmenu_theme_set_env; }
+terminal_theme_set_hell() { cd ~/.config/alacritty/ && cat head.yml colors/al_hell.conf          > alacritty.yml; }
+terminal_theme_set_round() { cd ~/.config/alacritty/ && cat head.yml colors/SeaShells.conf        > alacritty.yml; }
+terminal_theme_set_glass() { cd ~/.config/alacritty/ && cat head.yml colors/tokyo-night-storm.yml > alacritty.yml; }
+terminal_theme_set_purple() { cd ~/.config/alacritty/ && cat head.yml colors/Floraverse.conf      > alacritty.yml; }
+terminal_theme_set_autumn() { cd ~/.config/alacritty/ && cat head.yml colors/FunForrest.conf      > alacritty.yml; }
+terminal_theme_set_bright() { cd ~/.config/alacritty/ && cat head.yml colors/CLRS.conf            > alacritty.yml; }
+terminal_theme_set_space() { cd ~/.config/alacritty/ && cat head.yml colors/Glacier.conf          > alacritty.yml; }
+terminal_theme_set_void() { cd ~/.config/alacritty/ && cat head.yml colors/3024_Day.conf         > alacritty.yml; }
 
 dmenu_theme_set_hell() { printf "%s\n" '#!/bin/sh' 'dmenu-legitimate -c red "$@"' > ~/.local/bin/dmenu-wrapper.sh; }
 dmenu_theme_set_round() { printf "%s\n" '#!/bin/sh' 'dmenu-legitimate -c blue "$@"' > ~/.local/bin/dmenu-wrapper.sh; }
@@ -224,9 +212,7 @@ screenshot_view()   { sxiv /tmp/screenshot.png; }
 
 clipboard_youtube_channel() { printf %s "https://www.youtube.com/@theodorealenas3171"|xclip -selection clipboard -in; }
 
-open_terminal() { alc-terminal; } #t
-open_terminal_below() { alc-terminal --below; }
-open_terminal_floating() { alc-terminal --float; }
+open_terminal() { alacritty; } #t
 
 open_battery_widget() { head /sys/class/power_supply/BAT1/capacity; alm-battery; } #u
 open_battery_widget_for() { alm-battery -t "$(:|dmenu)" -s 0.5; }
@@ -288,13 +274,13 @@ scmd_awk2() { printf %s 'print(s); printf("\t. %s && scmd_with_bar_status %s\n\n
 scmd_find() { printf "%s\n" "$(grep "^$1(" "$(this_file)")"; }
 scmd_with_bar_status() { cline="$(scmd_find "$1")"; (echo; "$@" 2>&1) | scmd_bar_fmt "$cline" >> /tmp/lemonbar; }
 scmd_bar_fmt() { while read -r l; do scmd_bar_paint "$1" "$l"; done; }
-scmd_bar_paint() { printf "%s\n" "%{c}  $(printf %s "$1" | scmd_bar_sed)  %{B#aa6}%{F#000}$2%{B-}%{F-}"; }
-scmd_bar_sed() { sed 's/\(^[^(]*\)\([^{]*{\)\(.*\)\(}[^}]*$\)/%{F#6a6}\1%{F#666}\2%{F#88e}\3%{F#666}\4%{F-}/'; }
+scmd_bar_paint() { printf "%s\n" "%{c}  $(printf %s "$1" | scmd_bar_sed)  %{R}$2%{R}"; }
+scmd_bar_sed() { sed 's/\(^[^(]*\)\([^{]*{\)\(.*\)\(}[^}]*$\)/\1%{F#666}\2%{F-}\3%{F#666}\4%{F-}/'; }
 scmd_give_bar_color_swap_fix() { echo "%{R}"; }
 scmd_give_bar_test_1234() { for i in 1 2 3 4; do sleep 1 && echo "$i"; done; }
 
-in_vim() { alc-terminal --dock -e sh -c ". $(this_file) && $1 | vim -"; }
-in_terminal() { alc-terminal --dock -e sh -c "$1"; }
+in_vim() { term_rule_dock && alacritty -e sh -c ". $(this_file) && $1 | vim -"; }
+in_terminal() { term_rule_dock && alacritty -e sh -c "$1"; }
 this_file() { echo ~/.config/scmd.sh; }
 
 # Copyright (c) 2023 Dimakopoulos Theodoros

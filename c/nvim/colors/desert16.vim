@@ -31,21 +31,21 @@ hi! link EndOfBuffer NonText
 hi! link MessageWindow Pmenu
 hi! link PopupNotification Todo
 
-hi Normal ctermfg=white ctermbg=NONE cterm=NONE
+hi Normal ctermfg=NONE ctermbg=NONE cterm=NONE
 hi StatusLine ctermfg=darkblue ctermbg=NONE cterm=bold,reverse
-hi StatusLineNC ctermfg=white ctermbg=NONE cterm=reverse
-hi StatusLineTerm ctermfg=white ctermbg=NONE cterm=bold,reverse
-hi StatusLineTermNC ctermfg=white ctermbg=NONE cterm=reverse
-hi VertSplit ctermfg=white ctermbg=NONE cterm=reverse
-hi Pmenu ctermfg=white ctermbg=black cterm=NONE
-hi PmenuSel ctermfg=white ctermbg=grey cterm=NONE
+hi StatusLineNC ctermfg=NONE ctermbg=NONE cterm=reverse
+hi StatusLineTerm ctermfg=NONE ctermbg=NONE cterm=bold,reverse
+hi StatusLineTermNC ctermfg=NONE ctermbg=NONE cterm=reverse
+hi VertSplit ctermfg=NONE ctermbg=NONE cterm=reverse
+hi Pmenu ctermfg=NONE ctermbg=black cterm=NONE
+hi PmenuSel ctermfg=NONE ctermbg=grey cterm=NONE
 hi PmenuSbar ctermfg=NONE ctermbg=NONE cterm=NONE
 hi PmenuThumb ctermfg=NONE ctermbg=grey cterm=NONE
 hi TabLine ctermfg=black ctermbg=grey cterm=NONE
 hi TabLineFill ctermfg=NONE ctermbg=grey cterm=NONE
-hi TabLineSel ctermfg=white ctermbg=NONE cterm=NONE
+hi TabLineSel ctermfg=NONE ctermbg=NONE cterm=NONE
 hi ToolbarLine ctermfg=NONE ctermbg=NONE cterm=NONE
-hi ToolbarButton ctermfg=white ctermbg=NONE cterm=bold,reverse
+hi ToolbarButton ctermfg=NONE ctermbg=NONE cterm=bold,reverse
 hi NonText ctermfg=darkgreen ctermbg=NONE cterm=bold
 hi SpecialKey ctermfg=darkyellow ctermbg=NONE cterm=NONE
 hi Folded ctermfg=darkgreen ctermbg=NONE cterm=NONE

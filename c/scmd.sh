@@ -142,14 +142,14 @@ bspwm_theme_set_bright()  { sh ~/.config/bspwm/themes/glass.sh; }
 bspwm_theme_set_space()  { sh ~/.config/bspwm/themes/space.sh; }
 bspwm_theme_set_void()  { sh ~/.config/bspwm/themes/void.sh; }
 
-lemonbar_theme_set_hell() {   kill_lmbr_tail_F lemonbar -f SourceCodePro-Medium -b -B '#05080c' -F '#aa1122'; }
-lemonbar_theme_set_round() {  kill_lmbr_tail_F lemonbar -f SourceCodePro-Medium -b -B '#112229' -F '#aa9988'; }
-lemonbar_theme_set_glass() {  kill_lmbr_tail_F lemonbar -f SourceCodePro-Medium -b -B '#112229' -F '#aa9988'; }
-lemonbar_theme_set_purple() { kill_lmbr_tail_F lemonbar -f SourceCodePro-Medium -b -B '#110611' -F '#44bb66'; }
-lemonbar_theme_set_autumn() { kill_lmbr_tail_F lemonbar -f SourceCodePro-Medium -b -B '#05080c' -F '#aa1122'; }
-lemonbar_theme_set_bright() { kill_lmbr_tail_F lemonbar -f SourceCodePro-Medium -b -B '#05080c' -F '#aaaabb'; }
-lemonbar_theme_set_space() {  kill_lmbr_tail_F lemonbar -f SourceCodePro-Medium -b -B '#05080c' -F '#aaaabb'; }
-lemonbar_theme_set_void() {   kill_lmbr_tail_F lemonbar -f SourceCodePro-Medium -b -B '#05080c' -F '#aaaabb'; }
+lemonbar_theme_set_hell() {   kill_lmbr_tail_F lemonbar -f "Source Code Pro-14" -b -B '#05080c' -F '#aa1122'; }
+lemonbar_theme_set_round() {  kill_lmbr_tail_F lemonbar -f "Source Code Pro-14" -b -B '#112229' -F '#aa9988'; }
+lemonbar_theme_set_glass() {  kill_lmbr_tail_F lemonbar -f "Source Code Pro-14" -b -B '#112229' -F '#8899aa'; }
+lemonbar_theme_set_purple() { kill_lmbr_tail_F lemonbar -f "Source Code Pro-14" -b -B '#110611' -F '#44bb66'; }
+lemonbar_theme_set_autumn() { kill_lmbr_tail_F lemonbar -f "Source Code Pro-14" -b -B '#05080c' -F '#aa1122'; }
+lemonbar_theme_set_bright() { kill_lmbr_tail_F lemonbar -f "Source Code Pro-14" -b -B '#05080c' -F '#aaaabb'; }
+lemonbar_theme_set_space() {  kill_lmbr_tail_F lemonbar -f "Source Code Pro-14" -b -B '#05080c' -F '#aaaabb'; }
+lemonbar_theme_set_void() {   kill_lmbr_tail_F lemonbar -f "Source Code Pro-14" -b -B '#05080c' -F '#aaaabb'; }
 
 lemonbar_theme_set_large() {  kill_lmbr_tail_F lemonbar -f "Source Code Pro-18" -b -B '#112229' -F '#aa9988'; }
 kill_lmbr_tail_F() { killall lemonbar; tail -F /tmp/lemonbar | "$@"; }

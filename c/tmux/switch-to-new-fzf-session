@@ -1,0 +1,12 @@
+#!/bin/sh
+
+main() {
+    fzf_pvw="eza -l --color=always {}"
+    cd ~/p/                              || return 1
+    p="$(ls | fzf --preview "$fzf_pvw")" || return 0
+    cd "$p"                              || return 1
+    tmux new-session -d -s "$p"          || return 1
+    tmux switch-client -t "$p"           || return 1
+}
+
+main "$@"

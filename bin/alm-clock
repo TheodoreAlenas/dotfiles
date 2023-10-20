@@ -51,7 +51,7 @@ exact_hour = hour + minute/60
 
 # the window
 W = 800
-H = 1100
+H = 1000
 
 # the clock
 middle = H/2

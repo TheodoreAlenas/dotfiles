@@ -9,7 +9,7 @@ stay_alive_for = 0.6
 danger_level = 30
 label_pre_arg_parse = "DEFAULT"
 bolt_pre_arg_parse = "d"
-size = 0.7
+size = 0.6
 windowless_mode = False
 
 with open("/sys/class/power_supply/BAT1/capacity", 'r') as f:
@@ -94,8 +94,8 @@ from tkinter import Tk, Canvas
 
 
 # the window
-W = 600
-H = 1080
+W = 400
+H = 800
 
 # the battery
 x_off = W/2 * (1 - size)

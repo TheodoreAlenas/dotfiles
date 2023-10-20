@@ -208,7 +208,7 @@ goodones_vim() { in_vim 'echo "mpv --no-terminal --pause"; find ~/g1 -type f'; }
 
 screenshot_take_region()   { eval "shotgun $(slop -f '-i %i -g %g') /tmp/screenshot.png"; } #w
 screenshot_take_fullscreen()   { sleep 0.2s && shotgun /tmp/screenshot.png; }
-screenshot_take_fullscreen_1s()   { sleep 1s && shotgun /tmp/screenshot.png; }
+screenshot_take_fullscreen_1s()   { sleep 0.5s && echo and && sleep 0.5s && echo now && shotgun /tmp/screenshot.png; }
 screenshot_take_fullscreen_3s()   { sleep 3s && shotgun /tmp/screenshot.png; echo taken; }
 screenshot_take_fullscreen_now()   { shotgun /tmp/screenshot.png; }
 screenshot_take_fullscreen_delay()   { sleep "$(:|dmenu)" && shotgun /tmp/screenshot.png; }

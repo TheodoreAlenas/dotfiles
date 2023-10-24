@@ -101,9 +101,9 @@ H = 800
 x_off = W/2 * (1 - size)
 middle = H/2
 half_h = W - 2 * x_off
-line_w = 70 * size
+line_w = 50 * size
 rad_cut = 0.25 * line_w
-separator_w = 8
+separator_w = 4
 forced_show_label = False
 
 if label_pre_arg_parse == "DEFAULT":

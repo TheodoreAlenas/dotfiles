@@ -3,8 +3,10 @@
 fzf_pvw="eza -l --color=always {}"
 vim_lua='lua require "telescope.builtin".find_files()'
 vim_sh="nvim +'$vim_lua'"
-cd ~/p/                              || exit 1
+cd
 p="$(ls | fzf --preview "$fzf_pvw")" || exit 0
 cd "$p"                              || exit 1
-tmux new-session -d -s "$p" "$vim_sh"|| exit 1
+tmux new-session -d -s "$p"          || exit 1
 tmux switch-client -t "$p"           || exit 1
+sleep 0.1
+tmux send-keys -t "$p" "$vim_sh"     || exit 1

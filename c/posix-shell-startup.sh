@@ -25,7 +25,7 @@ br() {
 rec() {
   ffmpeg \
     -f x11grab -s 1920x1080 -i :0.0 \
-    -f alsa -itsoffset 0.3 -i hw:1 \
+    -f alsa -itsoffset 0.3 -i hw:1 -af "volume=0.4" \
 	-fs 2000M \
     "${1:-"$AL_RECORDING"}"
 }

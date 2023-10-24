@@ -15,11 +15,12 @@ for_each() { while read -r l; do "$@" "$l"; done; }
 win_info() { printf "%s: %s\n" "$1" "$(xdotool getwindowclassname "$1" getwindowname "$1" | tr '\n' ' ')"; }
 win_infos_vim() { in_vim "win_query | for_each win_info"; }
 
-window_opaque() { picom-trans --current "$(:|dmenu)"; }
 window_opaque_20() { picom-trans --current 20; }
 window_opaque_80() { picom-trans --current 80; }
 window_opaque_95() { picom-trans --current 95; }
+window_opaque_99() { picom-trans --current 99; }
 window_opaque_100() { picom-trans --current 100; }
+window_opaque() { picom-trans --current "$(:|dmenu)"; }
 
 window_properties_vim() { in_vim "xprop -id $(bspc query -N -n)"; }
 window_information_vim() { in_vim "xwininfo -id $(bspc query -N -n)"; }
@@ -89,10 +90,10 @@ volume_set_8() { pacmd set-sink-volume 0 48000; } #m8
 volume_set_9() { pacmd set-sink-volume 0 54000; } #m9
 volume_set_custom() { pacmd set-sink-volume 0 "$(:|dmenu)"; }
 
-wallpaper_set_scale() { bspc_float; feh --bg-scale "$(find ~/p/i-wp/ -type f -print0 | xargs -0 sxiv -ot)"; }
-wallpaper_set_fill()  { bspc_float; feh --bg-fill  "$(find ~/p/i-wp/ -type f -print0 | xargs -0 sxiv -ot)"; }
-wallpaper_set_max()   { bspc_float; feh --bg-max   "$(find ~/p/i-wp/ -type f -print0 | xargs -0 sxiv -ot)"; }
-wallpaper_set_tile()  { bspc_float; feh --bg-tile  "$(find ~/p/i-wp/ -type f -print0 | xargs -0 sxiv -ot)"; }
+wallpaper_set_scale() { bspc_float; feh --bg-scale "$(find ~/gwp/ -type f -print0 | xargs -0 sxiv -ot)"; }
+wallpaper_set_fill()  { bspc_float; feh --bg-fill  "$(find ~/gwp/ -type f -print0 | xargs -0 sxiv -ot)"; }
+wallpaper_set_max()   { bspc_float; feh --bg-max   "$(find ~/gwp/ -type f -print0 | xargs -0 sxiv -ot)"; }
+wallpaper_set_tile()  { bspc_float; feh --bg-tile  "$(find ~/gwp/ -type f -print0 | xargs -0 sxiv -ot)"; }
 
 bspc_float() { bspc rule --add "${1:-"*:*:*"}" --one-shot state=floating; }
 
@@ -154,14 +155,14 @@ lemonbar_theme_set_void() {   kill_lmbr_tail_F lemonbar -f "Source Code Pro-14" 
 lemonbar_theme_set_large() {  kill_lmbr_tail_F lemonbar -f "Source Code Pro-18" -b -B '#112229' -F '#aa9988'; }
 kill_lmbr_tail_F() { killall lemonbar; tail -F /tmp/lemonbar | "$@"; }
 
-wallpaper_theme_set_hell() { feh --bg-fill ~/p/i-wp/rebecca-jansen.jpg; }
-wallpaper_theme_set_round() { feh --bg-scale ~/p/i-wp/gradient-blue-pink.jpg; }
-wallpaper_theme_set_glass() { feh --bg-scale ~/p/i-wp/abstract-glass-rings-blue.jpg; }
-wallpaper_theme_set_purple() { feh --bg-scale ~/p/i-wp/03-rails.jpg; }
-wallpaper_theme_set_autumn() { feh --bg-scale ~/p/i-wp/orange-leaves-autumn.jpg; }
-wallpaper_theme_set_bright() { feh --bg-scale ~/p/i-wp/flowers-space-yellow-dark.png; }
-wallpaper_theme_set_space() { feh --bg-scale ~/p/i-wp/flowers-space-yellow-dark.png; }
-wallpaper_theme_set_void() { feh --bg-scale ~/p/i-wp/gradient-liquid-glass.jpg; }
+wallpaper_theme_set_hell() { feh --bg-fill ~/gwp/rebecca-jansen.jpg; }
+wallpaper_theme_set_round() { feh --bg-scale ~/gwp/gradient-blue-pink.jpg; }
+wallpaper_theme_set_glass() { feh --bg-scale ~/gwp/abstract-glass-rings-blue.jpg; }
+wallpaper_theme_set_purple() { feh --bg-scale ~/gwp/03-rails.jpg; }
+wallpaper_theme_set_autumn() { feh --bg-scale ~/gwp/orange-leaves-autumn.jpg; }
+wallpaper_theme_set_bright() { feh --bg-scale ~/gwp/flowers-space-yellow-dark.png; }
+wallpaper_theme_set_space() { feh --bg-scale ~/gwp/flowers-space-yellow-dark.png; }
+wallpaper_theme_set_void() { feh --bg-scale ~/gwp/gradient-liquid-glass.jpg; }
 
 terminal_theme_set_hell() { cd ~/.config/alacritty/ && cat head.yml colors/al_hell.conf          > alacritty.yml; }
 terminal_theme_set_round() { cd ~/.config/alacritty/ && cat head.yml colors/SeaShells.conf        > alacritty.yml; }
@@ -247,7 +248,7 @@ lemonbar_show_memory() { free|awk 'NR>1{t=int($2/200000);u=int($3/200000);printf
 lemonbar_input_vim() { in_terminal "vi '+$' /tmp/lemonbar"; }
 
 preview_figlet_vim() { in_vim 'for f in /usr/share/figlet/fonts/*; do echo "$f"; figlet -f "$f" Figlet; done'; }
-copy_glyph_or_emoji() { printf %s "$(dmenu < ~/p/art/glyphs | cut -d' ' -f1)" | xclip -in -sel clipboard; }
+copy_glyph_or_emoji() { printf %s "$(dmenu < ~/art/glyphs | cut -d' ' -f1)" | xclip -in -sel clipboard; }
 
 reset_wifi_soft() { nmcli device connect wlo1; } #er
 reset_wifi_hard() { nmcli radio wifi off && nmcli radio wifi on; echo "done"; }

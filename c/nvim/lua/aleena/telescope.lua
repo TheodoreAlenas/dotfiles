@@ -1,5 +1,3 @@
-
-local ts = require 'telescope.builtin'
-
-vim.keymap.set("n", "<leader>e", ts.find_files)
-vim.keymap.set("n", "<leader>x", ts.builtin)
+vim.keymap.set("n", "<leader>e", ':Telescope find_files<CR>')
+vim.keymap.set("n", "<leader>o", ':Telescope live_grep<CR>')
+vim.keymap.set("n", "<leader>x", ':Telescope builtin<CR>')

@@ -200,6 +200,7 @@ screen_brightness_set_normal()  { xrandr  --output eDP-1  --brightness 0.7; }
 screen_brightness_set_custom()  { xrandr  --output eDP-1  --brightness "$(:|dmenu)"; }
 
 goodones_open_under() { (cd ~/g1 && p="$(printf "%s\n" * */* | dmenu)" && mpv --pause "$p"); }
+goodones_open_tagged() { (cd ~/g1 && sh tag.sh | awk "/$(:|dmenu)/"'{print $7}' | xargs mpv --pause); }
 goodones_open_newest()   { find ~/g1 -type f -printf "%B@\t%p\n"|sort -r|cut -f2|xargs mpv --pause; }
 goodones_open_accessed() { find ~/g1 -type f -printf "%A@\t%p\n"|sort -r|cut -f2|xargs mpv --pause; }
 goodones_open_changed()  { find ~/g1 -type f -printf "%C@\t%p\n"|sort -r|cut -f2|xargs mpv --pause; }

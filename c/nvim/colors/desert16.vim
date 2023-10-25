@@ -88,10 +88,10 @@ hi Directory ctermfg=darkgreen ctermbg=NONE cterm=bold
 hi Conceal ctermfg=white ctermbg=NONE cterm=NONE
 hi Ignore ctermfg=NONE ctermbg=NONE cterm=NONE
 hi Title ctermfg=darkred ctermbg=NONE cterm=bold
-hi DiffAdd ctermfg=white ctermbg=darkyellow cterm=NONE
-hi DiffChange ctermfg=white ctermbg=darkgreen cterm=NONE
-hi DiffText ctermfg=black ctermbg=grey cterm=NONE
-hi DiffDelete ctermfg=white ctermbg=darkmagenta cterm=NONE
+hi DiffAdd ctermfg=darkgreen ctermbg=NONE cterm=NONE
+hi DiffChange ctermfg=darkyellow ctermbg=NONE cterm=NONE
+hi DiffText ctermfg=grey ctermbg=NONE cterm=NONE
+hi DiffDelete ctermfg=darkred ctermbg=NONE cterm=NONE
 unlet s:t_Co
 finish
 

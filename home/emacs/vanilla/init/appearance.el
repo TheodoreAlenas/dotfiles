@@ -11,12 +11,9 @@
 
 (global-display-line-numbers-mode t)
 (setq display-line-numbers-type 'relative)
-(setq show-trailing-whitespace t)
+(setq-default show-trailing-whitespace t)
 (setq column-number-mode t)
+(load-theme 'ef-night t)
 
-(set-frame-parameter nil 'alpha-background 95)
-(add-to-list 'default-frame-alist '(alpha-background . 95))
-
-;; load-theme will be so late that it will override this
-(set-frame-parameter nil 'background-color "#101824")
-(add-to-list 'default-frame-alist '(background-color . "#101824"))
+(set-frame-parameter nil 'alpha-background 99)
+(add-to-list 'default-frame-alist '(alpha-background . 99))

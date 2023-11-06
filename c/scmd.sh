@@ -71,12 +71,12 @@ keyboard_language_set_english() { setxkbmap us; }
 keyboard_language_set_serbian() { setxkbmap rs; } #8
 keyboard_language_set_variant() { setxkbmap us "$(localectl list-x11-keymap-variants us | dmenu)"; }
 
-hellsinger_start() { mpv ~/music/hellsinger-fast.mp4 --start=00:00 --volume=50; } #ms
-hellsinger_this()  { mpv ~/music/hellsinger-fast.mp4 --start=05:48 --volume=50; } #mt
-hellsinger_egypt() { mpv ~/music/hellsinger-fast.mp4 --start=14:03 --volume=50; } #me
-hellsinger_feel()  { mpv ~/music/hellsinger-fast.mp4 --start=29:59 --volume=50; } #mf
-hellsinger_msg()   { mpv ~/music/hellsinger-fast.mp4 --start=36:18 --volume=50; } #mm
-hellsinger_away()  { mpv ~/music/hellsinger-fast.mp4 --start=41:31 --volume=50; } #ma
+hellsinger_start() { mpv ~/l/gmus/hellsinger-fast.mp4 --start=00:00 --volume=50; } #ms
+hellsinger_this()  { mpv ~/l/gmus/hellsinger-fast.mp4 --start=05:48 --volume=50; } #mt
+hellsinger_egypt() { mpv ~/l/gmus/hellsinger-fast.mp4 --start=14:03 --volume=50; } #me
+hellsinger_feel()  { mpv ~/l/gmus/hellsinger-fast.mp4 --start=29:59 --volume=50; } #mf
+hellsinger_msg()   { mpv ~/l/gmus/hellsinger-fast.mp4 --start=36:18 --volume=50; } #mm
+hellsinger_away()  { mpv ~/l/gmus/hellsinger-fast.mp4 --start=41:31 --volume=50; } #ma
 
 volume_set_0() { pacmd set-sink-volume 0  1000; } #m0
 volume_set_1() { pacmd set-sink-volume 0  6000; } #m1
@@ -90,10 +90,10 @@ volume_set_8() { pacmd set-sink-volume 0 48000; } #m8
 volume_set_9() { pacmd set-sink-volume 0 54000; } #m9
 volume_set_custom() { pacmd set-sink-volume 0 "$(:|dmenu)"; }
 
-wallpaper_set_scale() { bspc_float; feh --bg-scale "$(find ~/gwp/ -type f -print0 | xargs -0 sxiv -ot)"; }
-wallpaper_set_fill()  { bspc_float; feh --bg-fill  "$(find ~/gwp/ -type f -print0 | xargs -0 sxiv -ot)"; }
-wallpaper_set_max()   { bspc_float; feh --bg-max   "$(find ~/gwp/ -type f -print0 | xargs -0 sxiv -ot)"; }
-wallpaper_set_tile()  { bspc_float; feh --bg-tile  "$(find ~/gwp/ -type f -print0 | xargs -0 sxiv -ot)"; }
+wallpaper_set_scale() { bspc_float; feh --bg-scale "$(find ~/l/gwp/ -type f -print0 | xargs -0 sxiv -ot)"; }
+wallpaper_set_fill()  { bspc_float; feh --bg-fill  "$(find ~/l/gwp/ -type f -print0 | xargs -0 sxiv -ot)"; }
+wallpaper_set_max()   { bspc_float; feh --bg-max   "$(find ~/l/gwp/ -type f -print0 | xargs -0 sxiv -ot)"; }
+wallpaper_set_tile()  { bspc_float; feh --bg-tile  "$(find ~/l/gwp/ -type f -print0 | xargs -0 sxiv -ot)"; }
 
 bspc_float() { bspc rule --add "${1:-"*:*:*"}" --one-shot state=floating; }
 
@@ -152,17 +152,17 @@ lemonbar_theme_set_bright() { kill_lmbr_tail_F lemonbar -f "Source Code Pro-14" 
 lemonbar_theme_set_space() {  kill_lmbr_tail_F lemonbar -f "Source Code Pro-14" -b -B '#05080c' -F '#aaaabb'; }
 lemonbar_theme_set_void() {   kill_lmbr_tail_F lemonbar -f "Source Code Pro-14" -b -B '#05080c' -F '#aaaabb'; }
 
-lemonbar_theme_set_large() {  kill_lmbr_tail_F lemonbar -f "Source Code Pro-18" -b -B '#112229' -F '#aa9988'; }
+lemonbar_theme_set_large() {  kill_lmbr_tail_F lemonbar -f "Source Code Pro-24" -b -B '#24283b' -F '#7aa2f7'; }
 kill_lmbr_tail_F() { killall lemonbar; tail -F /tmp/lemonbar | "$@"; }
 
-wallpaper_theme_set_hell() { feh --bg-fill ~/gwp/rebecca-jansen.jpg; }
-wallpaper_theme_set_round() { feh --bg-scale ~/gwp/gradient-blue-pink.jpg; }
-wallpaper_theme_set_glass() { feh --bg-scale ~/gwp/abstract-glass-rings-blue.jpg; }
-wallpaper_theme_set_purple() { feh --bg-scale ~/gwp/03-rails.jpg; }
-wallpaper_theme_set_autumn() { feh --bg-scale ~/gwp/orange-leaves-autumn.jpg; }
-wallpaper_theme_set_bright() { feh --bg-scale ~/gwp/flowers-space-yellow-dark.png; }
-wallpaper_theme_set_space() { feh --bg-scale ~/gwp/flowers-space-yellow-dark.png; }
-wallpaper_theme_set_void() { feh --bg-scale ~/gwp/gradient-liquid-glass.jpg; }
+wallpaper_theme_set_hell() { feh --bg-fill ~/l/gwp/rebecca-jansen.jpg; }
+wallpaper_theme_set_round() { feh --bg-scale ~/l/gwp/gradient-blue-pink.jpg; }
+wallpaper_theme_set_glass() { feh --bg-scale ~/l/gwp/abstract-glass-rings-blue.jpg; }
+wallpaper_theme_set_purple() { feh --bg-scale ~/l/gwp/03-rails.jpg; }
+wallpaper_theme_set_autumn() { feh --bg-scale ~/l/gwp/orange-leaves-autumn.jpg; }
+wallpaper_theme_set_bright() { feh --bg-scale ~/l/gwp/flowers-space-yellow-dark.png; }
+wallpaper_theme_set_space() { feh --bg-scale ~/l/gwp/flowers-space-yellow-dark.png; }
+wallpaper_theme_set_void() { feh --bg-scale ~/l/gwp/gradient-liquid-glass.jpg; }
 
 terminal_theme_set_hell() { cd ~/.config/alacritty/ && cat head.yml colors/al_hell.conf          > alacritty.yml; }
 terminal_theme_set_round() { cd ~/.config/alacritty/ && cat head.yml colors/SeaShells.conf        > alacritty.yml; }
@@ -199,13 +199,13 @@ screen_brightness_set_9() { xrandr --output eDP-1 --brightness 0.9; }
 screen_brightness_set_normal()  { xrandr  --output eDP-1  --brightness 0.7; }
 screen_brightness_set_custom()  { xrandr  --output eDP-1  --brightness "$(:|dmenu)"; }
 
-goodones_open_under() { (cd ~/g1 && p="$(printf "%s\n" * */* | dmenu)" && mpv --pause "$p"); }
-goodones_open_tagged() { (cd ~/g1 && sh tag.sh | awk "/$(:|dmenu)/"'{print $7}' | xargs mpv --pause); }
-goodones_open_newest()   { find ~/g1 -type f -printf "%B@\t%p\n"|sort -r|cut -f2|xargs mpv --pause; }
-goodones_open_accessed() { find ~/g1 -type f -printf "%A@\t%p\n"|sort -r|cut -f2|xargs mpv --pause; }
-goodones_open_changed()  { find ~/g1 -type f -printf "%C@\t%p\n"|sort -r|cut -f2|xargs mpv --pause; }
-goodones_open_shuffled() { find ~/g1 -type f | shuf | xargs mpv --pause; } #g
-goodones_open_sorted()   { find ~/g1 -type f | sort | xargs mpv --pause; }
+goodones_open_under() { (cd ~/l/g1 && p="$(printf "%s\n" * */* | dmenu)" && mpv --pause "$p"); }
+goodones_open_tagged() { (cd ~/l/g1 && sh tag.sh | awk "/$(:|dmenu)/"'{print $NF}' | xargs mpv --pause); }
+goodones_open_newest()   { find ~/l/g1 -type f -printf "%B@\t%p\n"|sort -r|cut -f2|xargs mpv --pause; }
+goodones_open_accessed() { find ~/l/g1 -type f -printf "%A@\t%p\n"|sort -r|cut -f2|xargs mpv --pause; }
+goodones_open_changed()  { find ~/l/g1 -type f -printf "%C@\t%p\n"|sort -r|cut -f2|xargs mpv --pause; }
+goodones_open_shuffled() { find ~/l/g1 -type f | shuf | xargs mpv --pause; } #g
+goodones_open_sorted()   { find ~/l/g1 -type f | sort | xargs mpv --pause; }
 goodones_vim() { in_vim 'echo "mpv --no-terminal --pause"; find ~/g1 -type f'; }
 
 screenshot_take_region()   { eval "shotgun $(slop -f '-i %i -g %g') /tmp/screenshot.png"; } #w
@@ -232,6 +232,7 @@ open_clock_widget_longer() { alm-clock -t 5; } #H
 open_emacs() { emacs; } #em
 open_spotify() { spotify-launcher > /dev/null 2> /dev/null; }
 open_kdenlive() { kdenlive > /dev/null 2> /dev/null; }
+open_krita() { krita > /dev/null 2> /dev/null; }
 open_screenkey() { screenkey; }
 open_unclutter() { unclutter; }
 close_screenkey() { killall screenkey; }
@@ -249,7 +250,7 @@ lemonbar_show_memory() { free|awk 'NR>1{t=int($2/200000);u=int($3/200000);printf
 lemonbar_input_vim() { in_terminal "vi '+$' /tmp/lemonbar"; }
 
 preview_figlet_vim() { in_vim 'for f in /usr/share/figlet/fonts/*; do echo "$f"; figlet -f "$f" Figlet; done'; }
-copy_glyph_or_emoji() { printf %s "$(dmenu < ~/art/glyphs | cut -d' ' -f1)" | xclip -in -sel clipboard; }
+copy_glyph_or_emoji() { printf %s "$(dmenu < ~/l/gart/glyphs | cut -d' ' -f1)" | xclip -in -sel clipboard; }
 
 reset_wifi_soft() { nmcli device connect wlo1; } #er
 reset_wifi_hard() { nmcli radio wifi off && nmcli radio wifi on; echo "done"; }

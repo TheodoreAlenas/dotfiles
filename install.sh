@@ -1,14 +1,17 @@
-relink() {
-    (cd_and_relink "$@")
+
+for_each_src_dest() {
+    for f in c/*; do "$@" "$f" ~/.config/"${f#c/}"; done
+    for f in bin/*; do "$@" "$f" ~/.local/"$f"; done
+    for f in home/*; do "$@" "$f" ~/.config/"${f#home/}"; done
 }
 
-cd_and_relink() {
-    cd "$1" || return 1
-    for f in ./*
-    do rm -fv "$2/$f" && ln -sv "$PWD/$f" "$2/$f"
-    done
-}
+ln_full_path() { ln -sv "$PWD/$1" "$2"; }
+rm_dest() { rm -fv "$2"; }
+relink() { rm_dest "$@" && ln_full_path "$@"; }
 
-relink c ~/.config
-relink bin ~/.local/bin
-relink home ~/.config
+case "$1" in
+    (--help|-h) echo "$0 [ARG]   where ARG one of ln, rm, --help, -h" ;;
+    (ln) for_each_src_dest ln_full_path ;;
+    (rm) for_each_src_dest rm_dest ;;
+    ('') for_each_src_dest relink ;;
+esac

@@ -1,69 +1,57 @@
 #!/bin/sh
 # License at the bottom
 
-userresources=$HOME/.config/x/Xresources
-usermodmap=$HOME/.config/x/Xmodmap
+userresources=$HOME/.Xresources
+#usermodmap=$HOME/.Xmodmap
 sysresources=/etc/X11/xinit/.Xresources
 sysmodmap=/etc/X11/xinit/.Xmodmap
 # Maybe looking for ~/.config/profile.d/11-paths.sh ?
 
 merge_config_and_etc() {
-  test -f "$sysresources" && xrdb -merge $sysresources
+  test -f "$sysresources" && xrdb -merge "$sysresources"
   test -f "$userresources" && xrdb -merge "$userresources"
-  test -f "$sysmodmap" && xmodmap $sysmodmap
+  test -f "$sysmodmap" && xmodmap "$sysmodmap"
   test -f "$usermodmap" && xmodmap "$usermodmap"
 }
 
-source_xinit_directory() {
-  test -d /etc/X11/xinit/xinitrc.d || return 1
-
+source_system_xinit_directory() {
   for f in /etc/X11/xinit/xinitrc.d/?*.sh
   do test -x "$f" && . "$f"
   done
 }
 
-x_configurations() {
+configure_x() {
   setxkbmap -variant dvorak
   xset -display :0.0 r rate 250 40
   xrandr --output eDP-1 --brightness 0.7
 }
 
-jijibijies() {
+start_background_jobs() {
   unclutter -idle 0.7 -jitter 2 -root &  # autohide mouse pointer
   picom &
-  alc-battery-alarm &
-  touch /tmp/havent-said-welcome-yet
-}
-
-basics() {
-  #jackd -R -dalsa -dhw:1 &
-
-  # TODO manage at least a little better
-  {
-    timeout 5s pulseaudio  # trying to fix a bug
-    # A plain sleep command won't cut it.
-    # This started to be a problem in
-    # Thu Apr 13 16:56:50 EEST 2023
-    # when I cleaned up system's unneeded dependencies,
-    # along with some optional dependencies.
-    # The bug has to do with dbus being already in use.
-    # Try debugging on your own using:
-    # pulseaudio > /tmp/pulseaudio-1 2> /tmp/pulseaudio-2
-    # echo "pulseaudio closed after that" > /tmp/pulseaudio-3
-
-    pulseaudio
-  } &
-
+  while sleep 5; do albatwid -o 50; done &
+  (timeout 5s pulseaudio; pulseaudio) &  # (*)
   SXHKD_SHELL=dash sxhkd &
 }
 
 export INTERACTIVE=no
 merge_config_and_etc
-source_xinit_directory
-x_configurations
-jijibijies
-basics
+source_system_xinit_directory
+configure_x
+start_background_jobs
 exec bspwm  # perhaps also check ~/.config/bspwm/bspwmrc
+
+# (*)
+# A plain sleep command won't cut it.
+# This started to be a problem in
+# Thu Apr 13 16:56:50 EEST 2023
+# when I cleaned up system's unneeded dependencies,
+# along with some optional dependencies.
+# The bug has to do with dbus being already in use.
+# Try debugging on your own using:
+# pulseaudio > /tmp/pulseaudio-1 2> /tmp/pulseaudio-2
+# echo "pulseaudio closed after that" > /tmp/pulseaudio-3
+
 # Copyright (c) 2023 Dimakopoulos Theodoros
 # 
 # Permission is hereby granted, free of charge, to any person obtaining a copy

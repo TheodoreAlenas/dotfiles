@@ -221,9 +221,9 @@ clipboard_youtube_channel() { printf %s "https://www.youtube.com/@theodorealenas
 
 open_terminal() { alacritty; } #t
 
-open_battery_widget() { head /sys/class/power_supply/BAT1/capacity; alm-battery; } #u
-open_battery_widget_for() { alm-battery -t "$(:|dmenu)" -s 0.5; }
-open_battery_widget_longer() { alm-battery -t 3 -s 0.5; } #U
+open_battery_widget() { albatwid; } #u
+open_battery_widget_old() { head /sys/class/power_supply/BAT1/capacity; alm-battery; } #U
+open_battery_widget_old_longer() { alm-battery -t 3 -s 0.5; }
 
 open_clock_widget() { date; alm-clock; } #h
 open_clock_widget_for() { alm-clock -t "$(:|dmenu)"; }

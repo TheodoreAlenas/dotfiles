@@ -145,7 +145,7 @@ bspwm_theme_set_void()  { sh ~/.config/bspwm/themes/void.sh; }
 
 lemonbar_theme_set_hell() {   kill_lmbr_tail_F lemonbar -f "Source Code Pro-14" -b -B '#05080c' -F '#aa1122'; }
 lemonbar_theme_set_round() {  kill_lmbr_tail_F lemonbar -f "Source Code Pro-14" -b -B '#08131a' -F '#1d4850'; }
-lemonbar_theme_set_glass() {  kill_lmbr_tail_F lemonbar -f "Source Code Pro-14" -b -B '#24283b' -F '#7aa2f7'; }
+lemonbar_theme_set_glass() {  kill_lmbr_tail_F lemonbar -f "Source Code Pro-14" -b -B '#000e17' -F '#afbcbf'; }
 lemonbar_theme_set_purple() { kill_lmbr_tail_F lemonbar -f "Source Code Pro-14" -b -B '#0e0c15' -F '#42a38c'; }
 lemonbar_theme_set_autumn() { kill_lmbr_tail_F lemonbar -f "Source Code Pro-14" -b -B '#05080c' -F '#aa1122'; }
 lemonbar_theme_set_bright() { kill_lmbr_tail_F lemonbar -f "Source Code Pro-14" -b -B '#05080c' -F '#aaaabb'; }
@@ -174,10 +174,10 @@ terminal_theme_set_space() { cd ~/.config/alacritty/ && cat head.yml colors/Glac
 terminal_theme_set_void() { cd ~/.config/alacritty/ && cat head.yml colors/3024_Day.conf         > alacritty.yml; }
 
 #awk '/foreground|background|black|blue/{print}' ~/.config/alacritty/colors/SeaShells.conf
-dm_wr_hell() { dmenu-legitimate -nf '#887766' -nb '#000000' -sf '#aaaaaa' -sb '#550000'; }
-dm_wr_round() { dmenu-legitimate -nf '#deb88d' -nb '#08131a' -sf '#deb88d' -sb '#1d4850'; }
-dm_wr_glass() { dmenu-legitimate -nf '#c0caf5' -nb '#24283b' -sf '#15161e' -sb '#7aa2f7'; }
-dm_wr_purple() { dmenu-legitimate -nf '#42a38c' -nb '#0e0c15' -sf '#cd751c' -sb '#0e0c15'; }
+dm_wr_hell() { dmenu-floating -nf '#887766' -nb '#000000' -sf '#aaaaaa' -sb '#550000'; }
+dm_wr_round() { dmenu-floating -nf '#deb88d' -nb '#08131a' -sf '#deb88d' -sb '#1d4850'; }
+dm_wr_glass() { dmenu-original -nf '#afbcbf' -nb '#000e17' -sf '#ceeeff' -sb '#004065'; }
+dm_wr_purple() { dmenu-floating -nf '#42a38c' -nb '#0e0c15' -sf '#cd751c' -sb '#0e0c15'; }
 dmenu_theme_set_hell() { printf '#!/bin/sh\n. %s&&dm_wr_hell "$@"' "$(this_file)" > ~/.local/bin/dmenu-wrapper.sh; }
 dmenu_theme_set_round() { printf '#!/bin/sh\n. %s&&dm_wr_round "$@"' "$(this_file)" > ~/.local/bin/dmenu-wrapper.sh; }
 dmenu_theme_set_glass() { printf '#!/bin/sh\n. %s&&dm_wr_glass "$@"' "$(this_file)" > ~/.local/bin/dmenu-wrapper.sh; }

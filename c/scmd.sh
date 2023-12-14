@@ -237,7 +237,7 @@ open_screenkey() { screenkey; }
 open_unclutter() { unclutter; }
 close_screenkey() { killall screenkey; }
 close_unclutter() { killall unclutter; }
-open_qutebrowser() { qutebrowser --loglevel critical; } #a
+open_qutebrowser() { qutebrowser 2>&1 | grep -vi 'reject\|sRGB'; } #a
 open_last_recording() { mpv /tmp/rec.mkv; }
 open_zathura_in_downloads() { f="$(find ~/Downloads | dmenu)" && zathura "$f"; }
 
@@ -281,7 +281,7 @@ scmd_awk1() { printf %s 's = $1; gsub(/./, "; super + &", s); sub("; ", "", s); 
 scmd_awk2() { printf %s 'print(s); printf("\t. %s && scmd_with_bar_status %s\n\n", "'"$(this_file)"'", $2);'; }
 scmd_find() { printf "%s\n" "$(grep "^$1(" "$(this_file)")"; }
 scmd_with_bar_status() { cline="$(scmd_find "$1")"; (echo; "$@" 2>&1) | scmd_bar_fmt "$cline" >> /tmp/lemonbar; }
-scmd_bar_fmt() { while read -r l; do scmd_bar_paint "$1" "$l"; done; }
+scmd_bar_fmt() { while read -r l; do scmd_bar_paint "$1" "$(printf %s "$l" | sed 's/%/%%/')"; done; }
 scmd_bar_paint() { printf "%s\n" "%{c}  $(printf %s "$1" | scmd_bar_sed)  %{R}$2%{R}"; }
 scmd_bar_sed() { sed 's/\(^[^(]*\)\([^{]*{\)\(.*\)\(}[^}]*$\)/\1%{F#666}\2%{F-}\3%{F#666}\4%{F-}/'; }
 scmd_give_bar_color_swap_fix() { echo "%{R}"; }

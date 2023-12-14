@@ -9,10 +9,9 @@
 
 (set-face-attribute 'default nil :font "Source Code Pro-15")
 
-(global-display-line-numbers-mode t)
-(setq display-line-numbers-type 'relative)
 (setq-default show-trailing-whitespace t)
 (setq column-number-mode t)
+;;(add-to-list 'custom-theme-load-path "~/.emacs.d/themes")
 (load-theme 'ef-night t)
 
 (set-frame-parameter nil 'alpha-background 99)

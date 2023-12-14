@@ -78,17 +78,17 @@ hellsinger_feel()  { mpv ~/l/gmus/hellsinger-fast.mp4 --start=29:59 --volume=50;
 hellsinger_msg()   { mpv ~/l/gmus/hellsinger-fast.mp4 --start=36:18 --volume=50; } #mm
 hellsinger_away()  { mpv ~/l/gmus/hellsinger-fast.mp4 --start=41:31 --volume=50; } #ma
 
-volume_set_0() { pacmd set-sink-volume 0  1000; } #m0
-volume_set_1() { pacmd set-sink-volume 0  6000; } #m1
-volume_set_2() { pacmd set-sink-volume 0 12000; } #m2
-volume_set_3() { pacmd set-sink-volume 0 18000; } #m3
-volume_set_4() { pacmd set-sink-volume 0 24000; } #m4
-volume_set_5() { pacmd set-sink-volume 0 30000; } #m5
-volume_set_6() { pacmd set-sink-volume 0 36000; } #m6
-volume_set_7() { pacmd set-sink-volume 0 42000; } #m7
-volume_set_8() { pacmd set-sink-volume 0 48000; } #m8
-volume_set_9() { pacmd set-sink-volume 0 54000; } #m9
-volume_set_custom() { pacmd set-sink-volume 0 "$(:|dmenu)"; }
+volume_set_0() { pactl set-sink-volume 0  1000  1000; } #m0
+volume_set_1() { pactl set-sink-volume 0  6000  6000; } #m1
+volume_set_2() { pactl set-sink-volume 0 12000 12000; } #m2
+volume_set_3() { pactl set-sink-volume 0 18000 18000; } #m3
+volume_set_4() { pactl set-sink-volume 0 24000 24000; } #m4
+volume_set_5() { pactl set-sink-volume 0 30000 30000; } #m5
+volume_set_6() { pactl set-sink-volume 0 36000 36000; } #m6
+volume_set_7() { pactl set-sink-volume 0 42000 42000; } #m7
+volume_set_8() { pactl set-sink-volume 0 48000 48000; } #m8
+volume_set_9() { pactl set-sink-volume 0 54000 54000; } #m9
+volume_set_custom() { pactl set-sink-volume 0 "$(:|dmenu)"; }
 
 wallpaper_set_scale() { bspc_float; feh --bg-scale "$(find ~/l/gwp/ -type f -print0 | xargs -0 sxiv -ot)"; }
 wallpaper_set_fill()  { bspc_float; feh --bg-fill  "$(find ~/l/gwp/ -type f -print0 | xargs -0 sxiv -ot)"; }

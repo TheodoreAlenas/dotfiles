@@ -109,7 +109,7 @@ terminal_set_opacity_90()  { sed -i "s/\bopacity:.*/opacity: 0.9/"  ~/.config/al
 terminal_set_opacity_95()  { sed -i "s/\bopacity:.*/opacity: 0.95/" ~/.config/alacritty/alacritty.yml; }
 terminal_set_opacity_100() { sed -i "s/\bopacity:.*/opacity: 1.0/"  ~/.config/alacritty/alacritty.yml; }
 
-terminal_theme_set() { term_rule_dock; a=alacritty; cd ~/.config/$a/ && $a -e sh -c "$(term_fzf_prvw_cat)"; } #v
+terminal_theme_set() { term_rule_dock; a=alacritty; cd ~/.config/$a/ && $a -e sh -c "$(term_fzf_prvw_cat)"; }
 term_rule_dock() { bspc rule --add '*:*:*' --one-shot state=floating -g 1900x500+10+500; }
 term_fzf_prvw_cat() { printf %s "ls colors/ | fzf --preview 'cat head.yml colors/{} > alacritty.yml'"; }
 

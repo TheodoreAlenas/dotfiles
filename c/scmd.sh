@@ -107,6 +107,7 @@ terminal_set_opacity_70()  { sed -i "s/\bopacity:.*/opacity: 0.7/"  ~/.config/al
 terminal_set_opacity_80()  { sed -i "s/\bopacity:.*/opacity: 0.8/"  ~/.config/alacritty/alacritty.yml; }
 terminal_set_opacity_90()  { sed -i "s/\bopacity:.*/opacity: 0.9/"  ~/.config/alacritty/alacritty.yml; }
 terminal_set_opacity_95()  { sed -i "s/\bopacity:.*/opacity: 0.95/" ~/.config/alacritty/alacritty.yml; }
+terminal_set_opacity_99()  { sed -i "s/\bopacity:.*/opacity: 0.99/" ~/.config/alacritty/alacritty.yml; }
 terminal_set_opacity_100() { sed -i "s/\bopacity:.*/opacity: 1.0/"  ~/.config/alacritty/alacritty.yml; }
 
 terminal_theme_set() { term_rule_dock; a=alacritty; cd ~/.config/$a/ && $a -e sh -c "$(term_fzf_prvw_cat)"; }

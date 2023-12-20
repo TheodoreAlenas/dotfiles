@@ -1,7 +1,57 @@
-(load "~/.emacs.d/init/appearance.el")
-(load "~/.emacs.d/init/packages.el")
-(load "~/.emacs.d/init/defaults.el")
-(load "~/.emacs.d/init/al-d.el")
+;; tab characters
+(setq-default tab-width 4)
+(setq-default indent-tabs-mode nil)
+(editorconfig-mode)
+
+;; saves
+(setq backup-directory-alist `((".*" . "~/.cache/emacs/saves")))
+(setq auto-save-file-name-transforms `((".*" "~/.cache/emacs/saves" t)))
+
+;; melpa
+(require 'package)
+(add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
+
+;; full screen
+(add-to-list 'initial-frame-alist '(fullscreen . maximized))
+(add-to-list 'default-frame-alist '(fullscreen . maximized))
+
+;; GUI
+(menu-bar-mode -1)
+(tool-bar-mode -1)
+(toggle-scroll-bar -1)
+(set-face-attribute 'default nil :font "Source Code Pro-15")
+(set-frame-parameter nil 'alpha-background 99)
+(add-to-list 'default-frame-alist '(alpha-background . 99))
+
+;; buffer look
+(setq-default show-trailing-whitespace t)
+(setq column-number-mode t)
+(load-theme 'ef-night t)
+(vertico-mode)
+(marginalia-mode)
+(require 'git-gutter)
+(global-git-gutter-mode 1)
+
+;; eglot
+(setq eglot-confirm-server-initiated-edits nil)
+
+;; Haskell ligatures
+
+(defun al/prepare-for-ligatures ()
+  "For Haskell (ligatures are from a package)"
+  (set-face-attribute 'default nil :font "Hasklug Nerd Font"))
+
+(use-package haskell-mode :config
+  (add-to-list 'haskell-mode-hook 'al/prepare-for-ligatures)
+  (add-to-list 'haskell-mode-hook 'ligature-mode))
+
+(setq al/haskell-ligature-strings
+      '("<*" "<*>" "<+>" "<$>" "***" "<|" "|>" "<|>" "!!" "||" "==="
+        "==>" "<<<" ">>>" "<>" "+++" "<-" "->" "=>" ">>" "<<" ">>="
+        "=<<" ".." "..." "::" "-<" ">-" "-<<" ">>-" "++" "/=" "=="))
+
+(use-package ligature :config
+  (ligature-set-ligatures '(haskell-mode) al/haskell-ligature-strings))
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.

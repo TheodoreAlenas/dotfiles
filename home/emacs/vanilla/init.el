@@ -34,6 +34,14 @@
 
 ;; eglot
 (setq eglot-confirm-server-initiated-edits nil)
+(require 'eglot)
+(add-to-list
+ 'eglot-server-programs
+ '(prolog-mode
+   "sh" "-c"
+   "(echo $0; echo $1) > /tmp/to-swipl && swipl /tmp/to-swipl"
+   "?- use_module(library(prolog_lsp))."
+   "?- run_stdio_language_server."))
 
 ;; Haskell ligatures
 
@@ -67,7 +75,7 @@
  '(git-gutter:update-interval 0.2)
  '(org-agenda-files '("/home/aleena/code/emacs/test.org"))
  '(package-selected-packages
-   '(graphviz-dot-mode docker-compose-mode systemd org-babel-eval-in-repl web-mode pdf-tools ef-themes ligature haskell-mode evil marginalia slime editorconfig elfeed magit vertico material-theme git-gutter eglot)))
+   '(rust-mode graphviz-dot-mode docker-compose-mode systemd org-babel-eval-in-repl web-mode pdf-tools ef-themes ligature haskell-mode evil marginalia slime editorconfig elfeed magit vertico material-theme git-gutter eglot)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.

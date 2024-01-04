@@ -1,7 +1,0 @@
-;;-*-coding: utf-8;-*-
-(define-abbrev-table 'global-abbrev-table
-  '(
-    ("td" "Theodoros Dimakopoulos" nil :count 3)
-    ("m0" "margin: 0 0;" nil :count 0)
-   ))
-

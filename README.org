@@ -84,17 +84,5 @@ the popup clock and battery windows,
 which are in their own repsective repository,
 [[https://github.com/TheodoreAlenas/widget-blink]].
 
-Soon it will be time to refactor the dotfiles.
-They rely on the assumption that there's a lot of them.
-Don't we all make this mistake?
-To think that there will be a lot of something?
-I want to collect the theming related files
-in one place, because ~BSPWM~, ~Picom~ and ~Alacritty~
-all have themes to choose between and those need to line up.
-I could just archive all the theming since I don't use it.
-Also, there's no point in separating shell related
-configurations in this repository since the files of
-the repository will be linked in the system's directories.
-
 Thank you for the visit and I hope this repository
 can prove helpful!

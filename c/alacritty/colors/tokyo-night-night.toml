@@ -1,3 +1,4 @@
+
 [colors]
 draw_bold_text_with_bright_colors = false
 
@@ -20,7 +21,7 @@ white = "0xc0caf5"
 yellow = "0xe0af68"
 
 [colors.normal]
-black = "0x1d202f"
+black = "0x15161e"
 blue = "0x7aa2f7"
 cyan = "0x7dcfff"
 green = "0x9ece6a"
@@ -30,6 +31,6 @@ white = "0xa9b1d6"
 yellow = "0xe0af68"
 
 [colors.primary]
-background = "0x24283b"
+background = "0x1a1b26"
 foreground = "0xc0caf5"
 

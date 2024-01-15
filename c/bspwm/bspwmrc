@@ -2,4 +2,4 @@
 
 sh ~/.config/bspwm/rules.sh
 printf "%s\n" "%{c}lemonbar initialized" >> /tmp/lemonbar
-(. /home/aleena/.config/scmd.sh && global_theme_set_bspwm_startup)
+(. /home/aleena/c/scmd.sh && global_theme_set_bspwm_startup)

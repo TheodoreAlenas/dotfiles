@@ -1,0 +1,28 @@
+
+[colors]
+draw_bold_text_with_bright_colors = false
+
+[colors.bright]
+black = "0xffffff"
+blue = "0x0099cc"
+cyan = "0x79c4cc"
+green = "0x549a6f"
+magenta = "0xcc68c8"
+red = "0xff2f2f"
+white = "0x000000"
+yellow = "0xccac00"
+
+[colors.normal]
+black = "0xbbcbcc"
+blue = "0x0099cc"
+cyan = "0x79c4cc"
+green = "0x549a6f"
+magenta = "0xcc68c8"
+red = "0xff2f2f"
+white = "0x000000"
+yellow = "0xccac00"
+
+[colors.primary]
+background = "0x000000"
+foreground = "0xafc2c2"
+

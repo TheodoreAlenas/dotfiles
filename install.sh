@@ -1,10 +1,10 @@
 
 for_each_src_dest() {
     for f in c/*; do "$@" "$f" ~/.config/"${f#c/}"; done
-    for f in bin/*; do "$@" "$f" ~/.local/"$f"; done
-    for f in home/*; do "$@" "$f" ~/.config/"${f#home/}"; done
     for f in dot/*; do "$@" "$f" ~/."${f#dot/}"; done
+    for f in doom-emacs/*; do "$@" "$f" ~/.cache/emacs/doom/"${f#doom-emacs/}"; done
     "$@" dot/Xresources ~/.Xdefaults
+    "$@" init.el ~/.cache/emacs/vanilla/home-emacs-dot-d/init.el
 }
 
 ln_full_path() { ln -sv "$PWD/$1" "$2"; }

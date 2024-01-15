@@ -1,0 +1,25 @@
+[font]
+size = 10.0
+
+[font.bold]
+family = "Source Code Pro"
+style = "Bold"
+
+[font.glyph_offset]
+x = 0
+y = 0
+
+[font.italic]
+family = "Source Code Pro"
+style = "Light Italic"
+
+[font.normal]
+family = "Source Code Pro"
+style = "Medium"
+
+[font.offset]
+x = 0
+y = 0
+
+[window]
+opacity = 0.99

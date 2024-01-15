@@ -16,7 +16,7 @@ scmd_run() { c="$(dmenu < "$(this_file)" | cut -d'(' -f1)"; test "$c" && scmd_wi
 this_file() { echo ~/c/scmd.sh; }
 #+end_src
 
-the ~xinitrc~ graphical startup configuration of short shell functions
+the ~m/dot-xinitrc~ graphical startup configuration of short shell functions
 
 #+begin_src sh
 source_system_xinit_directory() {
@@ -46,15 +46,14 @@ esac
 and the two-part concatenated terminal configuration.
 
 #+begin_src
-  -rw-r--r--  1 aleena aleena   851 Jan 15 16:36 alacritty.toml
-  drwxr-xr-x  2 aleena aleena 20480 Jan  6 13:06 colors
-  -rw-r--r--  1 aleena aleena   283 Jan  6 12:57 head.toml
+  drwxr-xr-x 2 aleena aleena 20480 Jan 15 18:33 alacritty-colors
+  -rw-r--r-- 1 aleena aleena   283 Jan  6 12:57 alacritty-head.toml
 #+end_src
 
 I used to use NeoVim. Recently I switched to Emacs.
 NeoVim, TMux and ZSH were configured to be similar to the
 experience of using Vi and dash without terminal multiplexing,
-hense ~c/nvim/colors/desert16.vim~ and ~c/posix-shell-startup.sh~.
+hense ~nvim/colors/desert16.vim~ and ~bash-and-zsh/posix-shell-startup.sh~.
 
 #+begin_src sh
 PS1='$ '
@@ -79,6 +78,11 @@ switch_emacs_to_doom() { rm ~/.emacs.d; ln -s ~/.cache/emacs/doom/home-emacs-dot
 You may wonder how people have the TMux thing
 with the list that opens a new TMux thing,
 I've made one of these too.
+
+An important part of my system is
+the popup clock and battery windows,
+which are in their own repsective repository,
+[[https://github.com/TheodoreAlenas/widget-blink]].
 
 Soon it will be time to refactor the dotfiles.
 They rely on the assumption that there's a lot of them.

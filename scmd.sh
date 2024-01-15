@@ -97,9 +97,9 @@ wallpaper_set_tile()  { bspc_float; feh --bg-tile  "$(find ~/l/gwp/ -type f -pri
 
 bspc_float() { bspc rule --add "${1:-"*:*:*"}" --one-shot state=floating; }
 
-terminal_theme_set() { term_rule_dock; a=alacritty; cd ~/.config/$a/ && $a -e sh -c "$(term_fzf_prvw_cat)"; }
+terminal_theme_set() { term_rule_dock; cd ~/c/m/ && alacritty -e sh -c "ls alacritty-colors/ | $(term_fzf_prvw_cat)"; }
 term_rule_dock() { bspc rule --add '*:*:*' --one-shot state=floating -g 1900x500+10+500; }
-term_fzf_prvw_cat() { printf %s "ls colors/ | fzf --preview 'cat head.toml colors/{} > alacritty.toml'"; }
+term_fzf_prvw_cat() { a=alacritty; printf %s "fzf --preview 'cat $a-head.toml $a-colors/{} > ~/.config/$a/$a.toml'"; }
 
 global_theme_set_hell()  { global_theme_set hell; }
 global_theme_set_round()  { global_theme_set round; }
@@ -113,23 +113,23 @@ global_theme_set_void()  { global_theme_set void; }
 global_theme_set_bspwm_startup() { global_theme_set glass; }
 global_theme_set() { for t in terminal dmenu wallpaper picom bspwm lemonbar; do "${t}_theme_set_$1"; done; }
 
-picom_theme_set_hell()  { cp  ~/.config/picom/hell.conf  ~/.config/picom/picom.conf; }
-picom_theme_set_round()  { cp  ~/.config/picom/round.conf  ~/.config/picom/picom.conf; }
-picom_theme_set_glass()  { cp  ~/.config/picom/glass.conf  ~/.config/picom/picom.conf; }
-picom_theme_set_purple()  { cp  ~/.config/picom/glass.conf  ~/.config/picom/picom.conf; }
-picom_theme_set_autumn()  { cp  ~/.config/picom/autumn.conf  ~/.config/picom/picom.conf; }
-picom_theme_set_bright()  { cp  ~/.config/picom/space.conf  ~/.config/picom/picom.conf; }
-picom_theme_set_space()  { cp  ~/.config/picom/space.conf  ~/.config/picom/picom.conf; }
-picom_theme_set_void()  { cp  ~/.config/picom/void.conf  ~/.config/picom/picom.conf; }
+picom_theme_set_hell()  { cp  ~/c/m/picom-variants/hell.conf  ~/.config/picom/picom.conf; }
+picom_theme_set_round()  { cp  ~/c/m/picom-variants/round.conf  ~/.config/picom/picom.conf; }
+picom_theme_set_glass()  { cp  ~/c/m/picom-variants/glass.conf  ~/.config/picom/picom.conf; }
+picom_theme_set_purple()  { cp  ~/c/m/picom-variants/glass.conf  ~/.config/picom/picom.conf; }
+picom_theme_set_autumn()  { cp  ~/c/m/picom-variants/autumn.conf  ~/.config/picom/picom.conf; }
+picom_theme_set_bright()  { cp  ~/c/m/picom-variants/space.conf  ~/.config/picom/picom.conf; }
+picom_theme_set_space()  { cp  ~/c/m/picom-variants/space.conf  ~/.config/picom/picom.conf; }
+picom_theme_set_void()  { cp  ~/c/m/picom-variants/void.conf  ~/.config/picom/picom.conf; }
 
-bspwm_theme_set_hell()  { sh ~/.config/bspwm/themes/hell.sh; }
-bspwm_theme_set_round()  { sh ~/.config/bspwm/themes/round.sh; }
-bspwm_theme_set_glass()  { sh ~/.config/bspwm/themes/glass.sh; }
-bspwm_theme_set_purple()  { sh ~/.config/bspwm/themes/silent.sh; }
-bspwm_theme_set_autumn()  { sh ~/.config/bspwm/themes/autumn.sh; }
-bspwm_theme_set_bright()  { sh ~/.config/bspwm/themes/glass.sh; }
-bspwm_theme_set_space()  { sh ~/.config/bspwm/themes/space.sh; }
-bspwm_theme_set_void()  { sh ~/.config/bspwm/themes/void.sh; }
+bspwm_theme_set_hell()  { sh ~/c/m/bspwm-themes/hell.sh; }
+bspwm_theme_set_round()  { sh ~/c/m/bspwm-themes/round.sh; }
+bspwm_theme_set_glass()  { sh ~/c/m/bspwm-themes/glass.sh; }
+bspwm_theme_set_purple()  { sh ~/c/m/bspwm-themes/silent.sh; }
+bspwm_theme_set_autumn()  { sh ~/c/m/bspwm-themes/autumn.sh; }
+bspwm_theme_set_bright()  { sh ~/c/m/bspwm-themes/glass.sh; }
+bspwm_theme_set_space()  { sh ~/c/m/bspwm-themes/space.sh; }
+bspwm_theme_set_void()  { sh ~/c/m/bspwm-themes/void.sh; }
 
 lemonbar_theme_set_hell() {   kill_lmbr_tail_F lemonbar -f "Source Code Pro-14" -b -B '#05080c' -F '#aa1122'; }
 lemonbar_theme_set_round() {  kill_lmbr_tail_F lemonbar -f "Source Code Pro-14" -b -B '#08131a' -F '#1d4850'; }
@@ -152,14 +152,15 @@ wallpaper_theme_set_bright() { feh --bg-scale ~/l/gwp/flowers-space-yellow-dark.
 wallpaper_theme_set_space() { feh --bg-scale ~/l/gwp/flowers-space-yellow-dark.png; }
 wallpaper_theme_set_void() { feh --bg-scale ~/l/gwp/gradient-liquid-glass.jpg; }
 
-terminal_theme_set_hell() { cd ~/.config/alacritty/ && cat head.toml colors/al_hell.toml         > alacritty.toml; }
-terminal_theme_set_round() { cd ~/.config/alacritty/ && cat head.toml colors/SeaShells.toml       > alacritty.toml; }
-terminal_theme_set_glass() { cd ~/.config/alacritty/ && cat head.toml colors/tokyo-night-storm.toml > alacritty.toml; }
-terminal_theme_set_purple() { cd ~/.config/alacritty/ && cat head.toml colors/Floraverse.toml     > alacritty.toml; }
-terminal_theme_set_autumn() { cd ~/.config/alacritty/ && cat head.toml colors/FunForrest.toml     > alacritty.toml; }
-terminal_theme_set_bright() { cd ~/.config/alacritty/ && cat head.toml colors/CLRS.toml           > alacritty.toml; }
-terminal_theme_set_space() { cd ~/.config/alacritty/ && cat head.toml colors/Glacier.toml         > alacritty.toml; }
-terminal_theme_set_void() { cd ~/.config/alacritty/ && cat head.toml colors/3024_Day.toml        > alacritty.yml; }
+terminal_theme_set_arg() { a=alacritty; cd ~/c/m && cat $a-head.toml $a-colors/"$1" > ~/.config/$a/$a.toml; }
+terminal_theme_set_hell() { terminal_theme_set_arg al_hell.toml; }
+terminal_theme_set_round() { terminal_theme_set_arg SeaShells.toml; }
+terminal_theme_set_glass() { terminal_theme_set_arg tokyo-night-storm.toml; }
+terminal_theme_set_purple() { terminal_theme_set_arg Floraverse.toml; }
+terminal_theme_set_autumn() { terminal_theme_set_arg FunForrest.toml; }
+terminal_theme_set_bright() { terminal_theme_set_arg CLRS.toml; }
+terminal_theme_set_space() { terminal_theme_set_arg Glacier.toml; }
+terminal_theme_set_void() { terminal_theme_set_arg 3024_Day.toml; }
 
 #awk '/foreground|background|black|blue/{print}' ~/.config/alacritty/colors/SeaShells.conf
 dm_wr_hell() { echo "dmenu-floating -nf '#887766' -nb '#000000' -sf '#aaaaaa' -sb '#550000'"; }

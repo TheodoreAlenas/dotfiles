@@ -1,3 +1,5 @@
+ZDOTDIR=~/.config/zsh
+
 source ~/.config/zsh/pre-config.zsh
 
 autoload -U compinit && compinit

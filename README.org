@@ -68,7 +68,7 @@ alias xc='xclip -selection clipboard'
 Note that I don't use Doom Emacs, I just use vanilla Emacs.
 I just switch between vanilla and Doom for fun sometimes
 by changing the symlinks to the configuration/cache files.
-That's partly why there's no ~dot/emacs.d~.
+That's partly why there's no ~m/dot-emacs.d~.
 
 #+begin_src sh
 switch_emacs_to_vanilla() { rm ~/.emacs.d; ln -s ~/.cache/emacs/vanilla/home-emacs-dot-d/ ~/.emacs.d; }

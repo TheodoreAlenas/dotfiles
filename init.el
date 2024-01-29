@@ -33,6 +33,10 @@
 (require 'git-gutter)
 (global-git-gutter-mode 1)
 
+;; for dired painted things, you may want to append to
+;; dired-font-lock-keywords
+;; https://www.emacswiki.org/emacs/dired%2B.el
+
 ;; org
 (require 'org)
 (add-hook 'text-mode-hook #'variable-pitch-mode)
@@ -41,6 +45,8 @@
 (set-face-attribute 'org-agenda-date nil :inherit 'fixed-pitch)
 (set-face-attribute 'org-date        nil :inherit 'fixed-pitch)
 (set-face-attribute 'org-block       nil :inherit 'fixed-pitch)
+(custom-set-faces
+ '(org-code ((t (:family "Monospace")))))
 
 ;; eglot
 (setq eglot-confirm-server-initiated-edits nil)

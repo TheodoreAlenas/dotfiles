@@ -90,14 +90,14 @@ volume_set_8() { pactl set-sink-volume 0 48000 48000; } #m8
 volume_set_9() { pactl set-sink-volume 0 54000 54000; } #m9
 volume_set_custom() { pactl set-sink-volume 0 "$(:|dmenu)"; }
 
-wallpaper_set_scale() { bspc_float; feh --bg-scale "$(find ~/l/gwp/ -type f -print0 | xargs -0 sxiv -ot)"; }
-wallpaper_set_fill()  { bspc_float; feh --bg-fill  "$(find ~/l/gwp/ -type f -print0 | xargs -0 sxiv -ot)"; }
-wallpaper_set_max()   { bspc_float; feh --bg-max   "$(find ~/l/gwp/ -type f -print0 | xargs -0 sxiv -ot)"; }
-wallpaper_set_tile()  { bspc_float; feh --bg-tile  "$(find ~/l/gwp/ -type f -print0 | xargs -0 sxiv -ot)"; }
+wallpaper_set_scale() { bspc_float; feh --bg-scale "$(find ~/p/gw/ -type f -print0 | xargs -0 sxiv -ot)"; }
+wallpaper_set_fill()  { bspc_float; feh --bg-fill  "$(find ~/p/gw/ -type f -print0 | xargs -0 sxiv -ot)"; }
+wallpaper_set_max()   { bspc_float; feh --bg-max   "$(find ~/p/gw/ -type f -print0 | xargs -0 sxiv -ot)"; }
+wallpaper_set_tile()  { bspc_float; feh --bg-tile  "$(find ~/p/gw/ -type f -print0 | xargs -0 sxiv -ot)"; }
 
 bspc_float() { bspc rule --add "${1:-"*:*:*"}" --one-shot state=floating; }
 
-terminal_theme_set() { term_rule_dock; cd ~/c/ && alacritty -e sh -c "ls theming-alacritty/ | $(term_fzf_prvw_cat)"; }
+terminal_theme_set() { term_rule_dock; cd ~/p/c/ && alacritty -e sh -c "ls theming-alacritty/ | $(term_fzf_prvw_cat)"; }
 term_rule_dock() { bspc rule --add '*:*:*' --one-shot state=floating -g 1900x500+10+500; }
 term_fzf_prvw_cat() { a=alacritty; printf %s "fzf --preview 'cat $a-head.toml theming-$a/{} > ~/.config/$a/$a.toml'"; }
 
@@ -113,23 +113,23 @@ global_theme_set_void()  { global_theme_set void; }
 global_theme_set_bspwm_startup() { global_theme_set glass; }
 global_theme_set() { for t in terminal dmenu wallpaper picom bspwm lemonbar; do "${t}_theme_set_$1"; done; }
 
-picom_theme_set_hell()  { cp  ~/c/theming-picom/hell.conf  ~/.config/picom/picom.conf; }
-picom_theme_set_round()  { cp  ~/c/theming-picom/round.conf  ~/.config/picom/picom.conf; }
-picom_theme_set_glass()  { cp  ~/c/theming-picom/glass.conf  ~/.config/picom/picom.conf; }
-picom_theme_set_purple()  { cp  ~/c/theming-picom/glass.conf  ~/.config/picom/picom.conf; }
-picom_theme_set_autumn()  { cp  ~/c/theming-picom/autumn.conf  ~/.config/picom/picom.conf; }
-picom_theme_set_bright()  { cp  ~/c/theming-picom/space.conf  ~/.config/picom/picom.conf; }
-picom_theme_set_space()  { cp  ~/c/theming-picom/space.conf  ~/.config/picom/picom.conf; }
-picom_theme_set_void()  { cp  ~/c/theming-picom/void.conf  ~/.config/picom/picom.conf; }
+picom_theme_set_hell()  { cp  ~/p/c/theming-picom/hell.conf  ~/.config/picom/picom.conf; }
+picom_theme_set_round()  { cp  ~/p/c/theming-picom/round.conf  ~/.config/picom/picom.conf; }
+picom_theme_set_glass()  { cp  ~/p/c/theming-picom/glass.conf  ~/.config/picom/picom.conf; }
+picom_theme_set_purple()  { cp  ~/p/c/theming-picom/glass.conf  ~/.config/picom/picom.conf; }
+picom_theme_set_autumn()  { cp  ~/p/c/theming-picom/autumn.conf  ~/.config/picom/picom.conf; }
+picom_theme_set_bright()  { cp  ~/p/c/theming-picom/space.conf  ~/.config/picom/picom.conf; }
+picom_theme_set_space()  { cp  ~/p/c/theming-picom/space.conf  ~/.config/picom/picom.conf; }
+picom_theme_set_void()  { cp  ~/p/c/theming-picom/void.conf  ~/.config/picom/picom.conf; }
 
-bspwm_theme_set_hell()  { sh ~/c/theming-bspwm/hell.sh; }
-bspwm_theme_set_round()  { sh ~/c/theming-bspwm/round.sh; }
-bspwm_theme_set_glass()  { sh ~/c/theming-bspwm/glass.sh; }
-bspwm_theme_set_purple()  { sh ~/c/theming-bspwm/silent.sh; }
-bspwm_theme_set_autumn()  { sh ~/c/theming-bspwm/autumn.sh; }
-bspwm_theme_set_bright()  { sh ~/c/theming-bspwm/glass.sh; }
-bspwm_theme_set_space()  { sh ~/c/theming-bspwm/space.sh; }
-bspwm_theme_set_void()  { sh ~/c/theming-bspwm/void.sh; }
+bspwm_theme_set_hell()  { sh ~/p/c/theming-bspwm/hell.sh; }
+bspwm_theme_set_round()  { sh ~/p/c/theming-bspwm/round.sh; }
+bspwm_theme_set_glass()  { sh ~/p/c/theming-bspwm/glass.sh; }
+bspwm_theme_set_purple()  { sh ~/p/c/theming-bspwm/silent.sh; }
+bspwm_theme_set_autumn()  { sh ~/p/c/theming-bspwm/autumn.sh; }
+bspwm_theme_set_bright()  { sh ~/p/c/theming-bspwm/glass.sh; }
+bspwm_theme_set_space()  { sh ~/p/c/theming-bspwm/space.sh; }
+bspwm_theme_set_void()  { sh ~/p/c/theming-bspwm/void.sh; }
 
 lemonbar_theme_set_hell() {   kill_lmbr_tail_F lemonbar -f "Source Code Pro-14" -b -B '#05080c' -F '#aa1122'; }
 lemonbar_theme_set_round() {  kill_lmbr_tail_F lemonbar -f "Source Code Pro-14" -b -B '#08131a' -F '#1d4850'; }
@@ -143,16 +143,16 @@ lemonbar_theme_set_void() {   kill_lmbr_tail_F lemonbar -f "Source Code Pro-14" 
 lemonbar_theme_set_large() {  kill_lmbr_tail_F lemonbar -f "Source Code Pro-24" -b -B '#24283b' -F '#7aa2f7'; }
 kill_lmbr_tail_F() { killall lemonbar; tail -F /tmp/lemonbar | "$@"; }
 
-wallpaper_theme_set_hell() { feh --bg-fill ~/l/gwp/rebecca-jansen.jpg; }
-wallpaper_theme_set_round() { feh --bg-scale ~/l/gwp/gradient-blue-pink.jpg; }
-wallpaper_theme_set_glass() { feh --bg-scale ~/l/gwp/night-rain-city.jpg; }
-wallpaper_theme_set_purple() { feh --bg-scale ~/l/gwp/03-rails.jpg; }
-wallpaper_theme_set_autumn() { feh --bg-scale ~/l/gwp/orange-leaves-autumn.jpg; }
-wallpaper_theme_set_bright() { feh --bg-scale ~/l/gwp/flowers-space-yellow-dark.png; }
-wallpaper_theme_set_space() { feh --bg-scale ~/l/gwp/flowers-space-yellow-dark.png; }
-wallpaper_theme_set_void() { feh --bg-scale ~/l/gwp/gradient-liquid-glass.jpg; }
+wallpaper_theme_set_hell() { feh --bg-fill ~/p/gw/rebecca-jansen.jpg; }
+wallpaper_theme_set_round() { feh --bg-scale ~/p/gw/gradient-blue-pink.jpg; }
+wallpaper_theme_set_glass() { feh --bg-scale ~/p/gw/night-rain-city.jpg; }
+wallpaper_theme_set_purple() { feh --bg-scale ~/p/gw/03-rails.jpg; }
+wallpaper_theme_set_autumn() { feh --bg-scale ~/p/gw/orange-leaves-autumn.jpg; }
+wallpaper_theme_set_bright() { feh --bg-scale ~/p/gw/flowers-space-yellow-dark.png; }
+wallpaper_theme_set_space() { feh --bg-scale ~/p/gw/flowers-space-yellow-dark.png; }
+wallpaper_theme_set_void() { feh --bg-scale ~/p/gw/gradient-liquid-glass.jpg; }
 
-terminal_theme_set_arg() { a=alacritty; cd ~/c && cat $a-head.toml theming-$a/"$1" > ~/.config/$a/$a.toml; }
+terminal_theme_set_arg() { a=alacritty; cd ~/p/c && cat $a-head.toml theming-$a/"$1" > ~/.config/$a/$a.toml; }
 terminal_theme_set_hell() { terminal_theme_set_arg al_hell.toml; }
 terminal_theme_set_round() { terminal_theme_set_arg SeaShells.toml; }
 terminal_theme_set_glass() { terminal_theme_set_arg tokyo-night-storm.toml; }
@@ -277,7 +277,7 @@ scmd_give_bar_test_1234() { for i in 1 2 3 4; do sleep 1 && echo "$i"; done; }
 
 in_vim() { term_rule_dock && alacritty -e sh -c ". $(this_file) && $1 | vim -"; }
 in_terminal() { term_rule_dock && alacritty -e sh -c "$1"; }
-this_file() { echo ~/c/scmd.sh; }
+this_file() { echo ~/p/c/scmd.sh; }
 
 # Copyright (c) 2023 Dimakopoulos Theodoros
 # 

@@ -10,13 +10,8 @@ for_each_src_dest() {
     "$@" init.el ~/.cache/emacs/vanilla/home-emacs-dot-d/init.el
     "$@" nvim ~/.config/nvim
 
-    "$@" bash-and-zsh/posix-shell-startup.sh ~/.config/posix-shell-startup.sh
-    "$@" bash-and-zsh/main.bash              ~/.config/bash/main.bash
-    "$@" bash-and-zsh/.zcompdump             ~/.config/zsh/.zcompdump
-    "$@" bash-and-zsh/main.zsh               ~/.config/zsh/main.zsh
-    "$@" bash-and-zsh/main.zsh               ~/.zshrc
-    "$@" bash-and-zsh/post-config.zsh        ~/.config/zsh/post-config.zsh
-    "$@" bash-and-zsh/pre-config.zsh         ~/.config/zsh/pre-config.zsh
+    "$@" bash-and-zsh/dot-bashrc.bash ~/.bashrc
+    "$@" bash-and-zsh/dot-zshrc.zsh ~/.zshrc
 
     "$@" m/tmux.conf ~/.config/tmux/tmux.conf
     "$@" m/tmux-fzf-new-session ~/.local/bin/tmux-fzf-new-session

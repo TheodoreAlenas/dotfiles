@@ -31,6 +31,7 @@
 (vertico-mode)
 (marginalia-mode)
 (require 'git-gutter)
+(add-hook 'prog-mode-hook #'rainbow-delimiters-mode)
 (global-git-gutter-mode 1)
 
 ;; for dired painted things, you may want to append to
@@ -45,6 +46,7 @@
 (set-face-attribute 'org-agenda-date nil :inherit 'fixed-pitch)
 (set-face-attribute 'org-date        nil :inherit 'fixed-pitch)
 (set-face-attribute 'org-block       nil :inherit 'fixed-pitch)
+(setq org-hide-emphasis-markers t)
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -82,11 +84,6 @@
   (ligature-set-ligatures '(haskell-mode) al/haskell-ligature-strings))
 
 
-;; RSS
-(setq elfeed-feeds
-      '("http://agiamarinailision.gr/datafeeds/rss"
-        "https://www.di.uoa.gr/rss.xml"))
-
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -101,7 +98,7 @@
  '(git-gutter:update-interval 0.2)
  '(org-agenda-files '("/home/aleena/code/emacs/test.org"))
  '(package-selected-packages
-   '(lua-mode nginx-mode gptel rust-mode graphviz-dot-mode docker-compose-mode systemd org-babel-eval-in-repl web-mode pdf-tools ef-themes ligature haskell-mode evil marginalia slime editorconfig elfeed magit vertico material-theme git-gutter eglot)))
+   '(rainbow-delimiters lua-mode nginx-mode gptel rust-mode graphviz-dot-mode docker-compose-mode systemd org-babel-eval-in-repl web-mode pdf-tools ef-themes ligature haskell-mode evil marginalia slime editorconfig magit vertico material-theme git-gutter eglot)))
 
 
 (put 'narrow-to-region 'disabled nil)

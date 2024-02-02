@@ -1,9 +1,5 @@
 
 for_each_src_dest() {
-    for f in doom-emacs-for-temporary-symlink/*
-    do "$@" "$f" ~/.cache/emacs/doom/"${f#*/}"
-    done
-
     "$@" m/dot-xinitrc ~/.xinitrc
     "$@" m/dot-Xresources ~/.Xresources
     "$@" m/dot-Xresources ~/.Xdefaults

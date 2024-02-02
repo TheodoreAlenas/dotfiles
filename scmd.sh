@@ -230,7 +230,7 @@ open_last_recording() { mpv /tmp/rec.mkv; }
 open_zathura_in_downloads() { f="$(find ~/Downloads | dmenu)" && zathura "$f"; }
 
 switch_emacs_to_vanilla() { rm ~/.emacs.d; ln -s ~/.cache/emacs/vanilla/home-emacs-dot-d/ ~/.emacs.d; }
-switch_emacs_to_doom() { rm ~/.emacs.d; ln -s ~/.cache/emacs/doom/home-emacs-dot-d/ ~/.emacs.d; }
+switch_emacs_to_doom() { rm ~/.emacs.d; ln -s ~/.cache/emacs/doomemacs/ ~/.emacs.d; }
 
 lemonbar_show_date() { date; } #cd
 lemonbar_show_free_disk() { df -h | awk '/e0n1p6/{print $4}'; } #cf

@@ -36,18 +36,18 @@ the POSIX ~install.sh~ that doesn't use shell arrays
 
 #+begin_src sh
 case "$1" in
-    (--help|-h) echo "$0 [ARG]   where ARG one of ln, rm, --help, -h" ;;
     (ln) for_each_src_dest ln_full_path ;;
     (rm) for_each_src_dest rm_dest ;;
     ('') for_each_src_dest relink ;;
+    (*) echo "$0   or   $0 ln   or   $0 rm" ;;
 esac
 #+end_src
 
 and the two-part concatenated terminal configuration.
 
 #+begin_src
-  drwxr-xr-x 2 aleena aleena 20480 Jan 15 18:33 alacritty-colors
-  -rw-r--r-- 1 aleena aleena   283 Jan  6 12:57 alacritty-head.toml
+  drwxr-xr-x   2 aleena aleena 20480 Jan 15 18:33 theming-alacritty
+  -rw-r--r--   1 aleena aleena   283 Jan  6 12:57 alacritty-head.toml
 #+end_src
 
 I used to use NeoVim. Recently I switched to Emacs.

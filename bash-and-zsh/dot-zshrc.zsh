@@ -9,7 +9,6 @@ function zshrc_main() {
 
 function zshrc_set_variables() {
     ZDOTDIR=~/.config/zsh
-    ZDOTDIR=~/.config/zsh
 
     HISTFILE=~/.cache/zsh/history
     HISTSIZE=128

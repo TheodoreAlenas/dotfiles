@@ -71,12 +71,12 @@ keyboard_language_set_english() { setxkbmap us; }
 keyboard_language_set_serbian() { setxkbmap rs; } #8
 keyboard_language_set_variant() { setxkbmap us "$(localectl list-x11-keymap-variants us | dmenu)"; }
 
-hellsinger_start() { mpv ~/l/gmus/hellsinger-fast.mp4 --start=00:00 --volume=50; } #ms
-hellsinger_this()  { mpv ~/l/gmus/hellsinger-fast.mp4 --start=05:48 --volume=50; } #mt
-hellsinger_egypt() { mpv ~/l/gmus/hellsinger-fast.mp4 --start=14:03 --volume=50; } #me
-hellsinger_feel()  { mpv ~/l/gmus/hellsinger-fast.mp4 --start=29:59 --volume=50; } #mf
-hellsinger_msg()   { mpv ~/l/gmus/hellsinger-fast.mp4 --start=36:18 --volume=50; } #mm
-hellsinger_away()  { mpv ~/l/gmus/hellsinger-fast.mp4 --start=41:31 --volume=50; } #ma
+hellsinger_start() { mpv ~/r/music-laptop/hellsinger-fast.mp4 --start=00:00 --volume=50; } #ms
+hellsinger_this()  { mpv ~/r/music-laptop/hellsinger-fast.mp4 --start=05:48 --volume=50; } #mt
+hellsinger_egypt() { mpv ~/r/music-laptop/hellsinger-fast.mp4 --start=14:03 --volume=50; } #me
+hellsinger_feel()  { mpv ~/r/music-laptop/hellsinger-fast.mp4 --start=29:59 --volume=50; } #mf
+hellsinger_msg()   { mpv ~/r/music-laptop/hellsinger-fast.mp4 --start=36:18 --volume=50; } #mm
+hellsinger_away()  { mpv ~/r/music-laptop/hellsinger-fast.mp4 --start=41:31 --volume=50; } #ma
 
 volume_set_0() { pactl set-sink-volume 0  1000  1000; } #m0
 volume_set_1() { pactl set-sink-volume 0  6000  6000; } #m1
@@ -90,10 +90,10 @@ volume_set_8() { pactl set-sink-volume 0 48000 48000; } #m8
 volume_set_9() { pactl set-sink-volume 0 54000 54000; } #m9
 volume_set_custom() { pactl set-sink-volume 0 "$(:|dmenu)"; }
 
-wallpaper_set_scale() { bspc_float; feh --bg-scale "$(find ~/p/gw/ -type f -print0 | xargs -0 sxiv -ot)"; }
-wallpaper_set_fill()  { bspc_float; feh --bg-fill  "$(find ~/p/gw/ -type f -print0 | xargs -0 sxiv -ot)"; }
-wallpaper_set_max()   { bspc_float; feh --bg-max   "$(find ~/p/gw/ -type f -print0 | xargs -0 sxiv -ot)"; }
-wallpaper_set_tile()  { bspc_float; feh --bg-tile  "$(find ~/p/gw/ -type f -print0 | xargs -0 sxiv -ot)"; }
+wallpaper_set_scale() { bspc_float; feh --bg-scale "$(find ~/r/wp/ -type f -print0 | xargs -0 sxiv -ot)"; }
+wallpaper_set_fill()  { bspc_float; feh --bg-fill  "$(find ~/r/wp/ -type f -print0 | xargs -0 sxiv -ot)"; }
+wallpaper_set_max()   { bspc_float; feh --bg-max   "$(find ~/r/wp/ -type f -print0 | xargs -0 sxiv -ot)"; }
+wallpaper_set_tile()  { bspc_float; feh --bg-tile  "$(find ~/r/wp/ -type f -print0 | xargs -0 sxiv -ot)"; }
 
 bspc_float() { bspc rule --add "${1:-"*:*:*"}" --one-shot state=floating; }
 
@@ -141,16 +141,21 @@ lemonbar_theme_set_space() {  kill_lmbr_tail_F lemonbar -f "Source Code Pro-14" 
 lemonbar_theme_set_void() {   kill_lmbr_tail_F lemonbar -f "Source Code Pro-14" -b -B '#05080c' -F '#aaaabb'; }
 
 lemonbar_theme_set_large() {  kill_lmbr_tail_F lemonbar -f "Source Code Pro-24" -b -B '#24283b' -F '#7aa2f7'; }
-kill_lmbr_tail_F() { killall lemonbar; tail -F /tmp/lemonbar | "$@"; }
+kill_lmbr_tail_F() { killall lemonbar; tail -F /tmp/lemonbar.sh | lmbr_paint | "$@"; }
+lmbr_paint() { while read -r l; do printf "%s\n" "$l" | lmbr_paint1 | lmbr_paint2 | lmbr_paint3 | lmbr_paint4; done; }
+lmbr_paint1() { sed 's/%/%%/g' | tr -d '\n' | tr -c '[:print:]' '^'; echo; }
+lmbr_paint2() { sed 's/[0-9]\| #[^ >]* /%{F#f66}&%{F-}/g'; }
+lmbr_paint3() { sed 's/() *{\|; }\| }\| }\|#>>/%{F#334}&%{F-}/g'; }
+lmbr_paint4() { sed 's/\(.*#>>\)\(.*\)/%{c}\1%{B#001}\2%{B-}/'; }
 
-wallpaper_theme_set_hell() { feh --bg-fill ~/p/gw/rebecca-jansen.jpg; }
-wallpaper_theme_set_round() { feh --bg-scale ~/p/gw/gradient-blue-pink.jpg; }
-wallpaper_theme_set_glass() { feh --bg-scale ~/p/gw/night-rain-city.jpg; }
-wallpaper_theme_set_purple() { feh --bg-scale ~/p/gw/03-rails.jpg; }
-wallpaper_theme_set_autumn() { feh --bg-scale ~/p/gw/orange-leaves-autumn.jpg; }
-wallpaper_theme_set_bright() { feh --bg-scale ~/p/gw/flowers-space-yellow-dark.png; }
-wallpaper_theme_set_space() { feh --bg-scale ~/p/gw/flowers-space-yellow-dark.png; }
-wallpaper_theme_set_void() { feh --bg-scale ~/p/gw/gradient-liquid-glass.jpg; }
+wallpaper_theme_set_hell() { feh --bg-fill ~/r/wp/rebecca-jansen.jpg; }
+wallpaper_theme_set_round() { feh --bg-scale ~/r/wp/gradient-blue-pink.jpg; }
+wallpaper_theme_set_glass() { feh --bg-scale ~/r/wp/night-rain-city.jpg; }
+wallpaper_theme_set_purple() { feh --bg-scale ~/r/wp/03-rails.jpg; }
+wallpaper_theme_set_autumn() { feh --bg-scale ~/r/wp/orange-leaves-autumn.jpg; }
+wallpaper_theme_set_bright() { feh --bg-scale ~/r/wp/flowers-space-yellow-dark.png; }
+wallpaper_theme_set_space() { feh --bg-scale ~/r/wp/flowers-space-yellow-dark.png; }
+wallpaper_theme_set_void() { feh --bg-scale ~/r/wp/gradient-liquid-glass.jpg; }
 
 terminal_theme_set_arg() { a=alacritty; cd ~/p/c && cat $a-head.toml theming-$a/"$1" > ~/.config/$a/$a.toml; }
 terminal_theme_set_hell() { terminal_theme_set_arg al_hell.toml; }
@@ -235,7 +240,7 @@ switch_emacs_to_doom() { rm ~/.emacs.d; ln -s ~/.cache/emacs/doomemacs/ ~/.emacs
 lemonbar_show_date() { date; } #cd
 lemonbar_show_free_disk() { df -h | awk '/e0n1p6/{print $4}'; } #cf
 lemonbar_show_memory() { free|awk 'NR>1{t=int($2/200000);u=int($3/200000);printf("[%"u"s>%"t-u"s]","","")}';echo; } #cm
-lemonbar_input_vim() { in_terminal "vi '+$' /tmp/lemonbar"; }
+lemonbar_input_vim() { in_terminal "vi '+$' /tmp/lemonbar.sh"; }
 
 preview_figlet_vim() { in_vim 'for f in /usr/share/figlet/fonts/*; do echo "$f"; figlet -f "$f" Figlet; done'; }
 copy_glyph_or_emoji() { printf %s "$(dmenu < ~/l/gart/glyphs | cut -d' ' -f1)" | xclip -in -sel clipboard; }
@@ -268,10 +273,8 @@ scmd_sxhkdrc() { scmd_ls_keys | awk "{ $(scmd_awk1) $(scmd_awk2) }"; }
 scmd_awk1() { printf %s 's = $1; gsub(/./, "; super + &", s); sub("; ", "", s); '; }
 scmd_awk2() { printf %s 'print(s); printf("\t. %s && scmd_with_bar_status %s\n\n", "'"$(this_file)"'", $2);'; }
 scmd_find() { printf "%s\n" "$(grep "^$1(" "$(this_file)")"; }
-scmd_with_bar_status() { cline="$(scmd_find "$1")"; (echo; "$@" 2>&1) | scmd_bar_fmt "$cline" >> /tmp/lemonbar; }
-scmd_bar_fmt() { while read -r l; do scmd_bar_paint "$1" "$(printf %s "$l" | sed 's/%/%%/')"; done; }
-scmd_bar_paint() { printf "%s\n" "%{c}  $(printf %s "$1" | scmd_bar_sed)  %{R}$2%{R}"; }
-scmd_bar_sed() { sed 's/\(^[^(]*\)\([^{]*{\)\(.*\)\(}[^}]*$\)/\1%{F#666}\2%{F-}\3%{F#666}\4%{F-}/'; }
+scmd_with_bar_status() { cline="$(scmd_find "$1")"; (echo; "$@" 2>&1) | scmd_bar_fmt "$cline" >> /tmp/lemonbar.sh; }
+scmd_bar_fmt() { while read -r l; do printf "%s #>>%s\n" "$1" "$l"; done; }
 scmd_give_bar_color_swap_fix() { echo "%{R}"; }
 scmd_give_bar_test_1234() { for i in 1 2 3 4; do sleep 1 && echo "$i"; done; }
 

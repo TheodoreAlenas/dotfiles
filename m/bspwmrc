@@ -1,5 +1,5 @@
 #!/bin/env sh
 
 bspwm-rules
-printf "%s\n" "%{c}lemonbar initialized" >> /tmp/lemonbar
+printf "%s\n" "#%{c}Lemonbar initialized" >> /tmp/lemonbar.sh
 (. /home/aleena/p/c/scmd.sh && global_theme_set_bspwm_startup)

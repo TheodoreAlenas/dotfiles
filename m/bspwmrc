@@ -1,4 +1,21 @@
 #!/bin/env sh
 
-bspwm-rules
-(. /home/aleena/p/c/scmd.sh && scmd_with_bar_status global_theme_set_bspwm_startup)
+bspc monitor -d  main web manual terminal media spotify temporary
+
+per_rule() {
+    # Class (middle) is the first of the 2 WM_CLASS fields of xprop.
+    # The second of the 2 WM_CLASS fields goes to the first of these.
+    "$@" 'Battery widget:*:*' state=floating focus=off
+    "$@"   'Clock widget:*:*' state=floating focus=off
+    "$@"        'Zathura:*:*' state=tiled
+    "$@"          '*:emacs:*' state=tiled
+}
+
+bspc_rule_remove_add() {
+    bspc rule --remove "$1"
+    bspc rule --add "$@"
+}
+
+per_rule bspc_rule_remove_add
+
+(. /home/aleena/p/c/scmd.sh &&scmd_with_bar_status global_theme_set_bspwm_startup)

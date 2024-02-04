@@ -132,14 +132,14 @@ picom_theme_set_bright()  { cp  ~/p/c/theming-picom/space.conf  ~/.config/picom/
 picom_theme_set_space()  { cp  ~/p/c/theming-picom/space.conf  ~/.config/picom/picom.conf; }
 picom_theme_set_void()  { cp  ~/p/c/theming-picom/void.conf  ~/.config/picom/picom.conf; }
 
-bspwm_theme_set_hell()  { sh ~/p/c/theming-bspwm/hell.sh; }
-bspwm_theme_set_round()  { sh ~/p/c/theming-bspwm/round.sh; }
-bspwm_theme_set_glass()  { sh ~/p/c/theming-bspwm/glass.sh; }
-bspwm_theme_set_purple()  { sh ~/p/c/theming-bspwm/silent.sh; }
-bspwm_theme_set_autumn()  { sh ~/p/c/theming-bspwm/autumn.sh; }
-bspwm_theme_set_bright()  { sh ~/p/c/theming-bspwm/glass.sh; }
-bspwm_theme_set_space()  { sh ~/p/c/theming-bspwm/space.sh; }
-bspwm_theme_set_void()  { sh ~/p/c/theming-bspwm/void.sh; }
+bspwm_theme_set_hell()  { ~/p/c/m/bspwmrc only-theme hell; }
+bspwm_theme_set_round()  { ~/p/c/m/bspwmrc only-theme round; }
+bspwm_theme_set_glass()  { ~/p/c/m/bspwmrc only-theme glass; }
+bspwm_theme_set_purple()  { ~/p/c/m/bspwmrc only-theme silent; }
+bspwm_theme_set_autumn()  { ~/p/c/m/bspwmrc only-theme autumn; }
+bspwm_theme_set_bright()  { ~/p/c/m/bspwmrc only-theme glass; }
+bspwm_theme_set_space()  { ~/p/c/m/bspwmrc only-theme space; }
+bspwm_theme_set_void()  { ~/p/c/m/bspwmrc only-theme void; }
 
 lemonbar_theme_set_hell() {   kill_lmbr_tail_f lemonbar -f "Source Code Pro-14" -b -B '#05080c' -F '#aa1122'; }
 lemonbar_theme_set_round() {  kill_lmbr_tail_f lemonbar -f "Source Code Pro-14" -b -B '#08131a' -F '#1d4850'; }

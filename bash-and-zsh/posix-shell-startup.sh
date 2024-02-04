@@ -1,4 +1,5 @@
 PS1='$ '
+L5=sdi1900048@linux15.di.uoa.gr
 
 alias vi=nvim
 alias ls=eza
@@ -23,17 +24,12 @@ br() {
 
 # record screen
 rec() {
-  ffmpeg \
-    -f x11grab -s 1920x1080 -i :0.0 \
-	-fs 2000M \
-    "${1:-"$AL_RECORDING"}"
+  ffmpeg -f x11grab -s 1920x1080 -i :0.0 -fs 2000M "${1:-/tmp/rec.mkv}"
 }
 
 # record screen and audio
 reca() {
-  ffmpeg \
-    -f x11grab -s 1920x1080 -i :0.0 \
+  ffmpeg -f x11grab -s 1920x1080 -i :0.0 \
     -f alsa -itsoffset 0.3 -i hw:1 -af "volume=2.0" \
-	-fs 2000M \
-    "${1:-"$AL_RECORDING"}"
+	-fs 2000M "${1:-/tmp/rec.mkv}"
 }

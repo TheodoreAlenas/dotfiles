@@ -211,7 +211,13 @@ screenshot_take_fullscreen_delay()   { sleep "$(:|dmenu)" && shotgun /tmp/screen
 screenshot_copy_in_clipboard()   { xclip -in -sel clipboard -t image/png < /tmp/screenshot.png; }
 screenshot_view()   { sxiv /tmp/screenshot.png; }
 
-clipboard_youtube_channel() { printf %s "https://www.youtube.com/@theodorealenas3171"|xclip -selection clipboard -in; }
+clip_yt() { printf %s https://www.youtube.com/@theodorealenas3171 | xclip -selection clipboard -in; }
+clip_gh()  { printf %s https://github.com/TheodoreAlenas/          | xclip -selection clipboard -in; }
+clip_dot()  { printf %s https://github.com/TheodoreAlenas/dotfiles  | xclip -selection clipboard -in; }
+clip_site()  { printf %s https://theodoros-d-alenas.site/            | xclip -selection clipboard -in; }
+clip_insta()  { printf %s https://www.instagram.com/theodore_alenas/  | xclip -selection clipboard -in; }
+clip_yt_tdd() { printf %s "https://www.youtube.com/watch?v=kScFczWbwRM"     |xclip -selection clipboard -in; }
+clip_yt_tcr() { printf %s "https://youtu.be/tnO2Mos0RjU?si=OhTk8fUdI0FPTWT6"|xclip -selection clipboard -in; }
 
 open_terminal() { alacritty; } #t
 
@@ -283,17 +289,17 @@ in_terminal() { term_rule_dock && alacritty -e sh -c "$1"; }
 this_file() { echo ~/p/c/scmd.sh; }
 
 # Copyright (c) 2023 Dimakopoulos Theodoros
-# 
+#
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
 # in the Software without restriction, including without limitation the rights
 # to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
 # copies of the Software, and to permit persons to whom the Software is
 # furnished to do so, subject to the following conditions:
-# 
+#
 # The above copyright notice and this permission notice shall be included in all
 # copies or substantial portions of the Software.
-# 
+#
 # THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 # IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
 # FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE

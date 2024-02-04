@@ -3,6 +3,7 @@ for_each_src_dest() {
     "$@" m/dot-xinitrc ~/.xinitrc
     "$@" m/dot-Xresources ~/.Xresources
     "$@" m/dot-Xresources ~/.Xdefaults
+    "$@" m/profile-dot-d-exports.sh ~/.config/profile.d/01-all.sh
     "$@" init.el ~/.cache/emacs/vanilla/home-emacs-dot-d/init.el
     "$@" nvim ~/.config/nvim
 

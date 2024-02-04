@@ -5,16 +5,13 @@ You may find ~scmd.sh~,
 the self documented command palette and hotkey self generator
 
 #+begin_src sh
+about_logging() { tail /tmp/scmd.sh; echo "Should have lines that look like: func() { echo hi; } #>>hi"; }
+# [...]
 window_other() { bspc node next.local.leaf --focus; } #o
 # [...]
 volume_set_8() { pactl set-sink-volume 0 48000 48000; } #m8
 volume_set_9() { pactl set-sink-volume 0 54000 54000; } #m9
 volume_set_custom() { pactl set-sink-volume 0 "$(:|dmenu)"; }
-# [...]
-clip_yt_tdd() { printf %s "https://www.youtube.com/watch?v=kScFczWbwRM"     |xclip -selection clipboard -in; }
-clip_yt_tcr() { printf %s "https://youtu.be/tnO2Mos0RjU?si=OhTk8fUdI0FPTWT6"|xclip -selection clipboard -in; }
-
-open_terminal() { alacritty; } #t
 # [...]
 scmd_stands_for_system_command() { :; }
 scmd_run() { c="$(dmenu < "$(this_file)" | cut -d'(' -f1)"; test "$c" && scmd_with_bar_status "$c"; } #x

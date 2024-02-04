@@ -32,8 +32,8 @@
 (load-theme 'ef-tritanopia-dark t)
 (vertico-mode)
 (marginalia-mode)
-(require 'git-gutter)
 (add-hook 'prog-mode-hook #'rainbow-delimiters-mode)
+(require 'git-gutter)
 (global-git-gutter-mode 1)
 
 ;; for dired painted things, you may want to append to

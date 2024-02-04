@@ -25,5 +25,5 @@ case "$1" in
     (ln) for_each_src_dest ln_full_path ;;
     (rm) for_each_src_dest rm_dest ;;
     ('') for_each_src_dest relink ;;
-    (*) echo "$0   or   $0 ln   or   $0 rm" ;;
+    (*) echo "$0   or   $0 ln   or   $0 rm" >&2 ; exit 1 ;;
 esac

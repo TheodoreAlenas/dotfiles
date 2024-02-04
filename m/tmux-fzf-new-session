@@ -5,3 +5,6 @@ p="$(ls ~/l | fzf --preview "$fzf_pvw")" || exit 0
 cd -P "$HOME/l/$p"                       || exit 1
 tmux new-session -d -s "${PWD##*/}"      || exit 1
 tmux switch-client -t "${PWD##*/}"       || exit 1
+
+# I have symlinks in ~/l so that's why cd -P
+# The symlink has a long name and the destination a short.

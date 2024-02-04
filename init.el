@@ -27,6 +27,8 @@
 ;; buffer look
 (setq-default show-trailing-whitespace t)
 (setq column-number-mode t)
+(setq explicit-shell-file-name "/usr/bin/dash")
+(eshell-syntax-highlighting-global-mode)
 (load-theme 'ef-tritanopia-dark t)
 (vertico-mode)
 (marginalia-mode)
@@ -97,7 +99,7 @@
  '(git-gutter:update-interval 0.2)
  '(org-agenda-files '("/home/aleena/code/emacs/test.org"))
  '(package-selected-packages
-   '(rainbow-delimiters lua-mode nginx-mode gptel rust-mode graphviz-dot-mode docker-compose-mode systemd org-babel-eval-in-repl web-mode pdf-tools ef-themes ligature haskell-mode evil marginalia slime editorconfig magit vertico material-theme git-gutter eglot)))
+   '(eshell-syntax-highlighting rainbow-delimiters lua-mode nginx-mode gptel rust-mode graphviz-dot-mode docker-compose-mode systemd org-babel-eval-in-repl web-mode pdf-tools ef-themes ligature haskell-mode evil marginalia slime editorconfig magit vertico material-theme git-gutter eglot)))
 
 
 (put 'narrow-to-region 'disabled nil)

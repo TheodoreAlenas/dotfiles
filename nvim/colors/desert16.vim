@@ -3,9 +3,8 @@
 " Author:       Theodoros Dimakopoulos <dimakopt732@gmail.com>
 " Maintainer:   God bless
 " Website:      None
-" License:      None
+" License:      MIT found at the bottom of the file
 " Last Updated: Tue Oct  3 18:59:30 EEST 2023
-" License at the bottom
 
 set background=dark
 

@@ -1,5 +1,15 @@
 # License at the bottom
 # shellcheck disable=SC2016 disable=SC1090 disable=SC2012 disable=SC2120
+
+about_usage() { if [ -f ~/.config/sxhkdrc ]; then echo "CAREFUL!"; else . ./scmd.sh && scmd_upd && echo Super + X; fi; }
+about_main_dependencies() { which sxhkd dmenu lemonbar; }
+about_secondary_dependencies() { which bspwm picom pulseaudio alacritty vim feh; }
+about_debugging() { echo "This is what I usually do:"; scmd_ls_keys_vim; scmd_sxhkdrc_vim; this_file; }
+about_logging() { tail /tmp/scmd.sh; echo "Should have lines that look like: func() { echo hi; } #>>hi"; }
+about_why() { echo "For the syntax highlighting and to reduce bugs. I've made many abstract hotkey systems."; }
+about_how_to_write() { echo "Lines are only blank, comments or inline functions, none longer than 120 characters."; }
+about_but_how_do_i() { echo "You don't. That's the usual answer. Think of the luxuries you'd lose for it."; }
+
 window_other() { bspc node next.local.leaf --focus; } #o
 window_replace() { bspc node --swap "$(win_dmenu)"; }
 window_find() { bspc node "$(win_dmenu)" --focus; } #b
@@ -131,26 +141,26 @@ bspwm_theme_set_bright()  { sh ~/p/c/theming-bspwm/glass.sh; }
 bspwm_theme_set_space()  { sh ~/p/c/theming-bspwm/space.sh; }
 bspwm_theme_set_void()  { sh ~/p/c/theming-bspwm/void.sh; }
 
-lemonbar_theme_set_hell() {   kill_lmbr_tail_F lemonbar -f "Source Code Pro-14" -b -B '#05080c' -F '#aa1122'; }
-lemonbar_theme_set_round() {  kill_lmbr_tail_F lemonbar -f "Source Code Pro-14" -b -B '#08131a' -F '#1d4850'; }
-lemonbar_theme_set_glass() {  kill_lmbr_tail_F lemonbar -f "Source Code Pro-14" -b -B '#000e17' -F '#afbcbf'; }
-lemonbar_theme_set_purple() { kill_lmbr_tail_F lemonbar -f "Source Code Pro-14" -b -B '#0e0c15' -F '#42a38c'; }
-lemonbar_theme_set_autumn() { kill_lmbr_tail_F lemonbar -f "Source Code Pro-14" -b -B '#05080c' -F '#aa1122'; }
-lemonbar_theme_set_bright() { kill_lmbr_tail_F lemonbar -f "Source Code Pro-14" -b -B '#05080c' -F '#aaaabb'; }
-lemonbar_theme_set_space() {  kill_lmbr_tail_F lemonbar -f "Source Code Pro-14" -b -B '#05080c' -F '#aaaabb'; }
-lemonbar_theme_set_void() {   kill_lmbr_tail_F lemonbar -f "Source Code Pro-14" -b -B '#05080c' -F '#aaaabb'; }
+lemonbar_theme_set_hell() {   kill_lmbr_tail_f lemonbar -f "Source Code Pro-14" -b -B '#05080c' -F '#aa1122'; }
+lemonbar_theme_set_round() {  kill_lmbr_tail_f lemonbar -f "Source Code Pro-14" -b -B '#08131a' -F '#1d4850'; }
+lemonbar_theme_set_glass() {  kill_lmbr_tail_f lemonbar -f "Source Code Pro-14" -b -B '#000e17' -F '#afbcbf'; }
+lemonbar_theme_set_purple() { kill_lmbr_tail_f lemonbar -f "Source Code Pro-14" -b -B '#0e0c15' -F '#42a38c'; }
+lemonbar_theme_set_autumn() { kill_lmbr_tail_f lemonbar -f "Source Code Pro-14" -b -B '#05080c' -F '#aa1122'; }
+lemonbar_theme_set_bright() { kill_lmbr_tail_f lemonbar -f "Source Code Pro-14" -b -B '#05080c' -F '#aaaabb'; }
+lemonbar_theme_set_space() {  kill_lmbr_tail_f lemonbar -f "Source Code Pro-14" -b -B '#05080c' -F '#aaaabb'; }
+lemonbar_theme_set_void() {   kill_lmbr_tail_f lemonbar -f "Source Code Pro-14" -b -B '#05080c' -F '#aaaabb'; }
 
-lemonbar_theme_set_large() {  kill_lmbr_tail_F lemonbar -f "Source Code Pro-24" -b -B '#24283b' -F '#7aa2f7'; }
-kill_lmbr_tail_F() { killall lemonbar; tail -F /tmp/lemonbar.sh | lmbr_paint | "$@"; }
-lmbr_paint() { while read -r l; do printf "%s\n" "$l" | lmbr_paint1 | lmbr_paint2 | lmbr_paint3 | lmbr_paint4; done; }
-lmbr_paint1() { sed 's/%/%%/g' | tr -d '\n' | tr -c '[:print:]' '^'; echo; }
-lmbr_paint2() { sed 's/[0-9]\| #[^ >]* /%{F#f66}&%{F-}/g'; }
-lmbr_paint3() { sed 's/() *{\|; }\| }\| }\|#>>/%{F#334}&%{F-}/g'; }
-lmbr_paint4() { sed 's/\(.*#>>\)\(.*\)/%{c}\1%{B#001}\2%{B-}/'; }
+lemonbar_theme_set_large() {  kill_lmbr_tail_f lemonbar -f "Source Code Pro-24" -b -B '#000e17' -F '#afbcbf'; }
+kill_lmbr_tail_f() { killall lemonbar; tail -f /tmp/scmd.sh | lmbr_paint | "$@"; }
+lmbr_paint() { lmbr_paint1 | lmbr_paint2 | lmbr_paint3 | lmbr_paint4; }
+lmbr_paint1() { sed --unbuffered 's/%/%%/g' | stdbuf -o0 tr -c '[:print:]\n' '^'; }
+lmbr_paint2() { sed --unbuffered 's/[0-9]\| #[^ >]* /%{F#f66}&%{F-}/g'; }
+lmbr_paint3() { sed --unbuffered 's/() *{\|; }\| }\| }\|#>>/%{F#334}&%{F-}/g'; }
+lmbr_paint4() { sed --unbuffered 's/\(.*#>>\)\(.*\)/%{c}\1%{B#001}\2%{B-}/'; }
 
 wallpaper_theme_set_hell() { feh --bg-fill ~/r/wp/rebecca-jansen.jpg; }
 wallpaper_theme_set_round() { feh --bg-scale ~/r/wp/gradient-blue-pink.jpg; }
-wallpaper_theme_set_glass() { feh --bg-scale ~/r/wp/night-rain-city.jpg; }
+wallpaper_theme_set_glass() { feh --bg-scale ~/r/wp/gradient-blue-pink.jpg; }
 wallpaper_theme_set_purple() { feh --bg-scale ~/r/wp/03-rails.jpg; }
 wallpaper_theme_set_autumn() { feh --bg-scale ~/r/wp/orange-leaves-autumn.jpg; }
 wallpaper_theme_set_bright() { feh --bg-scale ~/r/wp/flowers-space-yellow-dark.png; }
@@ -246,7 +256,7 @@ switch_emacs_to_doom() { rm ~/.emacs.d; ln -s ~/.cache/emacs/doomemacs/ ~/.emacs
 lemonbar_show_date() { date; } #cd
 lemonbar_show_free_disk() { df -h | awk '/e0n1p6/{print $4}'; } #cf
 lemonbar_show_memory() { free|awk 'NR>1{t=int($2/200000);u=int($3/200000);printf("[%"u"s>%"t-u"s]","","")}';echo; } #cm
-lemonbar_input_vim() { in_terminal "vi '+$' /tmp/lemonbar.sh"; }
+lemonbar_input_vim() { in_terminal "vi '+$' /tmp/scmd.sh"; }
 
 preview_figlet_vim() { in_vim 'for f in /usr/share/figlet/fonts/*; do echo "$f"; figlet -f "$f" Figlet; done'; }
 copy_glyph_or_emoji() { printf %s "$(dmenu < ~/l/gart/glyphs | cut -d' ' -f1)" | xclip -in -sel clipboard; }
@@ -260,12 +270,13 @@ poweroff_reboot() { in_terminal 'sudo shutdown --reboot now'; }
 
 type_password() { p=~/.local/share/al/type;c="$p/$(ls "$p"|dmenu)" && xdotool type --delay 30 "$(base64 -d "$c")"; } #zi
 
-open_webcam_floating() { webc_rule_sf; mpv av://v4l2:/dev/video0 --vf=lavfi=hflip --profile=low-latency --untimed; }
-open_webcam_tiled() { webc_rule_tiled; mpv av://v4l2:/dev/video0 --vf=lavfi=hflip --profile=low-latency --untimed; }
-open_webcam_floating_not_flipped() { webc_rule_sf; mpv av://v4l2:/dev/video0 --profile=low-latency --untimed; }
-open_webcam_tiled_not_flipped() { webc_rule_tiled; mpv av://v4l2:/dev/video0 --profile=low-latency --untimed; }
+open_webcam_floating() { webc_rule_sf; webc_prf_lolat_unt_noterm mpv av://v4l2:/dev/video0 --vf=lavfi=hflip; }
+open_webcam_tiled() { webc_rule_tiled; webc_prf_lolat_unt_noterm mpv av://v4l2:/dev/video0 --vf=lavfi=hflip; }
+open_webcam_floating_not_flipped() { webc_rule_sf; webc_prf_lolat_unt_noterm mpv av://v4l2:/dev/video0; }
+open_webcam_tiled_not_flipped() { webc_rule_tiled; webc_prf_lolat_unt_noterm mpv av://v4l2:/dev/video0; }
 webc_rule_sf() { bspc rule --add '*:*:*' --one-shot sticky=on state=floating; }
 webc_rule_tiled() { bspc rule --add '*:*:*' --one-shot state=tiled; }
+webc_prf_lolat_unt_noterm() { "$@" --profile=low-latency --untimed --no-terminal; }
 
 scmd_stands_for_system_command() { :; }
 scmd_run() { c="$(dmenu < "$(this_file)" | cut -d'(' -f1)"; test "$c" && scmd_with_bar_status "$c"; } #x
@@ -279,7 +290,7 @@ scmd_sxhkdrc() { scmd_ls_keys | awk "{ $(scmd_awk1) $(scmd_awk2) }"; }
 scmd_awk1() { printf %s 's = $1; gsub(/./, "; super + &", s); sub("; ", "", s); '; }
 scmd_awk2() { printf %s 'print(s); printf("\t. %s && scmd_with_bar_status %s\n\n", "'"$(this_file)"'", $2);'; }
 scmd_find() { printf "%s\n" "$(grep "^$1(" "$(this_file)")"; }
-scmd_with_bar_status() { cline="$(scmd_find "$1")"; (echo; "$@" 2>&1) | scmd_bar_fmt "$cline" >> /tmp/lemonbar.sh; }
+scmd_with_bar_status() { cline="$(scmd_find "$1")"; (echo; "$@" 2>&1) | scmd_bar_fmt "$cline" >> /tmp/scmd.sh; }
 scmd_bar_fmt() { while read -r l; do printf "%s #>>%s\n" "$1" "$l"; done; }
 scmd_give_bar_color_swap_fix() { echo "%{R}"; }
 scmd_give_bar_test_1234() { for i in 1 2 3 4; do sleep 1 && echo "$i"; done; }

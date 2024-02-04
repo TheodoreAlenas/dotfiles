@@ -1,19 +1,41 @@
 * Theodore's System Configuration Tour
 
 Welcome to my iteratively hardened and compacted configuration!
-You may find ~scmd.sh~, the single file command palette
-and hotkey generator
+You may find ~scmd.sh~,
+the self documented command palette and hotkey self generator
 
 #+begin_src sh
-# License at the bottom
-# shellcheck disable=SC2016 disable=SC1090 disable=SC2012 disable=SC2120
 window_other() { bspc node next.local.leaf --focus; } #o
-window_replace() { bspc node --swap "$(win_dmenu)"; }
+# [...]
+volume_set_8() { pactl set-sink-volume 0 48000 48000; } #m8
+volume_set_9() { pactl set-sink-volume 0 54000 54000; } #m9
+volume_set_custom() { pactl set-sink-volume 0 "$(:|dmenu)"; }
+# [...]
+clip_yt_tdd() { printf %s "https://www.youtube.com/watch?v=kScFczWbwRM"     |xclip -selection clipboard -in; }
+clip_yt_tcr() { printf %s "https://youtu.be/tnO2Mos0RjU?si=OhTk8fUdI0FPTWT6"|xclip -selection clipboard -in; }
+
+open_terminal() { alacritty; } #t
 # [...]
 scmd_stands_for_system_command() { :; }
 scmd_run() { c="$(dmenu < "$(this_file)" | cut -d'(' -f1)"; test "$c" && scmd_with_bar_status "$c"; } #x
+scmd_upd() { scmd_sxhkdrc > ~/.config/sxhkd/sxhkdrc; killall sxhkd; sxhkd & } #S
 # [...]
-this_file() { echo ~/c/scmd.sh; }
+this_file() { echo ~/p/c/scmd.sh; }
+#+end_src
+
+the zsh configuration formatted like an article with a table of contents
+
+#+begin_src sh
+function zshrc_main() {
+    zshrc_set_variables
+    zshrc_set_emacs_movement
+    zshrc_load_everything_unrelated_to_color
+    zshrc_prepare_colors
+    zshrc_set_color_scheme
+}
+
+function zshrc_set_variables() {
+    ZDOTDIR=~/.config/zsh
 #+end_src
 
 the POSIX ~install.sh~ that doesn't use shell arrays

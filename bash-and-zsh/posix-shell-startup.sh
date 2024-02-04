@@ -5,9 +5,7 @@ alias vi=nvim
 alias ls=eza
 alias xc='xclip -selection clipboard'
 
-# shellcheck disable=SC2164
-c(){ cd "$@";pwd;eza; }
-
+# broot is a terminal file manager, note the `eval' here
 br() {
   # More information can be found in https://github.com/Canop/broot
   al_broot_cmd_file=$(mktemp)

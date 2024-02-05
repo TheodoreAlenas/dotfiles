@@ -246,7 +246,7 @@ open_screenkey() { screenkey; }
 open_unclutter() { unclutter; }
 close_screenkey() { killall screenkey; }
 close_unclutter() { killall unclutter; }
-open_qutebrowser() { qutebrowser 2>&1 | grep -vi 'reject\|sRGB'; } #a
+open_qutebrowser() { qutebrowser 2>&1 | grep -vi 'reject\|sRGB\|console.assert'; } #a
 open_last_recording() { mpv /tmp/rec.mkv; }
 open_zathura_in_downloads() { f="$(find ~/Downloads | dmenu)" && zathura "$f"; }
 

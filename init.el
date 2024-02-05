@@ -29,7 +29,7 @@
 (setq column-number-mode t)
 (setq explicit-shell-file-name "/usr/bin/dash")
 (eshell-syntax-highlighting-global-mode)
-(load-theme 'ef-tritanopia-dark t)
+(load-theme 'ef-night t)
 (vertico-mode)
 (marginalia-mode)
 (add-hook 'prog-mode-hook #'rainbow-delimiters-mode)

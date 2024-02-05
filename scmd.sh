@@ -151,16 +151,18 @@ lemonbar_theme_set_space() {  kill_lmbr_tail_f lemonbar -f "Source Code Pro-14" 
 lemonbar_theme_set_void() {   kill_lmbr_tail_f lemonbar -f "Source Code Pro-14" -b -B '#05080c' -F '#aaaabb'; }
 
 lemonbar_theme_set_large() {  kill_lmbr_tail_f lemonbar -f "Source Code Pro-24" -b -B '#000e17' -F '#afbcbf'; }
-kill_lmbr_tail_f() { killall lemonbar; tail -f /tmp/scmd.sh | lmbr_paint | "$@"; }
+kill_lmbr_tail_f() { kill_lmbr; tail -f /tmp/scmd.sh | lmbr_paint | "$@"; }
+kill_lmbr() { pidof tail | xargs ps -o ppid=,pid= -p | lmbr_tail_brother | xargs kill; }
+lmbr_tail_brother() { awk "/ $(pidof lemonbar | xargs ps -o ppid= -p | tr -d ' ') /{print \$2}"; }
 lmbr_paint() { lmbr_paint1 | lmbr_paint2 | lmbr_paint3 | lmbr_paint4; }
 lmbr_paint1() { sed --unbuffered 's/%/%%/g' | stdbuf -o0 tr -c '[:print:]\n' '^'; }
-lmbr_paint2() { sed --unbuffered 's/[0-9]\| #[^ >]* /%{F#f66}&%{F-}/g'; }
+lmbr_paint2() { sed --unbuffered 's/[0-9]\| #[^ >]* /%{F#379cf6}&%{F-}/g'; }
 lmbr_paint3() { sed --unbuffered 's/() *{\|; }\| }\| }\|#>>/%{F#334}&%{F-}/g'; }
-lmbr_paint4() { sed --unbuffered 's/\(.*#>>\)\(.*\)/%{c}\1%{B#001}\2%{B-}/'; }
+lmbr_paint4() { sed --unbuffered 's/\(.*#>>\)\(.*\)/%{c}\1%{B#222f40}\2%{B-}/'; }
 
 wallpaper_theme_set_hell() { feh --bg-fill ~/r/wp/rebecca-jansen.jpg; }
 wallpaper_theme_set_round() { feh --bg-scale ~/r/wp/gradient-blue-pink.jpg; }
-wallpaper_theme_set_glass() { feh --bg-scale ~/r/wp/gradient-blue-pink.jpg; }
+wallpaper_theme_set_glass() { feh --bg-scale ~/r/wp/blue-distant-mountains.jpg; }
 wallpaper_theme_set_purple() { feh --bg-scale ~/r/wp/03-rails.jpg; }
 wallpaper_theme_set_autumn() { feh --bg-scale ~/r/wp/orange-leaves-autumn.jpg; }
 wallpaper_theme_set_bright() { feh --bg-scale ~/r/wp/flowers-space-yellow-dark.png; }

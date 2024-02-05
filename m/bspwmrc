@@ -2,14 +2,14 @@
 
 main() {
     case "$1" in
-        ('')
+        (only-rules) per_rule bspc_rule_remove_add ;;
+        (only-theme) set_bspwm_theme "$2" ;;
+        (*)
+            printf "%s\n" "$*" > /tmp/bspwmrc-args-were
             bspc monitor -d  main web manual terminal media spotify temporary
             per_rule bspc_rule_remove_add
             (. /home/aleena/p/c/scmd.sh && scmd_with_bar_status global_theme_set_bspwm_startup)
         ;;
-        (only-rules) per_rule bspc_rule_remove_add ;;
-        (only-theme) set_bspwm_theme "$2" ;;
-        (*) sed '/help stops here/q' "$0" >&2; exit 1 ;;
     esac
 }
 

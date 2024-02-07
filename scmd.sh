@@ -81,12 +81,12 @@ keyboard_language_set_english() { setxkbmap us; }
 keyboard_language_set_serbian() { setxkbmap rs; } #8
 keyboard_language_set_variant() { setxkbmap us "$(localectl list-x11-keymap-variants us | dmenu)"; }
 
-hellsinger_start() { mpv ~/r/music-laptop/hellsinger-fast.mp4 --start=00:00 --volume=50; } #ms
-hellsinger_this()  { mpv ~/r/music-laptop/hellsinger-fast.mp4 --start=05:48 --volume=50; } #mt
-hellsinger_egypt() { mpv ~/r/music-laptop/hellsinger-fast.mp4 --start=14:03 --volume=50; } #me
-hellsinger_feel()  { mpv ~/r/music-laptop/hellsinger-fast.mp4 --start=29:59 --volume=50; } #mf
-hellsinger_msg()   { mpv ~/r/music-laptop/hellsinger-fast.mp4 --start=36:18 --volume=50; } #mm
-hellsinger_away()  { mpv ~/r/music-laptop/hellsinger-fast.mp4 --start=41:31 --volume=50; } #ma
+hellsinger_start() { mpv ~/r/music-laptop/hellsinger-fast.mp4 --start=00:00; } #ms
+hellsinger_this()  { mpv ~/r/music-laptop/hellsinger-fast.mp4 --start=05:48; } #mt
+hellsinger_egypt() { mpv ~/r/music-laptop/hellsinger-fast.mp4 --start=14:03; } #me
+hellsinger_feel()  { mpv ~/r/music-laptop/hellsinger-fast.mp4 --start=29:59; } #mf
+hellsinger_msg()   { mpv ~/r/music-laptop/hellsinger-fast.mp4 --start=36:18; } #mm
+hellsinger_away()  { mpv ~/r/music-laptop/hellsinger-fast.mp4 --start=41:31; } #ma
 
 volume_set_0() { pactl set-sink-volume 0  1000  1000; } #m0
 volume_set_1() { pactl set-sink-volume 0  6000  6000; } #m1

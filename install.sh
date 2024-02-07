@@ -14,6 +14,7 @@ for_each_src_dest() {
     "$@" m/tmux-fzf-new-session ~/.local/bin/tmux-fzf-new-session
 
     "$@" m/bspwmrc ~/.config/bspwm/bspwmrc
+    "$@" m/mpv.conf ~/.config/mpv/mpv.conf
 }
 
 ln_full_path() { ln -sv "$PWD/$1" "$2"; }

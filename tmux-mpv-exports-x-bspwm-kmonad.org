@@ -1,4 +1,5 @@
 #+title: Tiny Tangled Configurations
+#+startup: show2levels
 
 * Calling ~chmod~ on tangled files
 
@@ -189,7 +190,7 @@ case "$1" in
 esac
 #+end_src
 
-* KMonad home row mods
+* KMonad, keyboard hack so holding D gives Ctrl
 
 #+begin_src scheme :tangle tangled/kmonad-home-row-mods.kbd
 (defcfg

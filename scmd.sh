@@ -152,8 +152,8 @@ lemonbar_theme_set_void() {   kill_lmbr_tail_f lemonbar -f "Source Code Pro-14" 
 
 lemonbar_theme_set_large() {  kill_lmbr_tail_f lemonbar -f "Source Code Pro-24" -b -B '#000e17' -F '#afbcbf'; }
 kill_lmbr_tail_f() { kill_lmbr; tail -f /tmp/scmd.sh | lmbr_paint | "$@"; }
-kill_lmbr() { pidof tail | xargs ps -o ppid=,pid= -p | lmbr_tail_brother | xargs kill; }
-lmbr_tail_brother() { awk "/ $(pidof lemonbar | xargs ps -o ppid= -p | tr -d ' ') /{print \$2}"; }
+kill_lmbr() { pidof tail | xargs -i ps -o ppid=,pid= -p {} | lmbr_tail_brother | xargs -i kill {}; }
+lmbr_tail_brother() { awk "/ $(pidof lemonbar | xargs -i ps -o ppid= -p {} | tr -d ' ') /{print \$2}"; }
 lmbr_paint() { lmbr_paint1 | lmbr_paint2 | lmbr_paint3 | lmbr_paint4; }
 lmbr_paint1() { sed --unbuffered 's/%/%%/g' | stdbuf -o0 tr -c '[:print:]\n' '^'; }
 lmbr_paint2() { sed --unbuffered 's/[0-9]\| #[^ >]* /%{F#379cf6}&%{F-}/g'; }
@@ -241,6 +241,7 @@ open_clock_widget() { date; alclowid; } #h
 open_clock_widget_for() { alclowid -t "$(:|dmenu -p timeout)"; } #H
 
 open_emacs() { emacs; } #em
+open_libreoffice() { libreoffice; }
 open_spotify() { spotify-launcher > /dev/null 2> /dev/null; }
 open_kdenlive() { kdenlive > /dev/null 2> /dev/null; }
 open_krita() { krita > /dev/null 2> /dev/null; }
@@ -251,6 +252,7 @@ close_unclutter() { killall unclutter; }
 open_qutebrowser() { qutebrowser 2>&1 | grep -vi 'reject\|sRGB\|console.assert'; } #a
 open_last_recording() { mpv /tmp/rec.mkv; }
 open_zathura_in_downloads() { f="$(find ~/Downloads | dmenu)" && zathura "$f"; }
+close_bspwm() { killall bspwm; }
 
 switch_emacs_to_vanilla() { rm ~/.emacs.d; ln -s ~/.cache/emacs/vanilla/home-emacs-dot-d/ ~/.emacs.d; }
 switch_emacs_to_doom() { rm ~/.emacs.d; ln -s ~/.cache/emacs/doomemacs/ ~/.emacs.d; }
@@ -296,6 +298,7 @@ scmd_with_bar_status() { cline="$(scmd_find "$1")"; (echo; "$@" 2>&1) | scmd_bar
 scmd_bar_fmt() { while read -r l; do printf "%s #>>%s\n" "$1" "$l"; done; }
 scmd_give_bar_color_swap_fix() { echo "%{R}"; }
 scmd_give_bar_test_1234() { for i in 1 2 3 4; do sleep 1 && echo "$i"; done; }
+scmd_try_function() { c=$(dmenu<"$(this_file)"|cut -d'(' -f1)&&(a="$(:|dmenu -p $c)"; :|dmenu -p stdin|eval "$c $a"); }
 
 in_vim() { term_rule_dock && alacritty -e sh -c ". $(this_file) && $1 | vim -"; }
 in_terminal() { term_rule_dock && alacritty -e sh -c "$1"; }

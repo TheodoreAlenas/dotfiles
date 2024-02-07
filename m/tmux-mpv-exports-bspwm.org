@@ -1,5 +1,7 @@
 #+title: Tiny Tangled Configurations
 
+* Calling ~chmod~ on tangled files
+
 #+begin_src emacs-lisp :results silent :tangle no :exports none
   (add-hook 'org-babel-post-tangle-hook
             (lambda ()
@@ -8,10 +10,14 @@
                nil 0 nil)))
 #+end_src
 
+* MPV
+
 #+begin_src conf :tangle tangled/mpv.conf
 volume=50
 terminal=no
 #+end_src
+
+* Exports
 
 #+begin_src sh :tangle tangled/profile.d-01-all.sh
 # sourcing this file multiple times won't lengthen $PATH
@@ -23,6 +29,8 @@ export PATH="$AL_PATH_1:$AL_PATH_2:$AL_PATH_FROM_ROOT"
 export EDITOR=nvim
 export DEFAULT_TERM=alacritty
 #+end_src
+
+* TMux
 
 #+begin_src conf :tangle tangled/tmux.conf
 set -g status-right "$PWD"
@@ -40,6 +48,8 @@ bind-key C-r source-file ~/c/c/tmux/tmux.conf
 set escape-time 0
 #+end_src
 
+* TMux project switching
+
 #+begin_src sh :tangle tangled/tmux-fzf-new-session
 #!/bin/sh
 
@@ -52,6 +62,8 @@ tmux switch-client -t "${PWD##*/}"       || exit 1
 # I have symlinks in ~/l so that's why cd -P
 # The symlink has a long name and the destination a short.
 #+end_src
+
+* BSPWM startup
 
 #+begin_src sh :tangle tangled/bspwmrc
 #!/bin/env sh
@@ -77,6 +89,8 @@ if ! [ "$1" = no-scmd ]
 then (. /home/aleena/p/c/scmd.sh && scmd_with_bar_status global_theme_set_bspwm_startup)
 fi
 #+end_src
+
+* BSPWM theme
 
 #+begin_src sh :tangle tangled/bspwm-theme
 #!/bin/env sh

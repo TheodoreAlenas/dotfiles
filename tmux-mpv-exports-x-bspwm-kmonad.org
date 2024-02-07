@@ -3,7 +3,7 @@
 
 * Calling ~chmod~ on tangled files
 
-#+begin_src emacs-lisp :results silent :tangle no :exports none
+#+begin_src emacs-lisp :tangle no :exports none
   (add-hook 'org-babel-post-tangle-hook
             (lambda ()
               (call-process-shell-command

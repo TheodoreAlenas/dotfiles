@@ -212,7 +212,7 @@ goodones_open_accessed() { find ~/l/g1 -type f -printf "%A@\t%p\n"|sort -r|cut -
 goodones_open_changed()  { find ~/l/g1 -type f -printf "%C@\t%p\n"|sort -r|cut -f2|xargs mpv --pause; }
 goodones_open_shuffled() { find ~/l/g1 -type f | shuf | xargs mpv --pause; }
 goodones_open_sorted()   { find ~/l/g1 -type f | sort | xargs mpv --pause; }
-goodones_vim() { in_vim 'echo "mpv --no-terminal --pause"; find ~/g1 -type f'; }
+goodones_vim() { in_vim 'echo "mpv --pause"; find ~/g1 -type f'; }
 
 screenshot_take_region()   { eval "shotgun $(slop -f '-i %i -g %g') /tmp/screenshot.png"; } #w
 screenshot_take_fullscreen()   { sleep 0.2s && shotgun /tmp/screenshot.png; }
@@ -274,13 +274,12 @@ poweroff_reboot() { in_terminal 'sudo shutdown --reboot now'; }
 
 type_password() { p=~/.local/share/al/type;c="$p/$(ls "$p"|dmenu)" && xdotool type --delay 30 "$(base64 -d "$c")"; } #zi
 
-open_webcam_floating() { webc_rule_sf; webc_prf_lolat_unt_noterm mpv av://v4l2:/dev/video0 --vf=lavfi=hflip; }
-open_webcam_tiled() { webc_rule_tiled; webc_prf_lolat_unt_noterm mpv av://v4l2:/dev/video0 --vf=lavfi=hflip; }
-open_webcam_floating_not_flipped() { webc_rule_sf; webc_prf_lolat_unt_noterm mpv av://v4l2:/dev/video0; }
-open_webcam_tiled_not_flipped() { webc_rule_tiled; webc_prf_lolat_unt_noterm mpv av://v4l2:/dev/video0; }
+open_webcam_floating() { webc_rule_sf; mpv av://v4l2:/dev/video0 --vf=lavfi=hflip --profile=low-latency --untimed; }
+open_webcam_tiled() { webc_rule_tiled; mpv av://v4l2:/dev/video0 --vf=lavfi=hflip --profile=low-latency --untimed; }
+open_webcam_floating_not_flipped() { webc_rule_sf; mpv av://v4l2:/dev/video0 --profile=low-latency --untimed; }
+open_webcam_tiled_not_flipped() { webc_rule_tiled; mpv av://v4l2:/dev/video0 --profile=low-latency --untimed; }
 webc_rule_sf() { bspc rule --add '*:*:*' --one-shot sticky=on state=floating; }
 webc_rule_tiled() { bspc rule --add '*:*:*' --one-shot state=tiled; }
-webc_prf_lolat_unt_noterm() { "$@" --profile=low-latency --untimed --no-terminal; }
 
 scmd_stands_for_system_command() { :; }
 scmd_run() { c="$(dmenu < "$(this_file)" | cut -d'(' -f1)"; test "$c" && scmd_with_bar_status "$c"; } #x

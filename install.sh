@@ -6,7 +6,6 @@ for_each_src_dest() {
     "$@" bash-and-zsh/dot-bashrc.bash ~/.bashrc
     "$@" bash-and-zsh/dot-zshrc.zsh ~/.zshrc
 
-    "$@" m/bspwmrc ~/.config/bspwm/bspwmrc
     "$@" m/dot-xinitrc ~/.xinitrc
     "$@" m/dot-Xresources ~/.Xresources
     "$@" m/dot-Xresources ~/.Xdefaults
@@ -15,12 +14,17 @@ for_each_src_dest() {
     "$@" m/tangled/profile.d-01-all.sh ~/.config/profile.d/01-all.sh
     "$@" m/tangled/tmux.conf ~/.config/tmux/tmux.conf
     "$@" m/tangled/tmux-fzf-new-session ~/.local/bin/tmux-fzf-new-session
+    "$@" m/tangled/bspwmrc ~/.config/bspwm/bspwmrc
+    "$@" m/tangled/bspwm-theme ~/.local/bin/bspwm-theme
 }
 
 ln_full_path() { ln -sv "$PWD/$1" "$2"; }
 rm_dest() { rm -fv "$2"; }
 relink() { rm_dest "$@" && ln_full_path "$@"; }
-chmod_execs() { chmod +x m/tangled/tmux-fzf-new-session; }
+chmod_execs() {
+    chmod +x m/tangled/tmux-fzf-new-session
+    chmod +x m/tangled/bspwm-theme
+}
 
 case "$1" in
     (ln) for_each_src_dest ln_full_path && chmod_execs ;;

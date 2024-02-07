@@ -1,0 +1,17 @@
+#!/bin/env sh
+
+bspc_configs() {
+    for e in window_gap border_width normal_border_color focused_border_color pointer_modifier single_monocle borderless_monocle gapless_monocle
+    do bspc config "$e" "$1" ; shift
+    done
+}
+
+case "$1" in
+    (autumn) bspc_configs  0  3 \#553322 \#cfaa77 mod1 true  true  true  ;;
+    (glass)  bspc_configs  5  4 \#7777aa \#cc3333 mod1 true  true  true  ;;
+    (hell)   bspc_configs  0 10 \#af1122 \#ffdddd mod1 true  true  true  ;;
+    (round)  bspc_configs 30  5 \#7777aa \#ff3344 mod1 true  true  true  ;;
+    (silent) bspc_configs  0  4 \#7777aa \#cc3333 mod1 true  true  true  ;;
+    (space)  bspc_configs 50  8 \#000000 \#ccccff mod1 false true  true  ;;
+    (void)   bspc_configs  0  0 \#000000 \#000000 mod1 false false false ;;
+esac

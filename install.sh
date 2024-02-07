@@ -21,14 +21,10 @@ for_each_src_dest() {
 ln_full_path() { ln -sv "$PWD/$1" "$2"; }
 rm_dest() { rm -fv "$2"; }
 relink() { rm_dest "$@" && ln_full_path "$@"; }
-chmod_execs() {
-    chmod +x m/tangled/tmux-fzf-new-session
-    chmod +x m/tangled/bspwm-theme
-}
 
 case "$1" in
-    (ln) for_each_src_dest ln_full_path && chmod_execs ;;
+    (ln) for_each_src_dest ln_full_path ;;
     (rm) for_each_src_dest rm_dest ;;
-    ('') for_each_src_dest relink && chmod_execs ;;
+    ('') for_each_src_dest relink ;;
     (*) echo "$0   or   $0 ln   or   $0 rm" >&2 ; exit 1 ;;
 esac

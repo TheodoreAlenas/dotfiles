@@ -42,18 +42,13 @@
 ;; org
 (require 'org)
 (add-hook 'text-mode-hook #'variable-pitch-mode)
-;;(setq org-src-block-faces 'fixed-pitch)
+(add-hook 'text-mode-hook (lambda () (setq line-spacing 0.2)))
+(setq org-hide-emphasis-markers t)
 (set-face-attribute 'org-table       nil :inherit 'fixed-pitch)
 (set-face-attribute 'org-agenda-date nil :inherit 'fixed-pitch)
 (set-face-attribute 'org-date        nil :inherit 'fixed-pitch)
 (set-face-attribute 'org-block       nil :inherit 'fixed-pitch)
-(setq org-hide-emphasis-markers t)
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(org-code ((t (:family "Monospace")))))
+(set-face-attribute 'org-code        nil :inherit 'fixed-pitch)
 
 ;; eglot
 (setq eglot-confirm-server-initiated-edits nil)

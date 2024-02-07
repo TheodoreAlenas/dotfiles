@@ -1,29 +1,30 @@
 
 for_each_src_dest() {
-    "$@" m/dot-xinitrc ~/.xinitrc
-    "$@" m/dot-Xresources ~/.Xresources
-    "$@" m/dot-Xresources ~/.Xdefaults
-    "$@" m/profile-dot-d-exports.sh ~/.config/profile.d/01-all.sh
     "$@" init.el ~/.cache/emacs/vanilla/home-emacs-dot-d/init.el
     "$@" nvim ~/.config/nvim
 
     "$@" bash-and-zsh/dot-bashrc.bash ~/.bashrc
     "$@" bash-and-zsh/dot-zshrc.zsh ~/.zshrc
 
-    "$@" m/tmux.conf ~/.config/tmux/tmux.conf
-    "$@" m/tmux-fzf-new-session ~/.local/bin/tmux-fzf-new-session
-
     "$@" m/bspwmrc ~/.config/bspwm/bspwmrc
-    "$@" m/mpv.conf ~/.config/mpv/mpv.conf
+    "$@" m/dot-xinitrc ~/.xinitrc
+    "$@" m/dot-Xresources ~/.Xresources
+    "$@" m/dot-Xresources ~/.Xdefaults
+
+    "$@" m/tangled/mpv.conf ~/.config/mpv/mpv.conf
+    "$@" m/tangled/profile.d-01-all.sh ~/.config/profile.d/01-all.sh
+    "$@" m/tangled/tmux.conf ~/.config/tmux/tmux.conf
+    "$@" m/tangled/tmux-fzf-new-session ~/.local/bin/tmux-fzf-new-session
 }
 
 ln_full_path() { ln -sv "$PWD/$1" "$2"; }
 rm_dest() { rm -fv "$2"; }
 relink() { rm_dest "$@" && ln_full_path "$@"; }
+chmod_execs() { chmod +x m/tangled/tmux-fzf-new-session; }
 
 case "$1" in
-    (ln) for_each_src_dest ln_full_path ;;
+    (ln) for_each_src_dest ln_full_path && chmod_execs ;;
     (rm) for_each_src_dest rm_dest ;;
-    ('') for_each_src_dest relink ;;
+    ('') for_each_src_dest relink && chmod_execs ;;
     (*) echo "$0   or   $0 ln   or   $0 rm" >&2 ; exit 1 ;;
 esac

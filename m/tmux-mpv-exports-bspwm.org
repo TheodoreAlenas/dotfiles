@@ -63,6 +63,83 @@ tmux switch-client -t "${PWD##*/}"       || exit 1
 # The symlink has a long name and the destination a short.
 #+end_src
 
+* X resources/defaults
+
+#+begin_src css :tangle tangled/dot-Xresources
+Xcursor.theme: phinger-cursors-light
+Xcursor.size: 128
+
+XTerm.VT100.translations: #override Alt <KeyPress> V: insert-selection(CLIPBOARD) \n Alt <KeyPress> P: print() \n
+XTerm*printAttributes: 0
+XTerm*printerCommand: cat - > /tmp/xterm-screenshot
+
+XTerm.termName: xterm-256color
+XTerm.vt100.locale: true
+XTerm.vt100.utf8: true
+XTerm*selectToClipboard: true
+*VT100.utf8Fonts.font:	-misc-fixed-medium-r-normal--20-200-75-75-c-100-iso10646-1
+
+!blazer
+*.background: #0d1925
+*.foreground: #d9e5f1
+*.cursorColor: #d9e5f1
+*.color0: #000000
+*.color8: #252525
+*.color1: #b87979
+*.color9: #dabdbd
+*.color2: #79b879
+*.color10: #bddabd
+*.color3: #b8b879
+*.color11: #dadabd
+*.color4: #7979b8
+*.color12: #bdbdda
+*.color5: #b879b8
+*.color13: #dabdda
+*.color6: #79b8b8
+*.color14: #bddada
+*.color7: #d9d9d9
+*.color15: #ffffff
+*.selection_foreground: #0d1925
+*.selection_background: #d9e6f2
+#+end_src
+
+* X init
+
+#+begin_src sh :tangle tangled/dot-xinitrc
+#!/bin/sh
+
+xrdb -merge ~/.Xresources
+(p=/etc/X11/xinit/.Xresources ; test -r "$p" && xrdb -merge "$p")
+(p=/etc/X11/xinit/.Xmodmap ; test -r "$p" && xmodmap "$p")
+
+for f in /etc/X11/xinit/xinitrc.d/?*.sh
+do test -x "$f" && . "$f"
+done
+
+setxkbmap -variant dvorak
+xset -display :0.0 r rate 250 40
+xrandr --output eDP-1 --brightness 0.7
+
+unclutter -idle 0.7 -jitter 2 -root    &
+picom                                  &
+while sleep 5; do albatwid -o 50; done &
+(timeout 5s pulseaudio; pulseaudio)    &  # more below
+SXHKD_SHELL=dash sxhkd                 &
+
+exec bspwm
+
+# (about pulseaudio being started twice)
+# A plain sleep command won't cut it.
+# This started to be a problem in
+# Thu Apr 13 16:56:50 EEST 2023
+# when I cleaned up system's unneeded dependencies,
+# along with some optional dependencies.
+# The bug has to do with dbus being already in use.
+# Try debugging on your own using:
+# pulseaudio > /tmp/pulseaudio-1 2> /tmp/pulseaudio-2
+# echo "pulseaudio closed after that" > /tmp/pulseaudio-3
+#+end_src
+
 * BSPWM startup
 
 #+begin_src sh :tangle tangled/bspwmrc
@@ -110,4 +187,82 @@ case "$1" in
     (space)  bspc_configs 50  8 \#000000 \#ccccff mod1 false true  true  ;;
     (void)   bspc_configs  0  0 \#000000 \#000000 mod1 false false false ;;
 esac
+#+end_src
+
+* KMonad home row mods
+
+#+begin_src scheme :tangle tangled/kmonad-home-row-mods.kbd
+(defcfg
+  input  (device-file "/dev/input/event4")
+  output (uinput-sink "KMonad: Aleena")
+
+  ;; This option tells KMonad to let non-configured keys act normal
+  fallthrough true
+)
+
+(defsrc
+    a    s    d    f    g    h    j    k    l    ;
+    lalt
+)
+
+(defalias
+    met_a (tap-hold-next-release 200 a lmet)
+    alt_s (tap-hold-next-release 200 s lalt)
+    ctl_d (tap-hold-next-release 200 d lctl)
+    sft_f (tap-hold-next-release 200 f lsft)
+
+    sft_j (tap-hold-next-release 200 j rsft)
+    ctl_k (tap-hold-next-release 200 k rctl)
+    alt_l (tap-hold-next-release 200 l lalt)
+    met_; (tap-hold-next-release 200 ; rmet)
+)
+
+(deflayer homerowmods
+    @met_a   @alt_s   @ctl_d   @sft_f   g   h   @sft_j   @ctl_k   @alt_l   @met_;
+    esc
+)
+#+end_src
+
+* KMonad unused idea, offsetting keys up
+
+#+begin_src scheme :tangle tangled/kmonad-unused-minimal-idea.kbd
+(defcfg
+  input  (device-file "/dev/input/event4")
+  output (uinput-sink "KMonad: Aleena")
+
+  ;; This option tells KMonad to let non-configured keys act normal
+  fallthrough true
+)
+
+(defsrc
+  sysrq
+  grv  1    2    3    4    5    6    7    8    9    0    -    =    bspc
+       q    w    e    r    t    y    u    i    o    p    [    ]    \
+       a    s    d    f    g    h    j    k    l    ;
+            x    c    v    b    n    m
+                 spc
+)
+
+(defalias
+    num (tap-hold-next-release 200 spc (layer-toggle num))
+    ecl (tap-hold-next-release 200 esc rctl)
+)
+
+(deflayer offset
+  bspc
+  tab  q    w    e    r    t    y    u    i    o    p    [    ]    \
+       a    s    d    f    g    h    j    k    l    ;    '    ret  ret
+       z    x    c    v    b    n    m    ,    .    /
+            @num @ecl lalt lmet spc  ralt
+                 rsft
+)
+
+(deflayer num
+  sysrq
+  grv  1    2    3    4    5    6    7    8    9    0    -    =    \
+       _    _    _    _    _    _    4    5    6    _    _    _    _
+       _    _    _    _    _    _    1    2    3    _
+            _    _    _    _    _    _
+                 _
+)
 #+end_src

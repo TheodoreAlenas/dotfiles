@@ -6,16 +6,16 @@ for_each_src_dest() {
     "$@" bash-and-zsh/dot-bashrc.bash ~/.bashrc
     "$@" bash-and-zsh/dot-zshrc.zsh ~/.zshrc
 
-    "$@" m/dot-xinitrc ~/.xinitrc
-    "$@" m/dot-Xresources ~/.Xresources
-    "$@" m/dot-Xresources ~/.Xdefaults
-
     "$@" m/tangled/mpv.conf ~/.config/mpv/mpv.conf
     "$@" m/tangled/profile.d-01-all.sh ~/.config/profile.d/01-all.sh
     "$@" m/tangled/tmux.conf ~/.config/tmux/tmux.conf
     "$@" m/tangled/tmux-fzf-new-session ~/.local/bin/tmux-fzf-new-session
     "$@" m/tangled/bspwmrc ~/.config/bspwm/bspwmrc
     "$@" m/tangled/bspwm-theme ~/.local/bin/bspwm-theme
+    "$@" m/tangled/kmonad-home-row-mods.kbd ~/.config/kmonad.kbd
+    "$@" m/tangled/dot-xinitrc ~/.xinitrc
+    "$@" m/tangled/dot-Xresources ~/.Xresources
+    "$@" m/tangled/dot-Xresources ~/.Xdefaults
 }
 
 ln_full_path() { ln -sv "$PWD/$1" "$2"; }

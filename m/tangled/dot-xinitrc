@@ -1,5 +1,4 @@
 #!/bin/sh
-# License at the bottom
 
 xrdb -merge ~/.Xresources
 (p=/etc/X11/xinit/.Xresources ; test -r "$p" && xrdb -merge "$p")

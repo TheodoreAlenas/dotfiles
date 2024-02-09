@@ -7,7 +7,7 @@
   (add-hook 'org-babel-post-tangle-hook
             (lambda ()
               (call-process-shell-command
-               "cd tangled && chmod +x tmux-fzf-new-session bspwm-theme"
+               "cd tangled && chmod +x tmux-fzf-new-session bspwmrc bspwm-theme"
                nil 0 nil)))
 #+end_src
 

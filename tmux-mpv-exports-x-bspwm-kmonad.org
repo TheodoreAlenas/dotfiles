@@ -78,28 +78,30 @@ XTerm.termName: xterm-256color
 XTerm.vt100.locale: true
 XTerm.vt100.utf8: true
 XTerm*selectToClipboard: true
-*VT100.utf8Fonts.font:	-misc-fixed-medium-r-normal--20-200-75-75-c-100-iso10646-1
+*VT100.utf8Fonts.font: SourceCodePro:size=15
+!-misc-fixed-medium-r-normal--20-200-75-75-c-100-iso10646-1
+XTerm*faceName: SourceCodePro:size=15
 
-!blazer
-*.background: #0d1925
-*.foreground: #d9e5f1
+!tokyo night storm theme
+*.background: #24283b
+*.foreground: #c0caf5
 *.cursorColor: #d9e5f1
-*.color0: #000000
-*.color8: #252525
-*.color1: #b87979
-*.color9: #dabdbd
-*.color2: #79b879
-*.color10: #bddabd
-*.color3: #b8b879
-*.color11: #dadabd
-*.color4: #7979b8
-*.color12: #bdbdda
-*.color5: #b879b8
-*.color13: #dabdda
-*.color6: #79b8b8
-*.color14: #bddada
-*.color7: #d9d9d9
-*.color15: #ffffff
+*.color0: #1d202f
+*.color1: #f7768e
+*.color2: #9ece6a
+*.color3: #e0af68
+*.color4: #7aa2f7
+*.color5: #bb9af7
+*.color6: #7dcfff
+*.color7: #a9b1d6
+*.color8: #414868
+*.color9: #f7768e
+*.color10: #9ece6a
+*.color11: #e0af68
+*.color12: #7aa2f7
+*.color13: #bb9af7
+*.color14: #7dcfff
+*.color15: #c0caf5
 *.selection_foreground: #0d1925
 *.selection_background: #d9e6f2
 #+end_src

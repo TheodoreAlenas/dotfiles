@@ -1,5 +1,5 @@
 ;; tab characters
-(setq-default tab-width 4)
+(setq-default tab-width 8)
 (setq-default indent-tabs-mode nil)
 (editorconfig-mode)
 
@@ -27,6 +27,7 @@
 ;; buffer look
 (setq-default show-trailing-whitespace t)
 (setq column-number-mode t)
+(setq split-width-threshold 120)
 (setq explicit-shell-file-name "/usr/bin/dash")
 (load-theme 'ef-night t)
 (vertico-mode)
@@ -38,6 +39,9 @@
 ;; for dired painted things, you may want to append to
 ;; dired-font-lock-keywords
 ;; https://www.emacswiki.org/emacs/dired%2B.el
+
+;; https://www.gnu.org/software/auctex/
+;; for better latex support
 
 ;; org
 (require 'org)
@@ -51,6 +55,7 @@
 (set-face-attribute 'org-code        nil :inherit 'fixed-pitch)
 
 ;; eglot
+(setq eldoc-echo-area-use-multiline-p nil)
 (setq eglot-confirm-server-initiated-edits nil)
 (require 'eglot)
 (add-to-list

@@ -12,7 +12,7 @@ for_each_src_dest() {
     "$@" tangled/tmux-fzf-new-session ~/.local/bin/tmux-fzf-new-session
     "$@" tangled/bspwmrc ~/.config/bspwm/bspwmrc
     "$@" tangled/bspwm-theme ~/.local/bin/bspwm-theme
-    "$@" tangled/kmonad-home-row-mods.kbd ~/.config/kmonad.kbd
+    "$@" tangled/kmonad-alt-z-mods.kbd ~/.config/kmonad.kbd
     "$@" tangled/dot-xinitrc ~/.xinitrc
     "$@" tangled/dot-Xresources ~/.Xresources
     "$@" tangled/dot-Xresources ~/.Xdefaults

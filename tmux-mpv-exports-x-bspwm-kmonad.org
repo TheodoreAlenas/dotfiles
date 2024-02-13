@@ -192,9 +192,9 @@ case "$1" in
 esac
 #+end_src
 
-* KMonad, keyboard hack so holding D gives Ctrl
+* KMonad, holding Alt gives Ctrl
 
-#+begin_src scheme :tangle tangled/kmonad-home-row-mods.kbd
+#+begin_src scheme :tangle tangled/kmonad-alt-z-mods.kbd
 (defcfg
   input  (device-file "/dev/input/event4")
   output (uinput-sink "KMonad: Aleena")
@@ -203,69 +203,13 @@ esac
   fallthrough true
 )
 
-(defsrc
-    a    s    d    f    g    h    j    k    l    ;
-    lalt
-)
+(defsrc lalt z /)  ;; order: left Alt, z key, slash key
 
 (defalias
-    met_a (tap-hold-next-release 200 a lmet)
-    alt_s (tap-hold-next-release 200 s lalt)
-    ctl_d (tap-hold-next-release 200 d lctl)
-    sft_f (tap-hold-next-release 200 f lsft)
-
-    sft_j (tap-hold-next-release 200 j rsft)
-    ctl_k (tap-hold-next-release 200 k rctl)
-    alt_l (tap-hold-next-release 200 l lalt)
-    met_; (tap-hold-next-release 200 ; rmet)
+    alalt (tap-hold-next-release 200 esc lctl)  ;; tap: Esc, hold: Ctrl
+    alz   (tap-hold-next-release 200 z lmet)    ;; tap: z, hold: Super
+    al/   (tap-hold-next-release 200 / rmet)
 )
 
-(deflayer homerowmods
-    @met_a   @alt_s   @ctl_d   @sft_f   g   h   @sft_j   @ctl_k   @alt_l   @met_;
-    esc
-)
-#+end_src
-
-* KMonad unused idea, offsetting keys up
-
-#+begin_src scheme :tangle tangled/kmonad-unused-minimal-idea.kbd
-(defcfg
-  input  (device-file "/dev/input/event4")
-  output (uinput-sink "KMonad: Aleena")
-
-  ;; This option tells KMonad to let non-configured keys act normal
-  fallthrough true
-)
-
-(defsrc
-  sysrq
-  grv  1    2    3    4    5    6    7    8    9    0    -    =    bspc
-       q    w    e    r    t    y    u    i    o    p    [    ]    \
-       a    s    d    f    g    h    j    k    l    ;
-            x    c    v    b    n    m
-                 spc
-)
-
-(defalias
-    num (tap-hold-next-release 200 spc (layer-toggle num))
-    ecl (tap-hold-next-release 200 esc rctl)
-)
-
-(deflayer offset
-  bspc
-  tab  q    w    e    r    t    y    u    i    o    p    [    ]    \
-       a    s    d    f    g    h    j    k    l    ;    '    ret  ret
-       z    x    c    v    b    n    m    ,    .    /
-            @num @ecl lalt lmet spc  ralt
-                 rsft
-)
-
-(deflayer num
-  sysrq
-  grv  1    2    3    4    5    6    7    8    9    0    -    =    \
-       _    _    _    _    _    _    4    5    6    _    _    _    _
-       _    _    _    _    _    _    1    2    3    _
-            _    _    _    _    _    _
-                 _
-)
+(deflayer alt-z-mods @alalt @alz @al/)  ;; same order: Esc/Ctrl...
 #+end_src

@@ -1,0 +1,17 @@
+(defcfg
+  input  (device-file "/dev/input/event4")
+  output (uinput-sink "KMonad: Aleena")
+
+  ;; This option tells KMonad to let non-configured keys act normal
+  fallthrough true
+)
+
+(defsrc lalt z /)  ;; order: left Alt, z key
+
+(defalias
+    alalt (tap-hold-next-release 200 esc lctl)  ;; tap: Esc, hold: Ctrl
+    alz   (tap-hold-next-release 200 z lmet)    ;; tap: z, hold: Super
+    al/   (tap-hold-next-release 200 / rmet)
+)
+
+(deflayer alt-z-mods @alalt @alz @al/)  ;; same order: Esc/Ctrl

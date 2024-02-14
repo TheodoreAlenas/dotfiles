@@ -252,7 +252,6 @@ close_screenkey() { killall screenkey; }
 close_unclutter() { killall unclutter; }
 open_qutebrowser() { qutebrowser 2>&1 | grep -vi 'reject\|sRGB\|console.assert'; } #a
 open_last_recording() { mpv /tmp/rec.mkv; }
-open_zathura_in_downloads() { f="$(find ~/Downloads | dmenu)" && zathura "$f"; }
 close_bspwm() { killall bspwm; }
 
 switch_emacs_to_vanilla() { rm ~/.emacs.d; ln -s ~/.cache/emacs/vanilla/home-emacs-dot-d/ ~/.emacs.d; }

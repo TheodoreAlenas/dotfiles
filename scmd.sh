@@ -12,7 +12,7 @@ about_but_how_do_i() { echo "You don't. That's the usual answer. Think of the lu
 
 window_other() { bspc node next.local.leaf --focus; } #o
 window_replace() { bspc node --swap "$(win_dmenu)"; }
-window_find() { bspc node "$(win_dmenu)" --focus; } #b
+window_find() { bspc node "$(win_dmenu)" --focus; }
 goto_window() { bspc node "$(win_dmenu)" --focus; }
 window_bring() { bspc node "$(win_dmenu)" --to-node focused; }
 window_replace_other() { bspc node @brother --swap "$(win_dmenu)"; }
@@ -45,6 +45,12 @@ goto_desktop_5() { bspc desktop ^5 --focus; } #5
 goto_desktop_6() { bspc desktop ^6 --focus; } #6
 goto_desktop_7() { bspc desktop ^7 --focus; } #7
 
+keyboard_language_set_serbian() { setxkbmap rs; } #8
+keyboard_language_set_greek()     { setxkbmap gr; } #9
+keyboard_language_set_dvorak()   { setxkbmap us -variant dvorak; } #0
+keyboard_language_set_english() { setxkbmap us; }
+keyboard_language_set_variant() { setxkbmap us "$(localectl list-x11-keymap-variants us | dmenu)"; }
+
 window_to_desktop() { bspc node --to-desktop "$(bspc query -D --names|dmenu)"; }
 window_to_desktop_1() { bspc node --to-desktop ^1; } #j1
 window_to_desktop_2() { bspc node --to-desktop ^2; } #j2
@@ -53,6 +59,18 @@ window_to_desktop_4() { bspc node --to-desktop ^4; } #j4
 window_to_desktop_5() { bspc node --to-desktop ^5; } #j5
 window_to_desktop_6() { bspc node --to-desktop ^6; } #j6
 window_to_desktop_7() { bspc node --to-desktop ^7; } #j7
+
+volume_set_0() { pactl set-sink-volume 0  1000  1000; } #m0
+volume_set_1() { pactl set-sink-volume 0  6000  6000; } #m1
+volume_set_2() { pactl set-sink-volume 0 12000 12000; } #m2
+volume_set_3() { pactl set-sink-volume 0 18000 18000; } #m3
+volume_set_4() { pactl set-sink-volume 0 24000 24000; } #m4
+volume_set_5() { pactl set-sink-volume 0 30000 30000; } #m5
+volume_set_6() { pactl set-sink-volume 0 36000 36000; } #m6
+volume_set_7() { pactl set-sink-volume 0 42000 42000; } #m7
+volume_set_8() { pactl set-sink-volume 0 48000 48000; } #m8
+volume_set_9() { pactl set-sink-volume 0 54000 54000; } #m9
+volume_set_custom() { pactl set-sink-volume 0 "$(:|dmenu)"; }
 
 window_move_split_to_positives() { bspc node @parent --ratio +0.05; } #i
 window_move_split_to_negatives() { bspc node @parent --ratio -0.05; } #d
@@ -75,30 +93,12 @@ window_set_fullscreen()   { bspc node --state fullscreen; }
 window_set_floating()   { bspc node --state floating; }
 window_set_tiled()   { bspc node --state tiled; }
 
-keyboard_language_set_greek()     { setxkbmap gr; } #9
-keyboard_language_set_dvorak()   { setxkbmap us -variant dvorak; } #0
-keyboard_language_set_english() { setxkbmap us; }
-keyboard_language_set_serbian() { setxkbmap rs; } #8
-keyboard_language_set_variant() { setxkbmap us "$(localectl list-x11-keymap-variants us | dmenu)"; }
-
-hellsinger_start() { mpv ~/r/music-laptop/hellsinger-fast.mp4 --start=00:00; } #ms
-hellsinger_this()  { mpv ~/r/music-laptop/hellsinger-fast.mp4 --start=05:48; } #mt
-hellsinger_egypt() { mpv ~/r/music-laptop/hellsinger-fast.mp4 --start=14:03; } #me
-hellsinger_feel()  { mpv ~/r/music-laptop/hellsinger-fast.mp4 --start=29:59; } #mf
-hellsinger_msg()   { mpv ~/r/music-laptop/hellsinger-fast.mp4 --start=36:18; } #mm
-hellsinger_away()  { mpv ~/r/music-laptop/hellsinger-fast.mp4 --start=41:31; } #ma
-
-volume_set_0() { pactl set-sink-volume 0  1000  1000; } #m0
-volume_set_1() { pactl set-sink-volume 0  6000  6000; } #m1
-volume_set_2() { pactl set-sink-volume 0 12000 12000; } #m2
-volume_set_3() { pactl set-sink-volume 0 18000 18000; } #m3
-volume_set_4() { pactl set-sink-volume 0 24000 24000; } #m4
-volume_set_5() { pactl set-sink-volume 0 30000 30000; } #m5
-volume_set_6() { pactl set-sink-volume 0 36000 36000; } #m6
-volume_set_7() { pactl set-sink-volume 0 42000 42000; } #m7
-volume_set_8() { pactl set-sink-volume 0 48000 48000; } #m8
-volume_set_9() { pactl set-sink-volume 0 54000 54000; } #m9
-volume_set_custom() { pactl set-sink-volume 0 "$(:|dmenu)"; }
+hellsinger_start() { mpv ~/r/music-laptop/hellsinger-fast.mp4 --start=00:00; }
+hellsinger_this()  { mpv ~/r/music-laptop/hellsinger-fast.mp4 --start=05:48; }
+hellsinger_egypt() { mpv ~/r/music-laptop/hellsinger-fast.mp4 --start=14:03; }
+hellsinger_feel()  { mpv ~/r/music-laptop/hellsinger-fast.mp4 --start=29:59; }
+hellsinger_msg()   { mpv ~/r/music-laptop/hellsinger-fast.mp4 --start=36:18; }
+hellsinger_away()  { mpv ~/r/music-laptop/hellsinger-fast.mp4 --start=41:31; }
 
 wallpaper_set_scale() { bspc_float; feh --bg-scale "$(find ~/r/wp/ -type f -print0 | xargs -0 sxiv -ot)"; }
 wallpaper_set_fill()  { bspc_float; feh --bg-fill  "$(find ~/r/wp/ -type f -print0 | xargs -0 sxiv -ot)"; }
@@ -156,7 +156,7 @@ kill_lmbr() { pidof tail | xargs -i ps -o ppid=,pid= -p {} | lmbr_tail_brother |
 lmbr_tail_brother() { awk "/ $(pidof lemonbar | xargs -i ps -o ppid= -p {} | tr -d ' ') /{print \$2}"; }
 lmbr_paint() { lmbr_paint1 | lmbr_paint2 | lmbr_paint3 | lmbr_paint4; }
 lmbr_paint1() { sed --unbuffered 's/%/%%/g' | stdbuf -o0 tr -c '[:print:]\n' '^'; }
-lmbr_paint2() { sed --unbuffered 's/[0-9]\| #[^ >]* /%{F#379cf6}&%{F-}/g'; }
+lmbr_paint2() { sed --unbuffered 's/[0-9]\| #[^ >]* \|dmenu/%{F#379cf6}&%{F-}/g'; }
 lmbr_paint3() { sed --unbuffered 's/() *{\|; }\| }\| }\|#>>/%{F#334}&%{F-}/g'; }
 lmbr_paint4() { sed --unbuffered 's/\(.*#>>\)\(.*\)/%{c}\1%{B#222f40}\2%{B-}/'; }
 
@@ -214,7 +214,7 @@ goodones_open_shuffled() { find ~/l/g1 -type f | shuf | xargs mpv --pause; }
 goodones_open_sorted()   { find ~/l/g1 -type f | sort | xargs mpv --pause; }
 goodones_vim() { in_vim 'echo "mpv --pause"; find ~/g1 -type f'; }
 
-screenshot_take_region()   { eval "shotgun $(slop -f '-i %i -g %g') /tmp/screenshot.png"; } #w
+screenshot_take_region()   { eval "shotgun $(slop -f '-i %i -g %g') /tmp/screenshot.png"; } #s
 screenshot_take_region_3s()  { cmd="shotgun $(slop -f '-i %i -g %g') /tmp/screenshot.png" && sleep 3 && eval "$cmd"; }
 screenshot_take_fullscreen()   { sleep 0.2s && shotgun /tmp/screenshot.png; }
 screenshot_take_fullscreen_1s()   { sleep 0.5s && echo and && sleep 0.5s && echo now && shotgun /tmp/screenshot.png; }
@@ -233,15 +233,10 @@ clip_yt_tdd() { printf %s "https://www.youtube.com/watch?v=kScFczWbwRM"     |xcl
 clip_yt_tcr() { printf %s "https://youtu.be/tnO2Mos0RjU?si=OhTk8fUdI0FPTWT6"|xclip -selection clipboard -in; }
 
 open_terminal() { alacritty; } #t
-
 open_battery_widget() { albatwid; } #u
-open_battery_widget_old() { head /sys/class/power_supply/BAT1/capacity; alm-battery; } #U
-open_battery_widget_old_longer() { alm-battery -t 3 -s 0.5; }
-
 open_clock_widget() { date; alclowid; } #h
-open_clock_widget_for() { alclowid -t "$(:|dmenu -p timeout)"; } #H
-
-open_emacs() { emacs; } #em
+open_clock_widget_for() { alclowid -t "$(:|dmenu -p timeout)"; }
+open_emacs() { emacs; } #e
 open_libreoffice() { libreoffice; }
 open_spotify() { spotify-launcher > /dev/null 2> /dev/null; }
 open_kdenlive() { kdenlive > /dev/null 2> /dev/null; }
@@ -250,29 +245,28 @@ open_screenkey() { screenkey; }
 open_unclutter() { unclutter; }
 close_screenkey() { killall screenkey; }
 close_unclutter() { killall unclutter; }
-open_qutebrowser() { qutebrowser 2>&1 | grep -vi 'reject\|sRGB\|console.assert'; } #a
+open_qutebrowser() { qutebrowser 2>&1 | grep -vi 'reject\|sRGB\|console.assert'; } #b
 open_last_recording() { mpv /tmp/rec.mkv; }
 close_bspwm() { killall bspwm; }
 
 switch_emacs_to_vanilla() { rm ~/.emacs.d; ln -s ~/.cache/emacs/vanilla/home-emacs-dot-d/ ~/.emacs.d; }
 switch_emacs_to_doom() { rm ~/.emacs.d; ln -s ~/.cache/emacs/doomemacs/ ~/.emacs.d; }
 
-lemonbar_show_date() { date; } #cd
-lemonbar_show_free_disk() { df -h | awk '/e0n1p6/{print $4}'; } #cf
-lemonbar_show_memory() { free|awk 'NR>1{t=int($2/200000);u=int($3/200000);printf("[%"u"s>%"t-u"s]","","")}';echo; } #cm
+lemonbar_show_free_disk() { df -h | awk '/e0n1p6/{print $4}'; } #c
+lemonbar_show_memory() { free|awk 'NR>1{t=int($2/200000);u=int($3/200000);printf("[%"u"s>%"t-u"s]","","")}';echo; }
 lemonbar_input_vim() { in_terminal "vi '+$' /tmp/scmd.sh"; }
 
 preview_figlet_vim() { in_vim 'for f in /usr/share/figlet/fonts/*; do echo "$f"; figlet -f "$f" Figlet; done'; }
 copy_glyph_or_emoji() { printf %s "$(dmenu < ~/l/gart/glyphs | cut -d' ' -f1)" | xclip -in -sel clipboard; }
 
-reset_wifi_soft() { nmcli device connect wlo1; } #er
-reset_wifi_hard() { nmcli radio wifi off && nmcli radio wifi on; echo "done"; }
-poweroff_now() { in_terminal 'sudo shutdown now'; } #eq
+reset_wifi_soft() { nmcli device connect wlo1; } #w
+reset_wifi_hard() { nmcli radio wifi off && nmcli radio wifi on; echo "done"; } #W
+poweroff_now() { in_terminal 'sudo shutdown now'; }
 poweroff_in_5_minutes() { in_terminal 'sudo shutdown +5'; }
 poweroff_after_midnight() { in_terminal 'sudo shutdown 02:00'; }
 poweroff_reboot() { in_terminal 'sudo shutdown --reboot now'; }
 
-type_password() { p=~/.local/share/al/type;c="$p/$(ls "$p"|dmenu)" && xdotool type --delay 30 "$(base64 -d "$c")"; } #zi
+type_password() { p=~/.local/share/al/type;c="$p/$(ls "$p"|dmenu)" && xdotool type --delay 30 "$(base64 -d "$c")"; } #p
 
 open_webcam_floating() { webc_rule_sf; mpv av://v4l2:/dev/video0 --vf=lavfi=hflip --profile=low-latency --untimed; }
 open_webcam_tiled() { webc_rule_tiled; mpv av://v4l2:/dev/video0 --vf=lavfi=hflip --profile=low-latency --untimed; }

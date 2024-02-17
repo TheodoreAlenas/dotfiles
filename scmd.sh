@@ -233,6 +233,7 @@ clip_yt_tdd() { printf %s "https://www.youtube.com/watch?v=kScFczWbwRM"     |xcl
 clip_yt_tcr() { printf %s "https://youtu.be/tnO2Mos0RjU?si=OhTk8fUdI0FPTWT6"|xclip -selection clipboard -in; }
 
 open_terminal() { alacritty; } #t
+open_terminal_xterm() { xterm; }
 open_battery_widget() { albatwid; } #u
 open_clock_widget() { date; alclowid; } #h
 open_clock_widget_for() { alclowid -t "$(:|dmenu -p timeout)"; }

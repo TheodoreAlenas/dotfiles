@@ -8,16 +8,19 @@
 (menu-bar-mode -1)
 (tool-bar-mode -1)
 (toggle-scroll-bar -1)
-(set-face-attribute 'default nil :family "Source Code Pro" :height 150)
-(set-face-attribute 'fixed-pitch nil :family "Source Code Pro" :height 150)
 (add-to-list 'initial-frame-alist '(fullscreen . maximized))
 (add-to-list 'default-frame-alist '(fullscreen . maximized))
+(dolist (def-fixpit ('default 'fixed-pitch))
+  (set-face-attribute def-fixpit nil
+		      :family "Source Code Pro"
+		      :height 150
+		      :weight 'medium))
 
 ;; buffer look
 (setq-default show-trailing-whitespace t)
-(setq column-number-mode t)
 (setq split-width-threshold 120)
 (setq explicit-shell-file-name "/usr/bin/dash")
+(column-number-mode t)
 (load-theme 'ef-night t)
 (add-hook 'prog-mode-hook #'rainbow-delimiters-mode)
 (editorconfig-mode)
@@ -30,11 +33,9 @@
 (add-hook 'text-mode-hook #'variable-pitch-mode)
 (add-hook 'text-mode-hook (lambda () (setq line-spacing 0.2)))
 (setq org-hide-emphasis-markers t)
-(set-face-attribute 'org-table       nil :inherit 'fixed-pitch)
-(set-face-attribute 'org-agenda-date nil :inherit 'fixed-pitch)
-(set-face-attribute 'org-date        nil :inherit 'fixed-pitch)
-(set-face-attribute 'org-block       nil :inherit 'fixed-pitch)
-(set-face-attribute 'org-code        nil :inherit 'fixed-pitch)
+(dolist (org-stuff
+         '(org-table org-agenda-date org-date org-block org-code))
+  (set-face-attribute org-stuff nil :inherit 'fixed-pitch))
 
 ;; eglot
 (setq eldoc-echo-area-use-multiline-p nil)
@@ -84,3 +85,9 @@
 
 
 (put 'narrow-to-region 'disabled nil)
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )

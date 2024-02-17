@@ -1,19 +1,8 @@
-;; tab characters
-(setq-default tab-width 8)
-(setq-default indent-tabs-mode nil)
-(editorconfig-mode)
-
 ;; saves
 (setq backup-directory-alist `((".*" . "~/.cache/emacs/saves")))
 (setq auto-save-file-name-transforms `((".*" "~/.cache/emacs/saves" t)))
-
-;; melpa
 (require 'package)
 (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
-
-;; full screen
-(add-to-list 'initial-frame-alist '(fullscreen . maximized))
-(add-to-list 'default-frame-alist '(fullscreen . maximized))
 
 ;; GUI
 (menu-bar-mode -1)
@@ -21,8 +10,8 @@
 (toggle-scroll-bar -1)
 (set-face-attribute 'default nil :family "Source Code Pro" :height 150)
 (set-face-attribute 'fixed-pitch nil :family "Source Code Pro" :height 150)
-(set-frame-parameter nil 'alpha-background 99)
-(add-to-list 'default-frame-alist '(alpha-background . 99))
+(add-to-list 'initial-frame-alist '(fullscreen . maximized))
+(add-to-list 'default-frame-alist '(fullscreen . maximized))
 
 ;; buffer look
 (setq-default show-trailing-whitespace t)
@@ -30,15 +19,8 @@
 (setq split-width-threshold 120)
 (setq explicit-shell-file-name "/usr/bin/dash")
 (load-theme 'ef-night t)
-(vertico-mode)
-(marginalia-mode)
 (add-hook 'prog-mode-hook #'rainbow-delimiters-mode)
-(require 'git-gutter)
-(global-git-gutter-mode 1)
-
-;; for dired painted things, you may want to append to
-;; dired-font-lock-keywords
-;; https://www.emacswiki.org/emacs/dired%2B.el
+(editorconfig-mode)
 
 ;; https://www.gnu.org/software/auctex/
 ;; for better latex support
@@ -98,7 +80,7 @@
  '(git-gutter:update-interval 0.2)
  '(org-agenda-files '("/home/aleena/code/emacs/test.org"))
  '(package-selected-packages
-   '(rainbow-delimiters lua-mode nginx-mode gptel rust-mode graphviz-dot-mode docker-compose-mode systemd org-babel-eval-in-repl web-mode pdf-tools ef-themes ligature haskell-mode evil marginalia slime editorconfig magit vertico material-theme git-gutter eglot)))
+   '(rainbow-delimiters lua-mode nginx-mode gptel rust-mode graphviz-dot-mode docker-compose-mode systemd web-mode pdf-tools ef-themes ligature haskell-mode slime editorconfig magit git-gutter eglot)))
 
 
 (put 'narrow-to-region 'disabled nil)

@@ -246,14 +246,15 @@ open_screenkey() { screenkey; }
 open_unclutter() { unclutter; }
 close_screenkey() { killall screenkey; }
 close_unclutter() { killall unclutter; }
-open_qutebrowser() { qutebrowser 2>&1 | grep -vi 'reject\|sRGB\|console.assert'; } #b
+open_quteb() { qbshh; } #b
+qbshh() { qutebrowser 2>&1 | grep --line-buffered -vi 'reject\|sRGB\|console.assert'; }
 open_last_recording() { mpv /tmp/rec.mkv; }
 close_bspwm() { killall bspwm; }
 
 switch_emacs_to_vanilla() { rm ~/.emacs.d; ln -s ~/.cache/emacs/vanilla/home-emacs-dot-d/ ~/.emacs.d; }
 switch_emacs_to_doom() { rm ~/.emacs.d; ln -s ~/.cache/emacs/doomemacs/ ~/.emacs.d; }
 
-lemonbar_show_free_disk() { df -h | awk '/e0n1p6/{print $4}'; } #c
+lemonbar_show_free_disk() { df | sed -n '/e0n1p6/s/[0-9]\{6\} /,&/gp'; } #c
 lemonbar_show_memory() { free|awk 'NR>1{t=int($2/200000);u=int($3/200000);printf("[%"u"s>%"t-u"s]","","")}';echo; }
 lemonbar_input_vim() { in_terminal "vi '+$' /tmp/scmd.sh"; }
 

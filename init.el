@@ -75,10 +75,6 @@
  ;; If there is more than one, they won't work right.
  '(custom-safe-themes t)
  '(elfeed-feeds '("https://www.di.uoa.gr/rss.xml") t)
- '(git-gutter:added-sign "+")
- '(git-gutter:deleted-sign "_")
- '(git-gutter:modified-sign "~")
- '(git-gutter:update-interval 0.2)
  '(org-agenda-files '("/home/aleena/code/emacs/test.org"))
  '(package-selected-packages
    '(rainbow-delimiters lua-mode nginx-mode gptel rust-mode graphviz-dot-mode docker-compose-mode systemd web-mode pdf-tools ef-themes ligature haskell-mode slime editorconfig magit git-gutter eglot)))

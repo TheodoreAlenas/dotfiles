@@ -172,7 +172,7 @@ wallpaper_theme_set_void() { feh --bg-scale ~/r/wp/gradient-liquid-glass.jpg; }
 terminal_theme_set_arg() { a=alacritty; cd ~/p/c && cat $a-head.toml theming-$a/"$1" > ~/.config/$a/$a.toml; }
 terminal_theme_set_hell() { terminal_theme_set_arg al_hell.toml; }
 terminal_theme_set_round() { terminal_theme_set_arg SeaShells.toml; }
-terminal_theme_set_glass() { terminal_theme_set_arg tokyo-night-storm.toml; }
+terminal_theme_set_glass() { terminal_theme_set_arg ef-night.toml; }
 terminal_theme_set_purple() { terminal_theme_set_arg Floraverse.toml; }
 terminal_theme_set_autumn() { terminal_theme_set_arg FunForrest.toml; }
 terminal_theme_set_bright() { terminal_theme_set_arg CLRS.toml; }
@@ -246,8 +246,7 @@ open_screenkey() { screenkey; }
 open_unclutter() { unclutter; }
 close_screenkey() { killall screenkey; }
 close_unclutter() { killall unclutter; }
-open_quteb() { qbshh; } #b
-qbshh() { qutebrowser 2>&1 | grep --line-buffered -vi 'reject\|sRGB\|console.assert'; }
+open_browser() { firefox; } #b
 open_last_recording() { mpv /tmp/rec.mkv; }
 open_steno_keyboard() { ~/.local/bin/plover-4.0.0rc2-x86_64.AppImage; }
 open_steno_keyboard_url() { qutebrowser https://github.com/openstenoproject/plover; }

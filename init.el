@@ -101,7 +101,7 @@
  '(elfeed-feeds '("https://www.di.uoa.gr/rss.xml") t)
  '(org-agenda-files '("/home/aleena/code/emacs/test.org"))
  '(package-selected-packages
-   '(rainbow-delimiters lua-mode nginx-mode gptel rust-mode graphviz-dot-mode docker-compose-mode systemd web-mode pdf-tools ef-themes ligature haskell-mode slime editorconfig magit git-gutter eglot)))
+   '(evil rainbow-delimiters lua-mode nginx-mode gptel rust-mode graphviz-dot-mode docker-compose-mode systemd web-mode pdf-tools ef-themes ligature haskell-mode slime editorconfig magit git-gutter eglot)))
 
 
 (put 'narrow-to-region 'disabled nil)

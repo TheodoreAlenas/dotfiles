@@ -234,8 +234,8 @@ clip_yt_tcr() { printf %s "https://youtu.be/tnO2Mos0RjU?si=OhTk8fUdI0FPTWT6"|xcl
 
 open_terminal() { alacritty; } #t
 open_terminal_xterm() { xterm; }
-open_battery_widget() { albatwid; } #u
-open_clock_widget() { date; alclowid; } #h
+open_battery_widget() { albatwid; } #a
+open_clock_widget() { head /sys/class/power_supply/BAT1/capacity |tr '\n' ' '; date; albatwid; alclowid; } #h
 open_clock_widget_for() { alclowid -t "$(:|dmenu -p timeout)"; }
 open_emacs() { emacs; } #e
 open_libreoffice() { libreoffice; }

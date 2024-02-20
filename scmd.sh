@@ -263,7 +263,7 @@ copy_glyph_or_emoji() { printf %s "$(dmenu < ~/l/gart/glyphs | cut -d' ' -f1)" |
 
 reset_wifi_soft() { nmcli device connect wlo1; } #w
 reset_wifi_hard() { nmcli radio wifi off && nmcli radio wifi on; echo "done"; } #W
-poweroff_now() { in_terminal 'sudo shutdown now'; }
+poweroff_now() { in_terminal 'sudo shutdown now'; } #P
 poweroff_in_5_minutes() { in_terminal 'sudo shutdown +5'; }
 poweroff_after_midnight() { in_terminal 'sudo shutdown 02:00'; }
 poweroff_reboot() { in_terminal 'sudo shutdown --reboot now'; }

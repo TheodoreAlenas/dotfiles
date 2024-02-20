@@ -10,7 +10,7 @@
 (toggle-scroll-bar -1)
 (add-to-list 'initial-frame-alist '(fullscreen . maximized))
 (add-to-list 'default-frame-alist '(fullscreen . maximized))
-(dolist (def-fixpit ('default 'fixed-pitch))
+(dolist (def-fixpit '(default fixed-pitch))
   (set-face-attribute def-fixpit nil
 		      :family "Source Code Pro"
 		      :height 150
@@ -66,6 +66,30 @@
 
 (use-package ligature :config
   (ligature-set-ligatures '(haskell-mode) al/haskell-ligature-strings))
+
+;; abbreviations
+(setq
+ al/abbrevs
+ '(("bu"	"because")
+   ("il"	"install")
+   ("ilg"	"installing")
+   ("ild"	"installed")
+   ("l"	"Linux")
+   ("la"	"Arch Linux")
+   ("gih"	"GitHub")
+   ("um"	"I'm")
+   ("un"	"I'm not")
+   ("ul"	"I'll")
+   ("pra"	"probably")
+   ("nint"	"not in the")))
+
+(defun al/abbrev-source ()
+  "Sources the variable al/abbrevs."
+  (interactive)
+  (dolist (ab al/abbrevs)
+	  (define-abbrev text-mode-abbrev-table (nth 1 ab) (nth 2 ab))))
+(defalias 'abbrev-source-al 'al/abbrev-source)
+(al/abbrev-source)
 
 
 (custom-set-variables

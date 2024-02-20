@@ -8,7 +8,6 @@ for f in /etc/X11/xinit/xinitrc.d/?*.sh
 do test -x "$f" && . "$f"
 done
 
-setxkbmap -variant dvorak
 xset -display :0.0 r rate 250 40
 xrandr --output eDP-1 --brightness 0.7
 

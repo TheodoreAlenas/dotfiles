@@ -45,10 +45,10 @@ goto_desktop_5() { bspc desktop ^5 --focus; } #5
 goto_desktop_6() { bspc desktop ^6 --focus; } #6
 goto_desktop_7() { bspc desktop ^7 --focus; } #7
 
-keyboard_language_set_serbian() { setxkbmap rs; } #8
+keyboard_language_set_english() { setxkbmap us; } #8
 keyboard_language_set_greek()     { setxkbmap gr; } #9
 keyboard_language_set_dvorak()   { setxkbmap us -variant dvorak; } #0
-keyboard_language_set_english() { setxkbmap us; }
+keyboard_language_set_serbian() { setxkbmap rs; }
 keyboard_language_set_variant() { setxkbmap us "$(localectl list-x11-keymap-variants us | dmenu)"; }
 
 window_to_desktop() { bspc node --to-desktop "$(bspc query -D --names|dmenu)"; }
@@ -249,6 +249,8 @@ close_unclutter() { killall unclutter; }
 open_quteb() { qbshh; } #b
 qbshh() { qutebrowser 2>&1 | grep --line-buffered -vi 'reject\|sRGB\|console.assert'; }
 open_last_recording() { mpv /tmp/rec.mkv; }
+open_steno_keyboard() { ~/.local/bin/plover-4.0.0rc2-x86_64.AppImage; }
+open_steno_keyboard_url() { qutebrowser https://github.com/openstenoproject/plover; }
 close_bspwm() { killall bspwm; }
 
 switch_emacs_to_vanilla() { rm ~/.emacs.d; ln -s ~/.cache/emacs/vanilla/home-emacs-dot-d/ ~/.emacs.d; }

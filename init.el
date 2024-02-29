@@ -17,11 +17,11 @@
 		      :weight 'medium))
 
 ;; buffer look
-(setq-default show-trailing-whitespace t)
+(global-whitespace-mode 1)
 (setq split-width-threshold 120)
 (setq explicit-shell-file-name "/usr/bin/dash")
 (column-number-mode t)
-(load-theme 'ef-night t)
+(load-theme 'ef-elea-dark t)
 (add-hook 'prog-mode-hook #'rainbow-delimiters-mode)
 (editorconfig-mode)
 
@@ -30,8 +30,20 @@
 
 ;; org
 (require 'org)
-(add-hook 'text-mode-hook #'variable-pitch-mode)
-(add-hook 'text-mode-hook (lambda () (setq line-spacing 0.2)))
+
+(defun al/prose-enable ()
+    "Variable pitch mode and line spacing"
+  (interactive)
+  (variable-pitch-mode 1)
+  (setq line-spacing 0.2))
+
+(defun al/prose-disable ()
+    "Variable pitch mode and line spacing"
+  (interactive)
+  (variable-pitch-mode -1)
+  (setq line-spacing nil))
+
+(add-hook 'text-mode-hook #'al/prose-enable)
 (setq org-hide-emphasis-markers t)
 (dolist (org-stuff
          '(org-table org-agenda-date org-date org-block org-code))
@@ -91,6 +103,14 @@
 (defalias 'abbrev-source-al 'al/abbrev-source)
 (al/abbrev-source)
 
+;; Greek
+(use-package reverse-im
+  :ensure t ; install `reverse-im' using package.el
+  :demand t ; always load it
+  :custom
+  (reverse-im-input-methods '("greek")) ; translate these methods
+  :config
+  (reverse-im-mode t)) ; turn the mode on
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
@@ -101,7 +121,7 @@
  '(elfeed-feeds '("https://www.di.uoa.gr/rss.xml") t)
  '(org-agenda-files '("/home/aleena/code/emacs/test.org"))
  '(package-selected-packages
-   '(evil rainbow-delimiters lua-mode nginx-mode gptel rust-mode graphviz-dot-mode docker-compose-mode systemd web-mode pdf-tools ef-themes ligature haskell-mode slime editorconfig magit git-gutter eglot)))
+   '(reverse-im evil rainbow-delimiters lua-mode nginx-mode gptel rust-mode graphviz-dot-mode docker-compose-mode systemd web-mode pdf-tools ef-themes ligature haskell-mode slime editorconfig magit git-gutter eglot)))
 
 
 (put 'narrow-to-region 'disabled nil)

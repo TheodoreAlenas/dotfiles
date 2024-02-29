@@ -45,9 +45,9 @@ goto_desktop_5() { bspc desktop ^5 --focus; } #5
 goto_desktop_6() { bspc desktop ^6 --focus; } #6
 goto_desktop_7() { bspc desktop ^7 --focus; } #7
 
-keyboard_language_set_english() { setxkbmap us; } #8
-keyboard_language_set_greek()     { setxkbmap gr; } #9
-keyboard_language_set_dvorak()   { setxkbmap us -variant dvorak; } #0
+keyboard_language_set_greek()   { setxkbmap gr; } #9
+keyboard_language_set_english() { setxkbmap us; } #0
+keyboard_language_set_dvorak()  { setxkbmap us -variant dvorak; }
 keyboard_language_set_serbian() { setxkbmap rs; }
 keyboard_language_set_variant() { setxkbmap us "$(localectl list-x11-keymap-variants us | dmenu)"; }
 
@@ -205,13 +205,13 @@ screen_brightness_set_9() { xrandr --output eDP-1 --brightness 0.9; }
 screen_brightness_set_normal()  { xrandr  --output eDP-1  --brightness 0.7; }
 screen_brightness_set_custom()  { xrandr  --output eDP-1  --brightness "$(:|dmenu)"; }
 
-goodones_open_under() { (cd ~/l/g1 && p="$(printf "%s\n" * */* | dmenu)" && mpv --pause "$p"); }
-goodones_open_tagged() { (cd ~/l/g1 && sh tag.sh | awk "/$(:|dmenu)/"'{print $NF}' | xargs mpv --pause); }
-goodones_open_newest()   { find ~/l/g1 -type f -printf "%B@\t%p\n"|sort -r|cut -f2|xargs mpv --pause; }
-goodones_open_accessed() { find ~/l/g1 -type f -printf "%A@\t%p\n"|sort -r|cut -f2|xargs mpv --pause; }
-goodones_open_changed()  { find ~/l/g1 -type f -printf "%C@\t%p\n"|sort -r|cut -f2|xargs mpv --pause; }
-goodones_open_shuffled() { find ~/l/g1 -type f | shuf | xargs mpv --pause; }
-goodones_open_sorted()   { find ~/l/g1 -type f | sort | xargs mpv --pause; }
+goodones_open_under() { (cd ~/r/g1 && p="$(printf "%s\n" * */* | dmenu)" && mpv --pause "$p"); }
+goodones_open_tagged() { (cd ~/r/g1 && sh tag.sh | awk "/$(:|dmenu)/"'{print $NF}' | xargs mpv --pause); }
+goodones_open_newest()   { find ~/r/g1 -type f -printf "%B@\t%p\n"|sort -r|cut -f2|xargs mpv --pause; }
+goodones_open_accessed() { find ~/r/g1 -type f -printf "%A@\t%p\n"|sort -r|cut -f2|xargs mpv --pause; }
+goodones_open_changed()  { find ~/r/g1 -type f -printf "%C@\t%p\n"|sort -r|cut -f2|xargs mpv --pause; }
+goodones_open_shuffled() { find ~/r/g1 -type f | shuf | xargs mpv --pause; }
+goodones_open_sorted()   { find ~/r/g1 -type f | sort | xargs mpv --pause; }
 goodones_vim() { in_vim 'echo "mpv --pause"; find ~/g1 -type f'; }
 
 screenshot_take_region()   { eval "shotgun $(slop -f '-i %i -g %g') /tmp/screenshot.png"; } #s

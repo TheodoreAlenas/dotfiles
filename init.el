@@ -52,14 +52,6 @@
 ;; eglot
 (setq eldoc-echo-area-use-multiline-p nil)
 (setq eglot-confirm-server-initiated-edits nil)
-(require 'eglot)
-(add-to-list
- 'eglot-server-programs
- '(prolog-mode
-   "sh" "-c"
-   "(echo $0; echo $1) > /tmp/to-swipl && swipl /tmp/to-swipl"
-   "?- use_module(library(prolog_lsp))."
-   "?- run_stdio_language_server."))
 
 ;; Haskell ligatures
 
@@ -78,30 +70,6 @@
 
 (use-package ligature :config
   (ligature-set-ligatures '(haskell-mode) al/haskell-ligature-strings))
-
-;; abbreviations
-(setq
- al/abbrevs
- '(("bu"	"because")
-   ("il"	"install")
-   ("ilg"	"installing")
-   ("ild"	"installed")
-   ("l"	"Linux")
-   ("la"	"Arch Linux")
-   ("gih"	"GitHub")
-   ("um"	"I'm")
-   ("un"	"I'm not")
-   ("ul"	"I'll")
-   ("pra"	"probably")
-   ("nint"	"not in the")))
-
-(defun al/abbrev-source ()
-  "Sources the variable al/abbrevs."
-  (interactive)
-  (dolist (ab al/abbrevs)
-	  (define-abbrev text-mode-abbrev-table (nth 1 ab) (nth 2 ab))))
-(defalias 'abbrev-source-al 'al/abbrev-source)
-(al/abbrev-source)
 
 ;; Greek
 (use-package reverse-im

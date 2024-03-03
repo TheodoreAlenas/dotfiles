@@ -20,14 +20,11 @@ br() {
   fi
 }
 
-# record screen
-rec() {
-  ffmpeg -f x11grab -s 1920x1080 -i :0.0 -fs 2000M "${1:-/tmp/rec.mkv}"
+first_missing_path() {
+  while read -r n; do if ! test -e "$n"; then echo "$n"; break; fi; done
 }
 
-# record screen and audio
-reca() {
-  ffmpeg -f x11grab -s 1920x1080 -i :0.0 \
-    -f alsa -itsoffset 0.3 -i hw:1 -af "volume=2.0" \
-	-fs 2000M "${1:-/tmp/rec.mkv}"
+rec() {
+  rec_next="$(seq -w 99 | sed 's/$/.mkv/' | first_missing_path)"
+  ffmpeg -f x11grab -s 1920x1080 -i :0.0 -fs 2000M "${1:-"$rec_next"}"
 }

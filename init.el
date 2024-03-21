@@ -34,19 +34,20 @@
 ;; org
 (require 'org)
 
-(defun al/prose-enable ()
+(setq al/prose-modeish -1)
+(defun al/prose-modeish (&optional enable)
     "Variable pitch mode and line spacing"
-  (interactive)
-  (variable-pitch-mode 1)
-  (setq line-spacing 0.2))
+    (interactive)
+    (if (or (not (eq al/prose-modeish 1)) (eq enable 1))
+        (progn
+          (setq al/prose-modeish 1)
+          (variable-pitch-mode 1)
+          (setq line-spacing 0.2))
+      (setq al/prose-modeish -1)
+      (variable-pitch-mode -1)
+      (setq line-spacing 0)))
 
-(defun al/prose-disable ()
-    "Variable pitch mode and line spacing"
-  (interactive)
-  (variable-pitch-mode -1)
-  (setq line-spacing nil))
-
-(add-hook 'text-mode-hook #'al/prose-enable)
+(add-hook 'text-mode-hook #'al/prose-modeish)
 (setq org-hide-emphasis-markers t)
 (dolist (org-stuff
          '(org-table org-agenda-date org-date org-block org-code))
@@ -102,3 +103,4 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  )
+(put 'set-goal-column 'disabled nil)

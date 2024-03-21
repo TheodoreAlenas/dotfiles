@@ -1,5 +1,5 @@
-GOPATH=~/.local/share/go
-GOBIN=~/.local/share/go/bin
+export GOPATH=~/.local/share/go
+export GOBIN=~/.local/share/go/bin
 
 # sourcing this file multiple times won't lengthen $PATH
 export AL_PATH_FROM_ROOT="${AL_PATH_FROM_ROOT:-"$PATH"}"

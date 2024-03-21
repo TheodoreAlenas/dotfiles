@@ -156,13 +156,13 @@ kill_lmbr() { pidof tail | xargs -i ps -o ppid=,pid= -p {} | lmbr_tail_brother |
 lmbr_tail_brother() { awk "/ $(pidof lemonbar | xargs -i ps -o ppid= -p {} | tr -d ' ') /{print \$2}"; }
 lmbr_paint() { lmbr_paint1 | lmbr_paint2 | lmbr_paint3 | lmbr_paint4; }
 lmbr_paint1() { sed --unbuffered 's/%/%%/g' | stdbuf -o0 tr -c '[:print:]\n' '^'; }
-lmbr_paint2() { sed --unbuffered 's/[0-9]\| #[^ >]* \|dmenu/%{F#379cf6}&%{F-}/g'; }
-lmbr_paint3() { sed --unbuffered 's/() *{\|; }\| }\| }\|#>>/%{F#334}&%{F-}/g'; }
-lmbr_paint4() { sed --unbuffered 's/\(.*#>>\)\(.*\)/%{c}\1%{B#222f40}\2%{B-}/'; }
+lmbr_paint2() { sed --unbuffered 's/[0-9"]\| #[^ >]* \|dmenu/%{F#379cf6}&%{F-}/g'; }
+lmbr_paint3() { sed --unbuffered 's/^:\| ; \|() *{\|; }\| }\|#>>/%{F#334}&%{F-}/g'; }
+lmbr_paint4() { sed --unbuffered 's/\(:[^;]*;[^ ]* \)\(.*#>>\)\(.*\)/\1%{c}\2%{B#222f40}\3%{B-}/'; }
 
 wallpaper_theme_set_hell() { feh --bg-fill ~/r/wp/rebecca-jansen.jpg; }
 wallpaper_theme_set_round() { feh --bg-scale ~/r/wp/gradient-blue-pink.jpg; }
-wallpaper_theme_set_glass() { feh --bg-scale ~/r/wp/blue-distant-mountains.jpg; }
+wallpaper_theme_set_glass() { feh --bg-scale ~/r/wp/orange-distant-mountain-mostly-sky.jpg ; }
 wallpaper_theme_set_purple() { feh --bg-scale ~/r/wp/03-rails.jpg; }
 wallpaper_theme_set_autumn() { feh --bg-scale ~/r/wp/orange-leaves-autumn.jpg; }
 wallpaper_theme_set_bright() { feh --bg-scale ~/r/wp/flowers-space-yellow-dark.png; }
@@ -235,7 +235,7 @@ clip_yt_tcr() { printf %s "https://youtu.be/tnO2Mos0RjU?si=OhTk8fUdI0FPTWT6"|xcl
 open_terminal() { alacritty; } #t
 open_terminal_xterm() { xterm; }
 open_battery_widget() { albatwid; } #a
-open_clock_widget() { head /sys/class/power_supply/BAT1/capacity |tr '\n' ' '; date; albatwid; alclowid; } #h
+open_clock_widget() { head /sys/class/power_supply/BAT1/capacity; albatwid; alclowid; } #h
 open_clock_widget_for() { alclowid -t "$(:|dmenu -p timeout)"; }
 open_emacs() { emacs; } #e
 open_libreoffice() { libreoffice; }
@@ -257,6 +257,7 @@ switch_emacs_to_doom() { rm ~/.emacs.d; ln -s ~/.cache/emacs/doomemacs/ ~/.emacs
 
 lemonbar_show_free_disk() { df | sed -n '/e0n1p6/s/[0-9]\{6\} /,&/gp'; } #c
 lemonbar_show_memory() { free|awk 'NR>1{t=int($2/200000);u=int($3/200000);printf("[%"u"s>%"t-u"s]","","")}';echo; }
+lemonbar_show_date() { date "+%+4Y-%m-%d %B, %A"; }
 lemonbar_input_vim() { in_terminal "vi '+$' /tmp/scmd.sh"; }
 
 preview_figlet_vim() { in_vim 'for f in /usr/share/figlet/fonts/*; do echo "$f"; figlet -f "$f" Figlet; done'; }
@@ -291,7 +292,7 @@ scmd_awk1() { printf %s 's = $1; gsub(/./, "; super + &", s); sub("; ", "", s); 
 scmd_awk2() { printf %s 'print(s); printf("\t. %s && scmd_with_bar_status %s\n\n", "'"$(this_file)"'", $2);'; }
 scmd_find() { printf "%s\n" "$(grep "^$1(" "$(this_file)")"; }
 scmd_with_bar_status() { cline="$(scmd_find "$1")"; (echo; "$@" 2>&1) | scmd_bar_fmt "$cline" >> /tmp/scmd.sh; }
-scmd_bar_fmt() { while read -r l; do printf "%s #>>%s\n" "$1" "$l"; done; }
+scmd_bar_fmt() { while read -r l; do printf ": $(date +%T) ; %s #>>%s\n" "$1" "$l"; done; }
 scmd_give_bar_color_swap_fix() { echo "%{R}"; }
 scmd_give_bar_test_1234() { for i in 1 2 3 4; do sleep 1 && echo "$i"; done; }
 scmd_try_function() { c=$(dmenu<"$(this_file)"|cut -d'(' -f1)&&(a="$(:|dmenu -p $c)"; :|dmenu -p stdin|eval "$c $a"); }

@@ -12,17 +12,20 @@
 (add-to-list 'default-frame-alist '(fullscreen . maximized))
 (dolist (def-fixpit '(default fixed-pitch))
   (set-face-attribute def-fixpit nil
-		      :family "Source Code Pro"
-		      :height 150
-		      :weight 'medium))
+                      :family "Source Code Pro"
+                      :height 150
+                      :weight 'medium))
 
 ;; buffer look
+(setq whitespace-style	'(face tabs tab-mark space-after-tab trailing lines-tail missing-newline-at-eof))
+(setq whitespace-line-column 72)
 (global-whitespace-mode 1)
 (setq split-width-threshold 120)
 (setq explicit-shell-file-name "/usr/bin/dash")
 (column-number-mode t)
 (load-theme 'ef-elea-dark t)
 (add-hook 'prog-mode-hook #'rainbow-delimiters-mode)
+(add-hook 'prog-mode-hook (lambda () (indent-tabs-mode -1)))
 (editorconfig-mode)
 
 ;; https://www.gnu.org/software/auctex/

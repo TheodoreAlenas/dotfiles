@@ -246,7 +246,8 @@ open_screenkey() { screenkey; }
 open_unclutter() { unclutter; }
 close_screenkey() { killall screenkey; }
 close_unclutter() { killall unclutter; }
-open_browser() { firefox; } #b
+firefox_silent() { firefox 2>&1 | grep --line-buffered -v mesa_glthread; }
+open_browser() { firefox_silent; } #b
 open_last_recording() { mpv /tmp/rec.mkv; }
 open_steno_keyboard() { ~/.local/bin/plover-4.0.0rc2-x86_64.AppImage; }
 open_steno_keyboard_url() { qutebrowser https://github.com/openstenoproject/plover; }
@@ -295,7 +296,7 @@ scmd_with_bar_status() { cline="$(scmd_find "$1")"; (echo; "$@" 2>&1) | scmd_bar
 scmd_bar_fmt() { while read -r l; do printf ": $(date +%T) ; %s #>>%s\n" "$1" "$l"; done; }
 scmd_give_bar_color_swap_fix() { echo "%{R}"; }
 scmd_give_bar_test_1234() { for i in 1 2 3 4; do sleep 1 && echo "$i"; done; }
-scmd_try_function() { c=$(dmenu<"$(this_file)"|cut -d'(' -f1)&&(a="$(:|dmenu -p $c)"; :|dmenu -p stdin|eval "$c $a"); }
+scmd_try_function() { c=$(dmenu<"$(this_file)"|cut -d'(' -f1)&&(a="$(:|dmenu -p $c)"&& :|dmenu -p stdin|eval "$c $a"); }
 
 in_vim() { term_rule_dock && alacritty -e sh -c ". $(this_file) && $1 | vim -"; }
 in_terminal() { term_rule_dock && alacritty -e sh -c "$1"; }

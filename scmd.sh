@@ -111,41 +111,41 @@ terminal_theme_set() { term_rule_dock; cd ~/p/c/ && alacritty -e sh -c "ls themi
 term_rule_dock() { bspc rule --add '*:*:*' --one-shot state=floating -g 1900x500+10+500; }
 term_fzf_prvw_cat() { a=alacritty; printf %s "fzf --preview 'cat $a-head.toml theming-$a/{} > ~/.config/$a/$a.toml'"; }
 
+global_theme_set_vert()  { global_theme_set vert; }
 global_theme_set_hell()  { global_theme_set hell; }
 global_theme_set_round()  { global_theme_set round; }
 global_theme_set_glass()  { global_theme_set glass; }
 global_theme_set_purple()  { global_theme_set purple; }
-global_theme_set_autumn()  { global_theme_set autumn; }
 global_theme_set_bright()  { global_theme_set bright; }
 global_theme_set_space()  { global_theme_set space; }
 global_theme_set_void()  { global_theme_set void; }
 
-global_theme_set_bspwm_startup() { global_theme_set glass; }
+global_theme_set_bspwm_startup() { global_theme_set vert; }
 global_theme_set() { for t in terminal dmenu wallpaper picom bspwm lemonbar; do "${t}_theme_set_$1"; done; }
 
+picom_theme_set_vert()  { cp  ~/p/c/theming-picom/glass.conf  ~/.config/picom/picom.conf; }
 picom_theme_set_hell()  { cp  ~/p/c/theming-picom/hell.conf  ~/.config/picom/picom.conf; }
 picom_theme_set_round()  { cp  ~/p/c/theming-picom/round.conf  ~/.config/picom/picom.conf; }
 picom_theme_set_glass()  { cp  ~/p/c/theming-picom/glass.conf  ~/.config/picom/picom.conf; }
 picom_theme_set_purple()  { cp  ~/p/c/theming-picom/glass.conf  ~/.config/picom/picom.conf; }
-picom_theme_set_autumn()  { cp  ~/p/c/theming-picom/autumn.conf  ~/.config/picom/picom.conf; }
 picom_theme_set_bright()  { cp  ~/p/c/theming-picom/space.conf  ~/.config/picom/picom.conf; }
 picom_theme_set_space()  { cp  ~/p/c/theming-picom/space.conf  ~/.config/picom/picom.conf; }
 picom_theme_set_void()  { cp  ~/p/c/theming-picom/void.conf  ~/.config/picom/picom.conf; }
 
+bspwm_theme_set_vert()  { bspwm-theme  glass; }
 bspwm_theme_set_hell()  { bspwm-theme  hell; }
 bspwm_theme_set_round()  { bspwm-theme  round; }
 bspwm_theme_set_glass()  { bspwm-theme  glass; }
 bspwm_theme_set_purple()  { bspwm-theme  silent; }
-bspwm_theme_set_autumn()  { bspwm-theme  autumn; }
 bspwm_theme_set_bright()  { bspwm-theme  glass; }
 bspwm_theme_set_space()  { bspwm-theme  space; }
 bspwm_theme_set_void()  { bspwm-theme  void; }
 
+lemonbar_theme_set_vert() {   kill_lmbr_tail_f lemonbar -f "Source Code Pro-8" -b -B '#000e17' -F '#afbcbf'; }
 lemonbar_theme_set_hell() {   kill_lmbr_tail_f lemonbar -f "Source Code Pro-14" -b -B '#05080c' -F '#aa1122'; }
 lemonbar_theme_set_round() {  kill_lmbr_tail_f lemonbar -f "Source Code Pro-14" -b -B '#08131a' -F '#1d4850'; }
 lemonbar_theme_set_glass() {  kill_lmbr_tail_f lemonbar -f "Source Code Pro-14" -b -B '#000e17' -F '#afbcbf'; }
 lemonbar_theme_set_purple() { kill_lmbr_tail_f lemonbar -f "Source Code Pro-14" -b -B '#0e0c15' -F '#42a38c'; }
-lemonbar_theme_set_autumn() { kill_lmbr_tail_f lemonbar -f "Source Code Pro-14" -b -B '#05080c' -F '#aa1122'; }
 lemonbar_theme_set_bright() { kill_lmbr_tail_f lemonbar -f "Source Code Pro-14" -b -B '#05080c' -F '#aaaabb'; }
 lemonbar_theme_set_space() {  kill_lmbr_tail_f lemonbar -f "Source Code Pro-14" -b -B '#05080c' -F '#aaaabb'; }
 lemonbar_theme_set_void() {   kill_lmbr_tail_f lemonbar -f "Source Code Pro-14" -b -B '#05080c' -F '#aaaabb'; }
@@ -160,21 +160,21 @@ lmbr_paint2() { sed --unbuffered 's/[0-9"]\| #[^ >]* \|dmenu/%{F#379cf6}&%{F-}/g
 lmbr_paint3() { sed --unbuffered 's/^:\| ; \|() *{\|; }\| }\|#>>/%{F#334}&%{F-}/g'; }
 lmbr_paint4() { sed --unbuffered 's/\(:[^;]*;[^ ]* \)\(.*#>>\)\(.*\)/\1%{c}\2%{B#222f40}\3%{B-}/'; }
 
+wallpaper_theme_set_vert() { feh --bg-fill ~/r/wp/01-hellsinger-stare.jpg; }
 wallpaper_theme_set_hell() { feh --bg-fill ~/r/wp/rebecca-jansen.jpg; }
 wallpaper_theme_set_round() { feh --bg-scale ~/r/wp/gradient-blue-pink.jpg; }
 wallpaper_theme_set_glass() { feh --bg-scale ~/r/wp/orange-distant-mountain-mostly-sky.jpg ; }
 wallpaper_theme_set_purple() { feh --bg-scale ~/r/wp/03-rails.jpg; }
-wallpaper_theme_set_autumn() { feh --bg-scale ~/r/wp/orange-leaves-autumn.jpg; }
 wallpaper_theme_set_bright() { feh --bg-scale ~/r/wp/flowers-space-yellow-dark.png; }
 wallpaper_theme_set_space() { feh --bg-scale ~/r/wp/flowers-space-yellow-dark.png; }
 wallpaper_theme_set_void() { feh --bg-scale ~/r/wp/gradient-liquid-glass.jpg; }
 
 terminal_theme_set_arg() { a=alacritty; cd ~/p/c && cat $a-head.toml theming-$a/"$1" > ~/.config/$a/$a.toml; }
+terminal_theme_set_vert() { terminal_theme_set_arg ef-night.toml; }
 terminal_theme_set_hell() { terminal_theme_set_arg al_hell.toml; }
 terminal_theme_set_round() { terminal_theme_set_arg SeaShells.toml; }
 terminal_theme_set_glass() { terminal_theme_set_arg ef-night.toml; }
 terminal_theme_set_purple() { terminal_theme_set_arg Floraverse.toml; }
-terminal_theme_set_autumn() { terminal_theme_set_arg FunForrest.toml; }
 terminal_theme_set_bright() { terminal_theme_set_arg CLRS.toml; }
 terminal_theme_set_space() { terminal_theme_set_arg Glacier.toml; }
 terminal_theme_set_void() { terminal_theme_set_arg 3024_Day.toml; }
@@ -184,11 +184,11 @@ dm_wr_hell() { echo "dmenu-floating -nf '#887766' -nb '#000000' -sf '#aaaaaa' -s
 dm_wr_round() { echo "dmenu-floating -nf '#deb88d' -nb '#08131a' -sf '#deb88d' -sb '#1d4850'"; }
 dm_wr_glass() { echo "dmenu-original -nf '#afbcbf' -nb '#000e17' -sf '#ceeeff' -sb '#004065'"; }
 dm_wr_purple() { echo "dmenu-floating -nf '#42a38c' -nb '#0e0c15' -sf '#cd751c' -sb '#0e0c15'"; }
+dmenu_theme_set_vert() { printf '#!/bin/sh\n%s "$@"' "$(dm_wr_glass)" > ~/.local/bin/dmenu-wrapper.sh; }
 dmenu_theme_set_hell() { printf '#!/bin/sh\n%s "$@"' "$(dm_wr_hell)" > ~/.local/bin/dmenu-wrapper.sh; }
 dmenu_theme_set_round() { printf '#!/bin/sh\n%s "$@"' "$(dm_wr_round)" > ~/.local/bin/dmenu-wrapper.sh; }
 dmenu_theme_set_glass() { printf '#!/bin/sh\n%s "$@"' "$(dm_wr_glass)" > ~/.local/bin/dmenu-wrapper.sh; }
 dmenu_theme_set_purple() { printf '#!/bin/sh\n%s "$@"' "$(dm_wr_purple)" > ~/.local/bin/dmenu-wrapper.sh; }
-dmenu_theme_set_autumn() { printf '#!/bin/sh\n%s "$@"' "$(dm_wr_glass)" > ~/.local/bin/dmenu-wrapper.sh; }
 dmenu_theme_set_bright() { printf '#!/bin/sh\n%s "$@"' "$(dm_wr_glass)" > ~/.local/bin/dmenu-wrapper.sh; }
 dmenu_theme_set_space() { printf '#!/bin/sh\n%s "$@"' "$(dm_wr_glass)" > ~/.local/bin/dmenu-wrapper.sh; }
 dmenu_theme_set_void() { printf '#!/bin/sh\n%s "$@"' "$(dm_wr_glass)" > ~/.local/bin/dmenu-wrapper.sh; }

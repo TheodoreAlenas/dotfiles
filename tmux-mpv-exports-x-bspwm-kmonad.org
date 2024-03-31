@@ -123,7 +123,7 @@ do test -x "$f" && . "$f"
 done
 
 xset -display :0.0 r rate 250 40
-xrandr --output eDP-1 --brightness 0.7
+xrandr --output eDP-1 --brightness 0.7 --rotate left
 
 unclutter -idle 0.7 -jitter 2 -root    &
 picom                                  &

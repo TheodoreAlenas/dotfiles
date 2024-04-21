@@ -17,10 +17,11 @@
                       :weight 'medium))
 
 ;; buffer look
-(setq whitespace-style	'(face tabs tab-mark space-after-tab trailing lines-tail missing-newline-at-eof))
+(setq whitespace-style	'(face tabs tab-mark space-after-tab trailing lines-char missing-newline-at-eof))
 (setq whitespace-line-column 72)
 (global-whitespace-mode 1)
 (setq split-width-threshold 120)
+(setq-default c-basic-offset 4)
 (setq explicit-shell-file-name "/usr/bin/dash")
 (column-number-mode t)
 (load-theme 'ef-elea-dark t)
@@ -32,22 +33,8 @@
 ;; for better latex support
 
 ;; org
+(add-hook 'text-mode-hook #'variable-pitch-mode)
 (require 'org)
-
-(setq al/prose-modeish -1)
-(defun al/prose-modeish (&optional enable)
-    "Variable pitch mode and line spacing"
-    (interactive)
-    (if (or (not (eq al/prose-modeish 1)) (eq enable 1))
-        (progn
-          (setq al/prose-modeish 1)
-          (variable-pitch-mode 1)
-          (setq line-spacing 0.2))
-      (setq al/prose-modeish -1)
-      (variable-pitch-mode -1)
-      (setq line-spacing 0)))
-
-(add-hook 'text-mode-hook #'al/prose-modeish)
 (setq org-hide-emphasis-markers t)
 (dolist (org-stuff
          '(org-table org-agenda-date org-date org-block org-code))

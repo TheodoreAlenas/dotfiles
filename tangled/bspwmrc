@@ -18,5 +18,5 @@ per_rule bspc_rule_remove_add
 bspc monitor -d  main web manual terminal media spotify temporary
 
 if ! [ "$1" = no-scmd ]
-then (. /home/aleena/p/c/scmd.sh && scmd_with_bar_status global_theme_set_bspwm_startup)
+then (. /home/aleena/p/c/scmd.sh && scmd_with_bar_status on_bspwm_startup)
 fi

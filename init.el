@@ -24,7 +24,7 @@
 (setq-default c-basic-offset 4)
 (setq explicit-shell-file-name "/usr/bin/dash")
 (column-number-mode t)
-(load-theme 'ef-elea-dark t)
+(load-theme 'modus-operandi t)
 (add-hook 'prog-mode-hook #'rainbow-delimiters-mode)
 (add-hook 'prog-mode-hook (lambda () (indent-tabs-mode -1)))
 (editorconfig-mode)
@@ -39,6 +39,11 @@
 (dolist (org-stuff
          '(org-table org-agenda-date org-date org-block org-code))
   (set-face-attribute org-stuff nil :inherit 'fixed-pitch))
+(defun al/load-org-config-from-proj (_)
+  (interactive)
+  (load "/home/aleena/2p/for-geom/config-org.el"))
+(add-hook 'org-export-before-parsing-functions #'al/load-org-config-from-proj)
+
 
 ;; eglot
 (setq eldoc-echo-area-use-multiline-p nil)

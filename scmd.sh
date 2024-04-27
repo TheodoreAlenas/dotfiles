@@ -99,7 +99,7 @@ lbtv() { lbk; tail -f /tmp/scmd.sh | lb_paint_vert | "$@"; }
 lbk() { pidof tail|xargs -i ps -o ppid=,pid= -p {}|lbsib|xargs -i kill {}; }
 lbsib() { awk "/ $(pidof lemonbar|xargs -i ps -o ppid= -p {}|tr -d ' ') /{print \$2}"; }
 lb_paint() { lbp1|lbp2|lbp3|lbp4; }
-lb_paint_vert() { lbp1|sed --unbuffered 's/^[^;]*;\([^(]*\).*#>>\(.*\)/\1  \2/'; }
+lb_paint_vert() { lbp1|sed --unbuffered 's/^[^;]*;\([^(]*\).*#>>\(.*\)/%{c}  \1  \2/'; }
 lbp1() { sed --unbuffered 's/%/%%/g' | stdbuf -o0 tr -c '[:print:]\n' '^'; }
 lbp2() { sed --unbuffered 's/[0-9"]\| #[^ >]* \|dmenu/%{F#379cf6}&%{F-}/g'; }
 lbp3() { sed --unbuffered 's/^:\| ; \|() *{\|; }\| }\|#>>/%{F#334}&%{F-}/g'; }
@@ -198,7 +198,7 @@ scmd_give_bar_test_1234() { for i in 1 2 3 4; do sleep 1 && echo "$i"; done; }
 scmd_try_function() { c=$(dmenu<"$(this_file)"|cut -d'(' -f1)&&(a="$(:|dmenu -p $c)"&& :|dmenu -p stdin|eval "$c $a"); }
 
 in_vim() { alacritty -e sh -c ". $(this_file) && $1 | vim -"; }
-in_terminal() { term_rule_dock && alacritty -e sh -c "$1"; }
+in_terminal() { alacritty -e sh -c "$1"; }
 this_file() { echo ~/p/c/scmd.sh; }
 
 # Copyright (c) 2023 Dimakopoulos Theodoros

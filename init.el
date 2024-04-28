@@ -42,8 +42,8 @@
 (defun al/load-org-config-from-proj (_)
   (interactive)
   (load "/home/aleena/2p/for-geom/config-org.el"))
-(add-hook 'org-export-before-parsing-functions #'al/load-org-config-from-proj)
-
+(add-hook 'org-export-before-parsing-functions
+          #'al/load-org-config-from-proj)
 
 ;; eglot
 (setq eldoc-echo-area-use-multiline-p nil)

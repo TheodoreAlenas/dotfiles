@@ -27,6 +27,7 @@
 (load-theme 'modus-operandi t)
 (add-hook 'prog-mode-hook #'rainbow-delimiters-mode)
 (add-hook 'prog-mode-hook (lambda () (indent-tabs-mode -1)))
+(add-hook 'org-mode-hook (lambda () (indent-tabs-mode -1)))
 (editorconfig-mode)
 
 ;; https://www.gnu.org/software/auctex/
@@ -36,9 +37,17 @@
 (add-hook 'text-mode-hook #'variable-pitch-mode)
 (require 'org)
 (setq org-hide-emphasis-markers t)
-(dolist (org-stuff
-         '(org-table org-agenda-date org-date org-block org-code))
-  (set-face-attribute org-stuff nil :inherit 'fixed-pitch))
+(setq al/org-faces-fixed-pitch
+      '(org-table org-agenda-date org-date org-block org-code))
+(setq al/org-faces-big
+      '(org-document-title org-level-1 org-level-2))
+(defun al/after-load-theme ()
+  (interactive)
+  (dolist (org-stuff al/org-faces-fixed-pitch)
+    (set-face-attribute org-stuff nil :inherit 'fixed-pitch))
+  (dolist (org-stuff al/org-faces-big)
+    (set-face-attribute org-stuff nil :height 250)))
+(al/after-load-theme)
 (defun al/load-org-config-from-proj (_)
   (interactive)
   (load "/home/aleena/2p/for-geom/config-org.el"))

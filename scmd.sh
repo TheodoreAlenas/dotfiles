@@ -84,7 +84,7 @@ bspc_float() { bspc rule --add "${1:-"*:*:*"}" --one-shot state=floating; }
 term_theme() { cd ~/p/c/ && alacritty -e sh -c "ls theming-alacritty/ | $(termfzfc)"; }
 termfzfc() { a=alacritty; printf %s "fzf --preview 'cat $a-head.toml theming-$a/{} > ~/.config/$a/$a.toml'"; }
 
-on_bspwm_startup() { scr_bn; scr_rl; wp_reset; bspwm-theme glass; lb_vert; }
+on_bspwm_startup() { scr_bn; wp_reset; bspwm-theme glass; lb_glass; }
 
 wp_reset() { feh --bg-fill ~/r/wp/orange-distant-mountain-mostly-sky.jpg; }
 

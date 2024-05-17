@@ -168,6 +168,7 @@ copy_glyph_or_emoji() { printf %s "$(dmenu < ~/l/gart/glyphs | cut -d' ' -f1)" |
 
 reset_wifi_soft() { nmcli device connect wlo1; } #w
 reset_wifi_hard() { nmcli radio wifi off && nmcli radio wifi on; echo "done"; } #W
+wifi_strength() { nmcli device wifi list | sed -n '/^\*/s/  */ /gp'; }
 poweroff_now() { in_terminal 'sudo shutdown now'; } #P
 
 type_password() { p=~/.local/share/al/type;c="$p/$(ls "$p"|dmenu)" && xdotool type --delay 30 "$(base64 -d "$c")"; } #p

@@ -24,7 +24,7 @@
 (setq-default c-basic-offset 4)
 (setq explicit-shell-file-name "/usr/bin/dash")
 (column-number-mode t)
-(load-theme 'modus-operandi t)
+(load-theme 'ef-elea-light t)
 (add-hook 'prog-mode-hook #'rainbow-delimiters-mode)
 (add-hook 'prog-mode-hook (lambda () (indent-tabs-mode -1)))
 (add-hook 'org-mode-hook (lambda () (indent-tabs-mode -1)))
@@ -50,7 +50,7 @@
 (al/after-load-theme)
 (defun al/load-org-config-from-proj (_)
   (interactive)
-  (load "/home/aleena/2p/for-geom/config-org.el"))
+  (load "/home/aleena/2p/for-geom/document/config-org.el"))
 (add-hook 'org-export-before-parsing-functions
           #'al/load-org-config-from-proj)
 

@@ -112,37 +112,43 @@ XTerm*faceName: SourceCodePro:size=15
 * X init
 
 #+begin_src sh :tangle tangled/dot-xinitrc
-#!/bin/sh
+  #!/bin/sh
 
-xrdb -merge ~/.Xresources
-(p=/etc/X11/xinit/.Xresources ; test -r "$p" && xrdb -merge "$p")
-(p=/etc/X11/xinit/.Xmodmap ; test -r "$p" && xmodmap "$p")
+  xrdb -merge ~/.Xresources
+  (p=/etc/X11/xinit/.Xresources ; test -r "$p" && xrdb -merge "$p")
+  (p=/etc/X11/xinit/.Xmodmap ; test -r "$p" && xmodmap "$p")
 
-for f in /etc/X11/xinit/xinitrc.d/?*.sh
-do test -x "$f" && . "$f"
-done
+  for f in /etc/X11/xinit/xinitrc.d/?*.sh
+  do test -x "$f" && . "$f"
+  done
 
-xset -display :0.0 r rate 250 40
+  xset -display :0.0 r rate 250 40
 
-unclutter -idle 0.7 -jitter 2 -root    &
-picom                                  &
-while sleep 5; do albatwid -o 50; done &
-while sleep 5; do [ "$(xssstate -t)" = 0 ] && slock; done &
-(timeout 5s pulseaudio; pulseaudio)    &  # more below
-SXHKD_SHELL=dash sxhkd                 &
+  while sleep 5; do
+      albatwid -o 50
+      # can't change language with the screen locked
+      #if [ "$(xssstate -t)" = 0 ] || \
+      #       grep closed /proc/acpi/button/lid/LID/state
+      #then slock
+      #fi
+  done &
+  unclutter -idle 0.7 -jitter 2 -root    &
+  picom                                  &
+  (timeout 5s pulseaudio; pulseaudio)    &  # more below
+  SXHKD_SHELL=dash sxhkd                 &
 
-exec bspwm
+  exec bspwm
 
-# (about pulseaudio being started twice)
-# A plain sleep command won't cut it.
-# This started to be a problem in
-# Thu Apr 13 16:56:50 EEST 2023
-# when I cleaned up system's unneeded dependencies,
-# along with some optional dependencies.
-# The bug has to do with dbus being already in use.
-# Try debugging on your own using:
-# pulseaudio > /tmp/pulseaudio-1 2> /tmp/pulseaudio-2
-# echo "pulseaudio closed after that" > /tmp/pulseaudio-3
+  # (about pulseaudio being started twice)
+  # A plain sleep command won't cut it.
+  # This started to be a problem in
+  # Thu Apr 13 16:56:50 EEST 2023
+  # when I cleaned up system's unneeded dependencies,
+  # along with some optional dependencies.
+  # The bug has to do with dbus being already in use.
+  # Try debugging on your own using:
+  # pulseaudio > /tmp/pulseaudio-1 2> /tmp/pulseaudio-2
+  # echo "pulseaudio closed after that" > /tmp/pulseaudio-3
 #+end_src
 
 * BSPWM startup

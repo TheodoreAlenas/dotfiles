@@ -124,18 +124,12 @@ XTerm*faceName: SourceCodePro:size=15
 
   xset -display :0.0 r rate 250 40
 
-  while sleep 5; do
-      albatwid -o 50
-      # can't change language with the screen locked
-      #if [ "$(xssstate -t)" = 0 ] || \
-      #       grep closed /proc/acpi/button/lid/LID/state
-      #then slock
-      #fi
-  done &
-  unclutter -idle 0.7 -jitter 2 -root    &
-  picom                                  &
-  (timeout 5s pulseaudio; pulseaudio)    &  # more below
-  SXHKD_SHELL=dash sxhkd                 &
+  albatwid-alarm 50 5000              &
+  slock-wrapper                       &
+  unclutter -idle 0.7 -jitter 2 -root &
+  picom                               &
+  (timeout 5s pulseaudio; pulseaudio) &  # more below
+  SXHKD_SHELL=dash sxhkd              &
 
   exec bspwm
 

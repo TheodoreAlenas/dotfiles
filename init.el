@@ -53,6 +53,7 @@
   (load "/home/aleena/2p/for-geom/document/config-org.el"))
 (add-hook 'org-export-before-parsing-functions
           #'al/load-org-config-from-proj)
+(add-to-list 'org-agenda-files "/home/aleena/2p/my-org/2024-05-20.org")
 
 ;; eglot
 (setq eldoc-echo-area-use-multiline-p nil)
@@ -92,7 +93,7 @@
  ;; If there is more than one, they won't work right.
  '(custom-safe-themes t)
  '(elfeed-feeds '("https://www.di.uoa.gr/rss.xml") t)
- '(org-agenda-files '("/home/aleena/code/emacs/test.org"))
+ '(org-agenda-files '("~/2p/my-org/2024-05-20.org"))
  '(package-selected-packages
    '(go-mode reverse-im evil rainbow-delimiters lua-mode nginx-mode gptel rust-mode graphviz-dot-mode docker-compose-mode systemd web-mode pdf-tools ef-themes ligature haskell-mode slime editorconfig magit git-gutter eglot)))
 

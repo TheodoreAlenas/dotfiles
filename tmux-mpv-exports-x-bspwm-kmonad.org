@@ -128,21 +128,9 @@ XTerm*faceName: SourceCodePro:size=15
   slock-wrapper                       &
   unclutter -idle 0.7 -jitter 2 -root &
   picom                               &
-  (timeout 5s pulseaudio; pulseaudio) &  # more below
   SXHKD_SHELL=dash sxhkd              &
 
   exec bspwm
-
-  # (about pulseaudio being started twice)
-  # A plain sleep command won't cut it.
-  # This started to be a problem in
-  # Thu Apr 13 16:56:50 EEST 2023
-  # when I cleaned up system's unneeded dependencies,
-  # along with some optional dependencies.
-  # The bug has to do with dbus being already in use.
-  # Try debugging on your own using:
-  # pulseaudio > /tmp/pulseaudio-1 2> /tmp/pulseaudio-2
-  # echo "pulseaudio closed after that" > /tmp/pulseaudio-3
 #+end_src
 
 * BSPWM startup

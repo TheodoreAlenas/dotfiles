@@ -99,11 +99,11 @@ lbtv() { lbk; tail -f /tmp/scmd.sh | lb_paint_vert | "$@"; }
 lbk() { pidof tail|xargs -i ps -o ppid=,pid= -p {}|lbsib|xargs -i kill {}; }
 lbsib() { awk "/ $(pidof lemonbar|xargs -i ps -o ppid= -p {}|tr -d ' ') /{print \$2}"; }
 lb_paint() { lbp1|lbp2|lbp3|lbp4; }
-lb_paint_vert() { lbp1|sed --unbuffered 's/^[^;]*;\([^(]*\).*#>>\(.*\)/%{c}  \1  \2/'; }
+lb_paint_vert() { lbp1|sed --unbuffered 's/.*__\([^(]*\).*#>>\(.*\)/%{c}  \1  \2/'; }
 lbp1() { sed --unbuffered 's/%/%%/g' | stdbuf -o0 tr -c '[:print:]\n' '^'; }
 lbp2() { sed --unbuffered 's/[0-9"]\| #[^ >]* \|dmenu/%{F#379cf6}&%{F-}/g'; }
-lbp3() { sed --unbuffered 's/^:\| ; \|() *{\|; }\| }\|#>>/%{F#334}&%{F-}/g'; }
-lbp4() { sed --unbuffered 's/\(:[^;]*;[^ ]* \)\(.*#>>\)\(.*\)/\1%{c}\2%{B#222f40}\3%{B-}/'; }
+lbp3() { sed --unbuffered 's/__\|() *{\|; }\| }\|#>>/%{F#334}&%{F-}/g'; }
+lbp4() { sed --unbuffered 's/\(.*#>>\)\(.*\)/%{c}\1%{B#222f40}\2%{B-}/'; }
 
 tth() { a=alacritty;cd ~/p/c&&cat $a-head.toml theming-$a/"$1" >~/.config/$a/$a.toml; }
 term_theme_vert() { tth ef-night.toml; }
@@ -193,7 +193,7 @@ scmd_awk1() { printf %s 's = $1; gsub(/./, "; super + &", s); sub("; ", "", s); 
 scmd_awk2() { printf %s 'print(s); printf("\t. %s && scmd_with_bar_status %s\n\n", "'"$(this_file)"'", $2);'; }
 scmd_find() { printf "%s\n" "$(grep "^$1(" "$(this_file)")"; }
 scmd_with_bar_status() { cline="$(scmd_find "$1")"; (echo; "$@" 2>&1) | scmd_bar_fmt "$cline" >> /tmp/scmd.sh; }
-scmd_bar_fmt() { while read -r l; do printf ": $(date +%T) ; %s #>>%s\n" "$1" "$l"; done; }
+scmd_bar_fmt() { while read -r l; do printf "$(date +%H_%M_%S)__%s #>>%s\n" "$1" "$l"; done; }
 scmd_give_bar_color_swap_fix() { echo "%{R}"; }
 scmd_give_bar_test_1234() { for i in 1 2 3 4; do sleep 1 && echo "$i"; done; }
 scmd_try_function() { c=$(dmenu<"$(this_file)"|cut -d'(' -f1)&&(a="$(:|dmenu -p $c)"&& :|dmenu -p stdin|eval "$c $a"); }

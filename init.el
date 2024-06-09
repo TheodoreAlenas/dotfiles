@@ -24,14 +24,17 @@
 (setq-default c-basic-offset 4)
 (setq explicit-shell-file-name "/usr/bin/dash")
 (column-number-mode t)
-(load-theme 'ef-elea-light t)
+(load-theme 'tango t)
 (add-hook 'prog-mode-hook #'rainbow-delimiters-mode)
 (add-hook 'prog-mode-hook (lambda () (indent-tabs-mode -1)))
 (add-hook 'org-mode-hook (lambda () (indent-tabs-mode -1)))
 (editorconfig-mode)
 
 ;; https://www.gnu.org/software/auctex/
-;; for better latex support
+(setq TeX-auto-save t)
+(setq TeX-parse-self t)
+(setq-default TeX-engine 'luatex)
+(setq-default TeX-master nil)
 
 ;; org
 (add-hook 'text-mode-hook #'variable-pitch-mode)
@@ -95,7 +98,7 @@
  '(elfeed-feeds '("https://www.di.uoa.gr/rss.xml") t)
  '(org-agenda-files '("~/2p/my-org/2024-05-20.org"))
  '(package-selected-packages
-   '(go-mode reverse-im evil rainbow-delimiters lua-mode nginx-mode gptel rust-mode graphviz-dot-mode docker-compose-mode systemd web-mode pdf-tools ef-themes ligature haskell-mode slime editorconfig magit git-gutter eglot)))
+   '(magit auctex go-mode reverse-im evil rainbow-delimiters lua-mode nginx-mode gptel rust-mode graphviz-dot-mode docker-compose-mode systemd web-mode pdf-tools ef-themes ligature haskell-mode slime editorconfig git-gutter eglot)))
 
 
 (put 'narrow-to-region 'disabled nil)

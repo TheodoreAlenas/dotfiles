@@ -153,7 +153,7 @@ bspc_rule_remove_add() {
     bspc rule --add "$@"
 }
 per_rule bspc_rule_remove_add
-bspc monitor -d  main web manual terminal media spotify temporary
+bspc monitor eDP-1 -d m1 m2 m3 m4 m5 m6 m7
 
 if ! [ "$1" = no-scmd ]
 then (. /home/aleena/p/c/scmd.sh && scmd_with_bar_status on_bspwm_startup)

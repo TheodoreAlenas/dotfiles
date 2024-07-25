@@ -28,3 +28,7 @@ rec() {
   rec_next="$(seq -w 99 | sed 's/$/.mkv/' | first_missing_path)"
   ffmpeg -f x11grab -s 1920x1080 -i :0.0 -fs 2000M "${1:-"$rec_next"}"
 }
+recvert() {
+  rec_next="$(seq -w 99 | sed 's/$/.mkv/' | first_missing_path)"
+  ffmpeg -f x11grab -s 1080x1920 -i :0.0 -fs 2000M "${1:-"$rec_next"}"
+}

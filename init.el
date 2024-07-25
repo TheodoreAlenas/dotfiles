@@ -98,7 +98,7 @@
  '(elfeed-feeds '("https://www.di.uoa.gr/rss.xml") t)
  '(org-agenda-files '("~/2p/my-org/2024-05-20.org"))
  '(package-selected-packages
-   '(magit auctex go-mode reverse-im evil rainbow-delimiters lua-mode nginx-mode gptel rust-mode graphviz-dot-mode docker-compose-mode systemd web-mode pdf-tools ef-themes ligature haskell-mode slime editorconfig git-gutter eglot)))
+   '(dockerfile-mode markdown-mode kotlin-mode magit auctex go-mode reverse-im evil rainbow-delimiters lua-mode nginx-mode gptel rust-mode graphviz-dot-mode docker-compose-mode systemd web-mode pdf-tools ef-themes ligature haskell-mode slime editorconfig git-gutter eglot)))
 
 
 (put 'narrow-to-region 'disabled nil)

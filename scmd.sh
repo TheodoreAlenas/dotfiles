@@ -74,6 +74,7 @@ hs_egypt() { mpv ~/r/music-laptop/hellsinger-fast.mp4 --start=14:03; }
 hs_feel()  { mpv ~/r/music-laptop/hellsinger-fast.mp4 --start=29:59; }
 hs_msg()   { mpv ~/r/music-laptop/hellsinger-fast.mp4 --start=36:18; }
 hs_awake() { mpv ~/r/music-laptop/hellsinger-fast.mp4 --start=41:31; }
+hs_rust()  { mpv ~/r/music-laptop/hellsinger-fast.mp4 --start=45:35; }
 
 wps() { bspc_float;feh --bg-scale "$(find ~/r/wp/ -type f -print0|xargs -0 sxiv -ot)"; }
 wpf() { bspc_float;feh --bg-fill  "$(find ~/r/wp/ -type f -print0|xargs -0 sxiv -ot)"; }
@@ -115,6 +116,7 @@ scr_bn() { xrandr --output eDP-1 --brightness 0.7; }
 scr_bd() { xrandr --output eDP-1 --brightness "$(:|dmenu)"; }
 scr_rn() { xrandr --output eDP-1 --rotate normal; }
 scr_rl() { xrandr --output eDP-1 --rotate left; }
+scr_ov() { xrandr --output HDMI-1 --auto --rotate left --dpi 150; bspc monitor HDMI-1 -d o1 o2 o3; }
 
 go_under() { (cd ~/r/g1 && p="$(printf "%s\n" * */* | dmenu)" && mpv --pause "$p"); }
 go_tag() { (cd ~/r/g1 && sh tag.sh|awk "/$(:|dmenu)/"'{print $NF}'|xargs mpv --pause); }
@@ -141,6 +143,7 @@ open_battery_widget() { albatwid; } #a
 open_clock_widget() { head /sys/class/power_supply/BAT1/capacity; albatwid; alclowid; } #h
 open_clock_widget_for() { alclowid -t "$(:|dmenu -p timeout)"; }
 open_emacs() { emacs; } #e
+open_intellij() { _JAVA_AWT_WM_NONREPARENTING=1 idea; }
 open_libreoffice() { libreoffice; }
 open_spotify() { spotify-launcher > /dev/null 2> /dev/null; }
 open_kdenlive() { kdenlive > /dev/null 2> /dev/null; }
@@ -159,7 +162,7 @@ close_bspwm() { killall bspwm; }
 swev() { rm ~/.emacs.d; ln -s ~/.cache/emacs/vanilla/home-emacs-dot-d/ ~/.emacs.d; }
 swed() { rm ~/.emacs.d; ln -s ~/.cache/emacs/doomemacs/ ~/.emacs.d; }
 
-lb_free_disk() { df | sed -n '/e0n1p6/s/[0-9]\{6\} /,&/gp'; } #c
+lb_free_disk() { df | sed -n '/e0n1p2/s/[0-9]\{6\} /,&/gp'; } #c
 lb_mem() { free|awk 'NR>1{t=int($2/200000);u=int($3/200000);printf("[%"u"s>%"t-u"s]","","")}';echo; }
 lb_date() { date "+%+4Y-%m-%d %B, %A"; }
 
@@ -169,14 +172,17 @@ copy_glyph_or_emoji() { printf %s "$(dmenu < ~/l/gart/glyphs | cut -d' ' -f1)" |
 reset_wifi_soft() { nmcli device connect wlo1; } #w
 reset_wifi_hard() { nmcli radio wifi off && nmcli radio wifi on; echo "done"; } #W
 wifi_strength() { nmcli device wifi list | sed -n '/^\*/s/  */ /gp'; }
+wifi_which() { nmcli connection show --active | awk '/wifi/ {print $1}'; }
 poweroff_now() { in_terminal 'sudo shutdown now'; } #P
 
+type_clip() { xdotool type --delay 30 "$(xclip -o)"; }
 type_password() { p=~/.local/share/al/type;c="$p/$(ls "$p"|dmenu)" && xdotool type --delay 30 "$(base64 -d "$c")"; } #p
 
-open_webcam_floating() { webc_rule_sf; mpv av://v4l2:/dev/video0 --vf=lavfi=hflip --profile=low-latency --untimed; }
-open_webcam_tiled() { webc_rule_tiled; mpv av://v4l2:/dev/video0 --vf=lavfi=hflip --profile=low-latency --untimed; }
-open_webcam_floating_not_flipped() { webc_rule_sf; mpv av://v4l2:/dev/video0 --profile=low-latency --untimed; }
-open_webcam_tiled_not_flipped() { webc_rule_tiled; mpv av://v4l2:/dev/video0 --profile=low-latency --untimed; }
+webcam_floating() { webc_rule_sf; mpv av://v4l2:/dev/video0 --vf=lavfi=hflip --profile=low-latency --untimed; }
+webcam_vert() { webc_rule_sf; mpv av://v4l2:/dev/video0 --vf=lavfi=hflip,transpose=1 --profile=low-latency --untimed; }
+webcam_tiled() { webc_rule_tiled; mpv av://v4l2:/dev/video0 --vf=lavfi=hflip --profile=low-latency --untimed; }
+webcam_floating_not_flipped() { webc_rule_sf; mpv av://v4l2:/dev/video0 --profile=low-latency --untimed; }
+webcam_tiled_not_flipped() { webc_rule_tiled; mpv av://v4l2:/dev/video0 --profile=low-latency --untimed; }
 webc_rule_sf() { bspc rule --add '*:*:*' --one-shot sticky=on state=floating; }
 webc_rule_tiled() { bspc rule --add '*:*:*' --one-shot state=tiled; }
 

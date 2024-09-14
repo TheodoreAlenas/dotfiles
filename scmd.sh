@@ -53,12 +53,8 @@ vol() { pactl set-sink-volume 0 "$(:|dmenu)"; }
 
 win_move_split_to_positives() { bspc node @parent --ratio +0.05; } #i
 win_move_split_to_negatives() { bspc node @parent --ratio -0.05; } #d
-win_move_split() { bspc node @parent --ratio "$(:|dmenu)"; }
-win_flip_left_to_right() { bspc node @parent --flip horizontal; }
-win_flip_top_to_bottom() { bspc node @parent --flip vertical; }
 win_rotate_clockwise() { bspc node @parent --rotate 90; } #r
 win_rotate_flipping() { bspc node @parent --rotate 180; } #R
-win_rotate_counter_clockwise() { bspc node @parent --rotate 270; }
 
 window_rules_vim() { in_vim 'bspc rule -l'; }
 
@@ -82,8 +78,10 @@ wpm() { bspc_float;feh --bg-max   "$(find ~/r/wp/ -type f -print0|xargs -0 sxiv 
 wpt() { bspc_float;feh --bg-tile  "$(find ~/r/wp/ -type f -print0|xargs -0 sxiv -ot)"; }
 bspc_float() { bspc rule --add "${1:-"*:*:*"}" --one-shot state=floating; }
 
-term_theme() { cd ~/p/c/ && alacritty -e sh -c "ls theming-alacritty/ | $(termfzfc)"; }
-termfzfc() { a=alacritty; printf %s "fzf --preview 'cat $a-head.toml theming-$a/{} > ~/.config/$a/$a.toml'"; }
+term_theme() { cd ~/p/c/ && in_terminal "ls theming-alacritty/ | $(fzfpv_eza_cat)"; }
+fzfpv_eza_cat() { printf %s "fzf --preview '$(ezalcol) ; $(catalacr)'"; }
+ezalcol() { printf %s "eza -l --color=always"; }
+catalacr() { a=alacritty; printf %s "cat $a-head.toml theming-$a/{} > ~/.config/$a/$a.toml"; }
 
 on_bspwm_startup() { scr_bn; wp_reset; bspwm-theme glass; lb_glass; }
 
@@ -106,12 +104,6 @@ lbp2() { sed --unbuffered 's/[0-9"]\| #[^ >]* \|dmenu/%{F#379cf6}&%{F-}/g'; }
 lbp3() { sed --unbuffered 's/__\|() *{\|; }\| }\|#>>/%{F#334}&%{F-}/g'; }
 lbp4() { sed --unbuffered 's/\(.*#>>\)\(.*\)/%{c}\1%{B#222f40}\2%{B-}/'; }
 
-tth() { a=alacritty;cd ~/p/c&&cat $a-head.toml theming-$a/"$1" >~/.config/$a/$a.toml; }
-term_theme_vert() { tth ef-night.toml; }
-term_theme_round() { tth SeaShells.toml; }
-term_theme_glass() { tth ef-night.toml; }
-term_theme_void() { tth 3024_Day.toml; }
-
 scr_bn() { xrandr --output eDP-1 --brightness 0.7; }
 scr_bd() { xrandr --output eDP-1 --brightness "$(:|dmenu)"; }
 scr_rn() { xrandr --output eDP-1 --rotate normal; }
@@ -124,7 +116,7 @@ go_tag() { (cd ~/r/g1 && sh tag.sh|awk "/$(:|dmenu)/"'{print $NF}'|xargs mpv --p
 scshreg()   { eval "shotgun $(slop -f '-i %i -g %g') /tmp/s.png"; } #s
 scshreg3s() { cmd="shotgun $(slop -f '-i %i -g %g') /tmp/s.png"&&sleep 3&&eval "$cmd"; }
 scshfs()    { sleep 0.2s && shotgun /tmp/screenshot.png; }
-scshfs()    { sleep 0.5s && echo and && sleep 0.5s && echo now && shotgun /tmp/s.png; }
+scshfs1s()  { sleep 0.5s && echo and && sleep 0.5s && echo now && shotgun /tmp/s.png; }
 scshfsxs()  { sleep "$(:|dmenu)" && shotgun /tmp/s.png; echo taken; }
 screenshot_clip() { xclip -in -sel clipboard -t image/png < /tmp/s.png; }
 screenshot_view() { sxiv /tmp/s.png; }

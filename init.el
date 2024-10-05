@@ -16,11 +16,15 @@
                       :weight 'medium))
 
 ;; buffer look
-(defvar-keymap al/keymap-prefix
-  :doc "personal bindings"
-  "C-w" #'whitespace-mode
-  "C-n" #'display-line-numbers-mode)
-(keymap-set global-map "C-c C-?" al/keymap-prefix)
+(evil-mode)
+(defvar-keymap al/evil-prefix
+  :doc "evil custom bindings"
+  "w" #'whitespace-mode
+  "n" #'display-line-numbers-mode
+  "b" #'switch-to-buffer
+  "c" #'project-compile
+  "g" #'magit-status)
+(define-key evil-motion-state-map " " al/evil-prefix)
 (setq split-width-threshold 120)
 (setq-default c-basic-offset 4)
 (setq explicit-shell-file-name "/usr/bin/dash")

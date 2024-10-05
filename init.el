@@ -1,8 +1,7 @@
-;; saves
-(setq backup-directory-alist `((".*" . "~/.cache/emacs/saves")))
-(setq auto-save-file-name-transforms `((".*" "~/.cache/emacs/saves" t)))
+
 (require 'package)
-(add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
+(add-to-list 'package-archives
+             '("melpa" . "https://melpa.org/packages/") t)
 
 ;; GUI
 (menu-bar-mode -1)
@@ -17,15 +16,16 @@
                       :weight 'medium))
 
 ;; buffer look
-(setq whitespace-style	'(face tabs tab-mark space-after-tab trailing lines-char missing-newline-at-eof))
-(setq whitespace-line-column 72)
-(global-whitespace-mode 1)
+(defvar-keymap al/keymap-prefix
+  :doc "personal bindings"
+  "C-w" #'whitespace-mode
+  "C-n" #'display-line-numbers-mode)
+(keymap-set global-map "C-c C-?" al/keymap-prefix)
 (setq split-width-threshold 120)
 (setq-default c-basic-offset 4)
 (setq explicit-shell-file-name "/usr/bin/dash")
 (column-number-mode t)
-(load-theme 'tango t)
-(add-hook 'prog-mode-hook #'rainbow-delimiters-mode)
+(load-theme 'ef-maris-light t)
 (add-hook 'prog-mode-hook (lambda () (indent-tabs-mode -1)))
 (add-hook 'org-mode-hook (lambda () (indent-tabs-mode -1)))
 (editorconfig-mode)
@@ -51,16 +51,16 @@
   (dolist (org-stuff al/org-faces-big)
     (set-face-attribute org-stuff nil :height 250)))
 (al/after-load-theme)
-(defun al/load-org-config-from-proj (_)
-  (interactive)
-  (load "/home/aleena/2p/for-geom/document/config-org.el"))
-(add-hook 'org-export-before-parsing-functions
-          #'al/load-org-config-from-proj)
 (add-to-list 'org-agenda-files "/home/aleena/2p/my-org/2024-05-20.org")
 
 ;; eglot
 (setq eldoc-echo-area-use-multiline-p nil)
 (setq eglot-confirm-server-initiated-edits nil)
+;;(require 'eglot)
+;;(add-to-list
+;; 'eglot-server-programs
+;; '((tsx-ts-mode typescript-ts-mode)
+;;   . ("typescript-language-server" "--stdio")))
 
 ;; Haskell ligatures
 
@@ -89,6 +89,20 @@
   :config
   (reverse-im-mode t)) ; turn the mode on
 
+;; NodeJS error messages
+(add-to-list
+ 'compilation-error-regexp-alist-alist
+ '(al-file
+   "file://\\([^:]*\\):\\([0-9]*\\):\\([^)]*\\)"
+   1 2 3))
+(add-to-list
+ 'compilation-error-regexp-alist-alist
+ '(al-imported-from
+   "imported from \\(.*\\)"
+   1))
+(add-to-list 'compilation-error-regexp-alist 'al-file)
+(add-to-list 'compilation-error-regexp-alist 'al-imported-from)
+
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -98,7 +112,7 @@
  '(elfeed-feeds '("https://www.di.uoa.gr/rss.xml") t)
  '(org-agenda-files '("~/2p/my-org/2024-05-20.org"))
  '(package-selected-packages
-   '(dockerfile-mode markdown-mode kotlin-mode magit auctex go-mode reverse-im evil rainbow-delimiters lua-mode nginx-mode gptel rust-mode graphviz-dot-mode docker-compose-mode systemd web-mode pdf-tools ef-themes ligature haskell-mode slime editorconfig git-gutter eglot)))
+   '(gruber-darker-theme dockerfile-mode markdown-mode kotlin-mode magit auctex go-mode reverse-im evil rainbow-delimiters lua-mode nginx-mode gptel rust-mode graphviz-dot-mode docker-compose-mode systemd web-mode pdf-tools ef-themes ligature haskell-mode slime editorconfig git-gutter eglot)))
 
 
 (put 'narrow-to-region 'disabled nil)

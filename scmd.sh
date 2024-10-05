@@ -1,5 +1,5 @@
-# License at the bottom
 # shellcheck disable=SC2016 disable=SC1090 disable=SC2012 disable=SC2120
+c() { : "License at the bottom"; }
 
 about_usage() { . ./scmd.sh && scmd_upd && echo Super + X; }
 about_main_dependencies() { which sxhkd dmenu lemonbar; }
@@ -200,22 +200,22 @@ in_vim() { alacritty -e sh -c ". $(this_file) && $1 | vim -"; }
 in_terminal() { alacritty -e sh -c "$1"; }
 this_file() { echo ~/p/c/scmd.sh; }
 
-# Copyright (c) 2023 Dimakopoulos Theodoros
-#
-# Permission is hereby granted, free of charge, to any person obtaining a copy
-# of this software and associated documentation files (the "Software"), to deal
-# in the Software without restriction, including without limitation the rights
-# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-# copies of the Software, and to permit persons to whom the Software is
-# furnished to do so, subject to the following conditions:
-#
-# The above copyright notice and this permission notice shall be included in all
-# copies or substantial portions of the Software.
-#
-# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-# SOFTWARE.
+c() { : " Copyright (c) 2023 Dimakopoulos Theodoros                                      "; }
+c() { : "                                                                                "; }
+c() { : " Permission is hereby granted, free of charge, to any person obtaining a copy   "; }
+c() { : " of this software and associated documentation files (the "Software"), to deal  "; }
+c() { : " in the Software without restriction, including without limitation the rights   "; }
+c() { : " to use, copy, modify, merge, publish, distribute, sublicense, and/or sell      "; }
+c() { : " copies of the Software, and to permit persons to whom the Software is          "; }
+c() { : " furnished to do so, subject to the following conditions:                       "; }
+c() { : "                                                                                "; }
+c() { : " The above copyright notice and this permission notice shall be included in all "; }
+c() { : " copies or substantial portions of the Software.                                "; }
+c() { : "                                                                                "; }
+c() { : " THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR     "; }
+c() { : " IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,       "; }
+c() { : " FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE    "; }
+c() { : " AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER         "; }
+c() { : " LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,  "; }
+c() { : " OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE  "; }
+c() { : " SOFTWARE.                                                                      "; }

@@ -16,23 +16,22 @@
                       :weight 'medium))
 
 ;; buffer look
-(evil-mode)
-(defvar-keymap al/evil-prefix
-  :doc "evil custom bindings"
-  "w" #'whitespace-mode
-  "n" #'display-line-numbers-mode
-  "b" #'switch-to-buffer
-  "c" #'project-compile
-  "g" #'magit-status)
-(define-key evil-motion-state-map " " al/evil-prefix)
 (setq split-width-threshold 120)
-(setq-default c-basic-offset 4)
-(setq explicit-shell-file-name "/usr/bin/dash")
 (column-number-mode t)
 (load-theme 'ef-maris-light t)
+
+;; indentation
+(setq-default c-basic-offset 4)
 (add-hook 'prog-mode-hook (lambda () (indent-tabs-mode -1)))
 (add-hook 'org-mode-hook (lambda () (indent-tabs-mode -1)))
 (editorconfig-mode)
+
+;; other functionality
+(setq make-backup-files nil)
+(setq explicit-shell-file-name "/usr/bin/dash")
+;;(setq evil-want-keybinding nil)
+;;(evil-collection-init)
+;;(evil-mode)
 
 ;; https://www.gnu.org/software/auctex/
 (setq TeX-auto-save t)
@@ -55,7 +54,10 @@
   (dolist (org-stuff al/org-faces-big)
     (set-face-attribute org-stuff nil :height 250)))
 (al/after-load-theme)
+
 (add-to-list 'org-agenda-files "/home/aleena/2p/my-org/2024-05-20.org")
+(add-to-list 'org-agenda-files "/home/aleena/2p/my-org/2024-10-22.org")
+(setq org-default-notes-file "/home/aleena/2p/my-org/2024-10-22.org")
 
 ;; eglot
 (setq eldoc-echo-area-use-multiline-p nil)
@@ -93,7 +95,7 @@
   :config
   (reverse-im-mode t)) ; turn the mode on
 
-;; NodeJS error messages
+;; error messages
 (add-to-list
  'compilation-error-regexp-alist-alist
  '(al-file
@@ -104,8 +106,14 @@
  '(al-imported-from
    "imported from \\(.*\\)"
    1))
+(add-to-list
+ 'compilation-error-regexp-alist-alist
+ '(al-line-of
+   "line \\([0-9]*\\) of \\(.*\\)"
+   2 1))
 (add-to-list 'compilation-error-regexp-alist 'al-file)
 (add-to-list 'compilation-error-regexp-alist 'al-imported-from)
+(add-to-list 'compilation-error-regexp-alist 'al-line-of)
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
@@ -114,9 +122,8 @@
  ;; If there is more than one, they won't work right.
  '(custom-safe-themes t)
  '(elfeed-feeds '("https://www.di.uoa.gr/rss.xml") t)
- '(org-agenda-files '("~/2p/my-org/2024-05-20.org"))
  '(package-selected-packages
-   '(gruber-darker-theme dockerfile-mode markdown-mode kotlin-mode magit auctex go-mode reverse-im evil rainbow-delimiters lua-mode nginx-mode gptel rust-mode graphviz-dot-mode docker-compose-mode systemd web-mode pdf-tools ef-themes ligature haskell-mode slime editorconfig git-gutter eglot)))
+   '(evil-collection gruber-darker-theme dockerfile-mode markdown-mode kotlin-mode magit auctex go-mode reverse-im evil rainbow-delimiters lua-mode nginx-mode gptel rust-mode graphviz-dot-mode docker-compose-mode systemd web-mode pdf-tools ef-themes ligature haskell-mode slime editorconfig git-gutter eglot)))
 
 
 (put 'narrow-to-region 'disabled nil)

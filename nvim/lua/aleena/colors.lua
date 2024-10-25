@@ -12,7 +12,8 @@ function SetTransparentBackground()
   end
 end
 
-vim.cmd.colorscheme "desert16"
+vim.opt.background = "light"
+vim.cmd.colorscheme "vim"
 
 
 -- Copyright (c) 2023 Dimakopoulos Theodoros

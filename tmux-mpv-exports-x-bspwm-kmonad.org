@@ -7,7 +7,7 @@
   (add-hook 'org-babel-post-tangle-hook
             (lambda ()
               (call-process-shell-command
-               "cd tangled && chmod +x tmux-fzf-new-session bspwmrc bspwm-theme"
+               "cd tangled && chmod +x bspwmrc bspwm-theme"
                nil 0 nil)))
 #+end_src
 
@@ -37,34 +37,10 @@ export DEFAULT_TERM=alacritty
 * TMux
 
 #+begin_src conf :tangle tangled/tmux.conf
-set -g status-right "$PWD"
 set -g status off
-set -g pane-border-style fg=black
-
 set -g mode-keys emacs
 set-option -g prefix C-x
-set-option -g detach-on-destroy off
-
-bind-key C-f new-window tmux-fzf-new-session
-bind-key C-g set status
-bind-key C-r source-file ~/c/c/tmux/tmux.conf
-
 set escape-time 0
-#+end_src
-
-* TMux project switching
-
-#+begin_src sh :tangle tangled/tmux-fzf-new-session
-#!/bin/sh
-
-fzf_pvw="eza -l --color=always ~/l/{}"
-p="$(ls ~/l | fzf --preview "$fzf_pvw")" || exit 0
-cd -P "$HOME/l/$p"                       || exit 1
-tmux new-session -d -s "${PWD##*/}"      || exit 1
-tmux switch-client -t "${PWD##*/}"       || exit 1
-
-# I have symlinks in ~/l so that's why cd -P
-# The symlink has a long name and the destination a short.
 #+end_src
 
 * X resources/defaults
@@ -72,41 +48,12 @@ tmux switch-client -t "${PWD##*/}"       || exit 1
 #+begin_src css :tangle tangled/dot-Xresources
 Xcursor.theme: phinger-cursors-light
 Xcursor.size: 128
-
-XTerm.VT100.translations: #override Alt <KeyPress> V: insert-selection(CLIPBOARD) \n Alt <KeyPress> P: print() \n
-XTerm*printAttributes: 0
-XTerm*printerCommand: cat - > /tmp/xterm-screenshot
-
 XTerm.termName: xterm-256color
 XTerm.vt100.locale: true
 XTerm.vt100.utf8: true
-XTerm*selectToClipboard: true
 *VT100.utf8Fonts.font: SourceCodePro:size=15
 !-misc-fixed-medium-r-normal--20-200-75-75-c-100-iso10646-1
 XTerm*faceName: SourceCodePro:size=15
-
-!tokyo night storm theme
-*.background: #24283b
-*.foreground: #c0caf5
-*.cursorColor: #d9e5f1
-*.color0: #1d202f
-*.color1: #f7768e
-*.color2: #9ece6a
-*.color3: #e0af68
-*.color4: #7aa2f7
-*.color5: #bb9af7
-*.color6: #7dcfff
-*.color7: #a9b1d6
-*.color8: #414868
-*.color9: #f7768e
-*.color10: #9ece6a
-*.color11: #e0af68
-*.color12: #7aa2f7
-*.color13: #bb9af7
-*.color14: #7dcfff
-*.color15: #c0caf5
-*.selection_foreground: #0d1925
-*.selection_background: #d9e6f2
 #+end_src
 
 * X init
@@ -175,17 +122,3 @@ case "$1" in
 esac
 #+end_src
 
-* KMonad, holding Alt gives Ctrl
-
-#+begin_src scheme :tangle tangled/kmonad-alt-z-mods.kbd
-(defcfg
-  input  (device-file "/dev/input/event4")
-  output (uinput-sink "KMonad: Aleena")
-
-  fallthrough true  ;; non-configured keys act normal
-)
-
-(defsrc lalt)  ;; left Alt is replaced with my thing
-(defalias alalt (tap-hold-next-release 200 esc lalt))
-(deflayer alt-z-mods @alalt)  ;; my thing sends Esc on tap
-#+end_src

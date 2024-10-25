@@ -16,4 +16,4 @@ unclutter -idle 0.7 -jitter 2 -root &
 picom                               &
 SXHKD_SHELL=dash sxhkd              &
 
-exec bspwm
+exec bspwm > ~/.cache/bspwm-log-1 2> ~/.cache/bspwm-log-2

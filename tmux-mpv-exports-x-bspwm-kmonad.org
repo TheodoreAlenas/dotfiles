@@ -130,7 +130,7 @@ XTerm*faceName: SourceCodePro:size=15
   picom                               &
   SXHKD_SHELL=dash sxhkd              &
 
-  exec bspwm
+  exec bspwm > ~/.cache/bspwm-log-1 2> ~/.cache/bspwm-log-2
 #+end_src
 
 * BSPWM startup
@@ -138,25 +138,18 @@ XTerm*faceName: SourceCodePro:size=15
 #+begin_src sh :tangle tangled/bspwmrc
 #!/bin/env sh
 
-# You can tweak and run ./bspwmrc no-scmd
-
-per_rule() {
-    # Class (middle) is the first of the 2 WM_CLASS fields of xprop.
-    # The second of the 2 WM_CLASS fields goes to the first of these.
-    "$@" 'Battery widget:*:*' state=floating focus=off
-    "$@"   'Clock widget:*:*' state=floating focus=off
-    "$@"        'Zathura:*:*' state=tiled
-    "$@"          '*:emacs:*' state=tiled
-}
-bspc_rule_remove_add() {
-    bspc rule --remove "$1"
-    bspc rule --add "$@"
-}
-per_rule bspc_rule_remove_add
+# Class (middle) is the first of the 2 WM_CLASS fields of xprop.
+# The second of the 2 WM_CLASS fields goes to the first of these.
+bspc rule --add 'Battery widget:*:*' state=floating focus=off
+bspc rule --add   'Clock widget:*:*' state=floating focus=off
+bspc rule --add          '*:emacs:*' state=tiled
 bspc monitor eDP-1 -d m1 m2 m3 m4 m5 m6 m7
 
-if ! [ "$1" = no-scmd ]
-then (. /home/aleena/p/c/scmd.sh && scmd_with_bar_status on_bspwm_startup)
+bspwm-theme glass
+
+if ! [ "$1" = no-scmd ]; then
+    export SCMD_FILE=~/p/c/scmd.sh
+    . "$SCMD_FILE" && scmd_init
 fi
 #+end_src
 

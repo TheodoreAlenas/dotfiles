@@ -1,4 +1,5 @@
 scmd_init() { scmd_compile_sxhkdrc && scmd_lemonbar_default; }
+scmd_init__props() { "$@" silent; }
 
 win_o() { bspc node next.local.leaf --focus; }
 win_Q() { bspc node --close; }
@@ -58,6 +59,7 @@ show_wifi_which() { nmcli connection show --active | awk '/wifi/ {print $1}'; }
 win_P() { alacritty -e sudo shutdown now; }
 win_S() { scmd_compile_sxhkdrc; }
 win_x() { v="$(dmenu < "$SCMD_FILE")" && scmd_wrap "${v%%(*}"; }
+win_x__props() { "$@" silent; }
 
 win_t() { alacritty; }
 win_h() { head /sys/class/power_supply/BAT1/capacity; albatwid; alclowid; }
@@ -72,7 +74,7 @@ open_screenkey() { screenkey; }
 open_unclutter() { unclutter; }
 close_screenkey() { killall screenkey; }
 close_unclutter() { killall unclutter; }
-close_bspwm() { killall bspwm; }
+close_bspwm() { bspc quit; }
 
 webcam_floating() { webc_rule_sf; mpv av://v4l2:/dev/video0 --vf=lavfi=hflip --profile=low-latency --untimed; }
 webcam_vert() { webc_rule_sf; mpv av://v4l2:/dev/video0 --vf=lavfi=hflip,transpose=1 --profile=low-latency --untimed; }
@@ -87,6 +89,7 @@ webc_rule_tiled() { bspc rule --add '*:*:*' --one-shot state=tiled; }
 : "${SCMD_TMP:=/tmp/scmd}"
 : "${SCMD_SXHKDRC=$HOME/.config/sxhkd/sxhkdrc}"
 
+scmd_lemonbar_default__props() { "$@" silent; }
 scmd_lemonbar_default() {
     scmd_restart_tail \
         | stdbuf -o0 tr -c '[:print:]\n' '^' \
@@ -99,6 +102,7 @@ s/^/%{c}/ ;
         | lemonbar -f "Source Code Pro-14" -b -B '#222' -F '#fff'
 }
 
+scmd_restart_tail__props() { "$@" silent; }
 scmd_restart_tail() {
     echo "ensuring the log file exists"
     mkdir -p "$SCMD_TMP"
@@ -126,13 +130,19 @@ scmd_compile_sxhkdrc() {
 scmd_wrap() {
     time="$(date +%H_%M_%S__)"
     def="$(grep "^$1(" "$SCMD_FILE" || echo "$1__not_in_scmd")"
+    if command -v ${1}__props >/dev/null
+    then silent="$(${1}__props printf "%s\n" | grep '^silent$')"
+    else silent=
+    fi
     ("$@" 2>&1; echo $?) \
         | python3 -c '
 import sys
-print(sys.argv[1] + "0 started |")
+if sys.argv[2] == "silent":
+  print(sys.argv[1] + "- silent  |")
+  exit(0)
+else:
+  print(sys.argv[1] + "0 started |")
 try:
-  if sys.argv[2] == "win_x":
-    exit(0)
   n = 1
   last = "SCMD RELATED ERROR"
   cur = ""
@@ -144,7 +154,7 @@ try:
     n += 1
 except Exception:
   print(sys.argv[1] + str(n-2) + " err " + cur.ljust(3) + " |" + last)
-' "$time$def #" "$1" >> "$SCMD_TMP/log.sh"
+' "$time$def #" "$silent" >> "$SCMD_TMP/log.sh"
 }
 
 scmd_test_1234() { for i in 1 2 3 4; do sleep 1 && echo $i; done; }

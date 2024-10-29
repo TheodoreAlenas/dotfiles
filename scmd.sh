@@ -16,7 +16,7 @@ win_9() { echo 9 > "$SCMD_TMP/arg"; }
 
 win_0() { setxkbmap us; }  # english
 win_l() { setxkbmap gr; }  # greek
-language_dvorak()  { setxkbmap us -variant dvorak; }
+language_dvorak() { setxkbmap us -variant dvorak; }
 language_serbian() { setxkbmap rs; }
 language_variant() { setxkbmap us "$(localectl list-x11-keymap-variants us | dmenu)"; }
 
@@ -84,7 +84,6 @@ webcam_tiled_not_flipped() { webc_rule_tiled; mpv av://v4l2:/dev/video0 --profil
 webc_rule_sf() { bspc rule --add '*:*:*' --one-shot sticky=on state=floating; }
 webc_rule_tiled() { bspc rule --add '*:*:*' --one-shot state=tiled; }
 
-
 : "${SCMD_FILE:=$HOME/.config/scmd.sh}"
 : "${SCMD_TMP:=/tmp/scmd}"
 : "${SCMD_SXHKDRC=$HOME/.config/sxhkd/sxhkdrc}"
@@ -92,14 +91,23 @@ webc_rule_tiled() { bspc rule --add '*:*:*' --one-shot state=tiled; }
 scmd_lemonbar_default__props() { "$@" silent; }
 scmd_lemonbar_default() {
     scmd_restart_tail \
-        | stdbuf -o0 tr -c '[:print:]\n' '^' \
-        | sed --unbuffered '
-s/%/%%/g ;
-s/^[a-zA-Z0-9_]*\s*()\s*{/%{F#667}&%{F-}/ ;
-s/; *} *#[^|]*|/%{F#667}&%{F-}/ ;
-s/^/%{c}/ ;
+        | python3 -c '
+while True:
+  raw = input()
+  raw_end = raw.find("; } #")
+  raw_len = len(raw)
+  escaped = raw.replace("%", "%%")
+  cmd_start = escaped.find("{") + 1
+  cmd_end = escaped.find("; } #")
+  out_start = escaped.find("|", cmd_end)
+  final = "%{c}%{F#667}" + escaped[:cmd_start] + "%{F-}" \
+    + escaped[cmd_start:cmd_end] \
+    + "%{F#667}" + escaped[cmd_end:out_start] + "%{F-}" \
+    + escaped[out_start:] \
+    + " " * max(0, 20 - (raw_len - raw_end))
+  print(final)
 ' \
-        | lemonbar -f "Source Code Pro-14" -b -B '#222' -F '#fff'
+        | lemonbar -f "Source Code Pro-14" -b -B '#222' -F '#ccc'
 }
 
 scmd_restart_tail__props() { "$@" silent; }
@@ -158,6 +166,17 @@ except Exception:
 }
 
 scmd_test_1234() { for i in 1 2 3 4; do sleep 1 && echo $i; done; }
+scmd_test_many_interactive() { scmd_test_many; }
+scmd_test_many() {
+    echo "Hello there..." > /tmp/del-me
+    seq 100 | while read -r line; do
+        sleep 0.05
+        head /tmp/del-me
+        first="$(sed 's/\(.\).*/\1/' /tmp/del-me)"
+        rest="$(sed 's/.\(.*\)/\1/' /tmp/del-me)"
+        echo "$rest$first" > /tmp/del-me
+    done
+}
 
 scmd_print_license() {
     cat <<EOLICENSE

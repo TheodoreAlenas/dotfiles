@@ -130,8 +130,8 @@ scmd_restart_tail() {
 }
 
 scmd_compile_sxhkdrc() {
-    res="super + \1\n\t. $SCMD_FILE; scmd_wrap win_\1"
-    sed -n "s|^win_\(.\)(.*|$res|p" "$SCMD_FILE" > "$SCMD_SXHKDRC"
+    echo "super + {a-z,A-Z,0-9}" > "$SCMD_SXHKDRC"
+    echo " . $SCMD_FILE && scmd_wrap win_{a-z,A-Z,0-9}" >> "$SCMD_SXHKDRC"
     export SCMD_FILE SCMD_TMP SCMD_SXHKDRC
     killall sxhkd; SXHKD_SHELL=dash sxhkd &
 }

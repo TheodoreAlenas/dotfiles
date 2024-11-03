@@ -99,7 +99,7 @@ while True:
   escaped = raw.replace("%", "%%")
   cmd_start = escaped.find("{") + 1
   cmd_end = escaped.find("; } #")
-  out_start = escaped.find("|", cmd_end)
+  out_start = escaped.find("|", cmd_end) + 1
   final = "%{c}%{F#667}" + escaped[:cmd_start] + "%{F-}" \
     + escaped[cmd_start:cmd_end] \
     + "%{F#667}" + escaped[cmd_end:out_start] + "%{F-}" \

@@ -21,11 +21,10 @@ language_dvorak() { setxkbmap us -variant dvorak; }
 language_serbian() { setxkbmap rs; }
 language_variant() { setxkbmap us "$(localectl list-x11-keymap-variants us | dmenu)"; }
 
-scmd_arg() { arg="$(head "$SCMD_TMP/arg")"; echo "arg = $arg"; }
-win_k() { scmd_arg; bspc desktop ^"$arg" --focus; }
-win_j() { scmd_arg; bspc node --to-desktop ^"$arg"; }
-win_m() { scmd_arg; v="$arg"0000; pactl set-sink-volume 0 "$v" "$v"; }
-win_i() { scmd_arg; bspc node @parent --ratio +0."$arg"; }
+win_k() { a=$(head "$SCMD_TMP/arg"); bspc desktop ^$a --focus; echo a = $a; }
+win_j() { a=$(head "$SCMD_TMP/arg"); bspc node --to-desktop ^$a; echo a = $a; }
+win_m() { v=$(($(head "$SCMD_TMP/arg")*3000)); pactl set-sink-volume 0 $v $v; echo v = $v; }
+win_i() { a=$(head "$SCMD_TMP/arg"); bspc node @parent --ratio 0.$a; echo a = $a; }
 win_r() { bspc node @parent --rotate 90; }
 win_R() { bspc node @parent --rotate 180; }
 

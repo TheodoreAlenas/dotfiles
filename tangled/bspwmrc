@@ -9,7 +9,10 @@ bspc monitor eDP-1 -d m1 m2 m3 m4 m5 m6 m7
 
 bspwm-theme glass
 
-if ! [ "$1" = no-scmd ]; then
-    export SCMD_FILE=~/p/c/scmd.sh
-    . "$SCMD_FILE" && scmd_init
-fi
+albatwid-alarm 50 5000 &
+slock-wrapper &
+unclutter --timeout 0.7 &
+picom &
+
+export SCMD_FILE=~/p/c/scmd.sh
+. "$SCMD_FILE" && scmd_init

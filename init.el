@@ -24,7 +24,6 @@
 (setq-default c-basic-offset 4)
 (add-hook 'prog-mode-hook (lambda () (indent-tabs-mode -1)))
 (add-hook 'org-mode-hook (lambda () (indent-tabs-mode -1)))
-(editorconfig-mode)
 
 ;; other functionality
 (setq make-backup-files nil)

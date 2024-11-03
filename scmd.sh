@@ -1,5 +1,6 @@
 scmd_init() { scmd_compile_sxhkdrc && scmd_lemonbar_default; }
 scmd_init__props() { "$@" silent; }
+keys_reset() { killall -sUSR1 sxhkd; }
 
 win_o() { bspc node next.local.leaf --focus; }
 win_Q() { bspc node --close; }

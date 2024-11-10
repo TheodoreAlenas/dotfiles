@@ -8,7 +8,10 @@ XTerm.vt100.translations: #override \
   Ctrl Shift <Key>C: copy-selection(CLIPBOARD) \n\
   Ctrl Shift <Key>V: insert-selection(CLIPBOARD)
 XTerm.vt100.metaSendsEscape: true
-XTerm.vt100.faceName: SourceCodePro:size=15
+XTerm.vt100.faceName: Source Code Pro:size=15
+
+! reverseVideo means dark theme
+XTerm.vt100.reverseVideo: false
 
 XTerm.vt100.color0: #000000
 XTerm.vt100.color1: #aa0000

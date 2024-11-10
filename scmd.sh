@@ -37,7 +37,7 @@ window_ti() { bspc node --state tiled; }
 show_win_rules() { bspc rule -l; }
 show_win_properties() { xprop -id "$(bspc query -N -n)"; }
 show_win_information() { xwininfo -id "$(bspc query -N -n)"; }
-win_v() { alacritty -e vim + "$SCMD_TMP/log.sh"; }
+win_v() { xterm -e vim + "$SCMD_TMP/log.sh"; }
 
 metal_start() { mpv ~/r/music-laptop/hellsinger-fast.mp4 --start=00:00; }
 metal_this()  { mpv ~/r/music-laptop/hellsinger-fast.mp4 --start=05:48; }
@@ -46,6 +46,14 @@ metal_feel()  { mpv ~/r/music-laptop/hellsinger-fast.mp4 --start=29:59; }
 metal_msg()   { mpv ~/r/music-laptop/hellsinger-fast.mp4 --start=36:18; }
 metal_awake() { mpv ~/r/music-laptop/hellsinger-fast.mp4 --start=41:31; }
 metal_rust()  { mpv ~/r/music-laptop/hellsinger-fast.mp4 --start=45:35; }
+
+win_s() { eval "shotgun $(slop -f '-i %i -g %g') /tmp/s.png"; }
+scshreg3s() { cmd="shotgun $(slop -f '-i %i -g %g') /tmp/s.png"&&sleep 3&&eval "$cmd"; }
+scshfs() { sleep 0.2s && shotgun /tmp/screenshot.png; }
+scshfs1s() { sleep 0.5s && echo and && sleep 0.5s && echo now && shotgun /tmp/s.png; }
+scshfsxs() { sleep "$(:|dmenu)" && shotgun /tmp/s.png; echo taken; }
+screenshot_clip() { xclip -in -sel clipboard -t image/png < /tmp/s.png; }
+screenshot_view() { sxiv /tmp/s.png; }
 
 win_d() { date "+%+4Y-%m-%d %B, %A"; }
 win_c() { df | sed -n '/e0n1p2/s/[0-9]\{6\} /,&/gp'; }
@@ -56,12 +64,12 @@ win_W() { nmcli radio wifi off && nmcli radio wifi on; }
 show_wifi_strength() { nmcli device wifi list | sed -n '/^\*/s/  */ /gp'; }
 show_wifi_which() { nmcli connection show --active | awk '/wifi/ {print $1}'; }
 
-win_P() { alacritty -e sudo shutdown now; }
+win_P() { xterm -e sudo shutdown now; }
 win_S() { scmd_compile_sxhkdrc; }
 win_x() { v="$(dmenu < "$SCMD_FILE")" && scmd_wrap "${v%%(*}"; }
 win_x__props() { "$@" silent; }
 
-win_t() { alacritty; }
+win_t() { xterm; }
 win_h() { head /sys/class/power_supply/BAT1/capacity; albatwid; alclowid; }
 win_e() { emacs; }
 win_b() { firefox_silent; }

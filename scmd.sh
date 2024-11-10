@@ -72,6 +72,7 @@ win_x__props() { "$@" silent; }
 win_t() { xterm; }
 win_h() { head /sys/class/power_supply/BAT1/capacity; albatwid; alclowid; }
 win_e() { emacs; }
+win_E() { emacs --debug-init; }
 win_b() { firefox_silent; }
 firefox_silent() { firefox 2>&1 | grep --line-buffered -v mesa_glthread; }
 open_intellij() { _JAVA_AWT_WM_NONREPARENTING=1 idea; }

@@ -8,21 +8,70 @@
 (toggle-scroll-bar -1)
 (add-to-list 'initial-frame-alist '(fullscreen . maximized))
 (add-to-list 'default-frame-alist '(fullscreen . maximized))
+(defun al/variable-pitch-enable ()
+  "Enables variable-pitch-mode and adjusts the buffer."
+  (interactive)
+  (variable-pitch-mode 1)
+  (setq-local line-spacing 0.3))
+(defun al/variable-pitch-disable ()
+  "Disables variable-pitch-mode and adjusts the buffer."
+  (interactive)
+  (variable-pitch-mode 0)
+  (setq line-spacing (default-value 'line-spacing)))
+(defun al/big-function-names-enable ()
+  "Makes the font bigger for function names in their definition."
+  (interactive)
+  (face-remap-add-relative 'font-lock-function-name-face :height 1.4))
+(defun al/big-function-names-disable ()
+  "See the enable version."
+  (interactive)
+  (face-remap-reset-base 'font-lock-function-name-face))
+(defvar
+  al/distortion-hooks
+  '(js-mode-hook
+    python-mode-hook
+    emacs-lisp-mode-hook)
+  "Mode hooks for
+al/variable-pitch-enable and
+al/big-function-names-enable")
+(defvar
+  al/variable-pitch-hooks
+  (append
+   '(text-mode-hook)
+   (default-value 'al/distortion-hooks))
+  "Mode hooks for al/variable-pitch-enable")
+(defvar
+  al/big-function-names-hooks
+  (append
+   '()
+   (default-value 'al/distortion-hooks))
+  "Mode hooks for al/function-names-enable")
+(dolist (x al/variable-pitch-hooks)
+  (add-hook x #'al/variable-pitch-enable))
+(dolist (x al/big-function-names-hooks)
+  (add-hook x #'al/big-function-names-enable))
+
 (dolist (def-fixpit '(default fixed-pitch))
   (set-face-attribute def-fixpit nil
                       :family "Source Code Pro"
                       :height 150
-                      :weight 'medium))
+                      :weight 'normal))
+(set-face-attribute 'variable-pitch nil
+                    :family "Sans Serif"
+                    :height 160
+                    :weight 'normal)
 
 ;; buffer look
 (setq split-width-threshold 120)
 (column-number-mode t)
-(load-theme 'ef-maris-light t)
+(load-theme 'mindre 1)
 
 ;; indentation
 (setq-default c-basic-offset 4)
 (add-hook 'prog-mode-hook (lambda () (indent-tabs-mode -1)))
 (add-hook 'org-mode-hook (lambda () (indent-tabs-mode -1)))
+(put 'narrow-to-region 'disabled nil)
+(put 'set-goal-column 'disabled nil)
 
 ;; other functionality
 (setq make-backup-files nil)
@@ -38,7 +87,6 @@
 (setq-default TeX-master nil)
 
 ;; org
-(add-hook 'text-mode-hook #'variable-pitch-mode)
 (require 'org)
 (setq org-hide-emphasis-markers t)
 (setq al/org-faces-fixed-pitch
@@ -70,6 +118,7 @@
 
 (defun al/prepare-for-ligatures ()
   "For Haskell (ligatures are from a package)"
+  (interactive)
   (set-face-attribute 'default nil :font "Hasklug Nerd Font"))
 
 (use-package haskell-mode :config
@@ -94,6 +143,7 @@
   (reverse-im-mode t)) ; turn the mode on
 
 ;; error messages
+(require 'compile)
 (add-to-list
  'compilation-error-regexp-alist-alist
  '(al-file
@@ -121,14 +171,10 @@
  '(custom-safe-themes t)
  '(elfeed-feeds '("https://www.di.uoa.gr/rss.xml") t)
  '(package-selected-packages
-   '(evil-collection gruber-darker-theme dockerfile-mode markdown-mode kotlin-mode magit auctex go-mode reverse-im evil rainbow-delimiters lua-mode nginx-mode gptel rust-mode graphviz-dot-mode docker-compose-mode systemd web-mode pdf-tools ef-themes ligature haskell-mode slime editorconfig git-gutter eglot)))
-
-
-(put 'narrow-to-region 'disabled nil)
+   '(mindre-theme parchment-theme aircon-theme evil-collection gruber-darker-theme dockerfile-mode markdown-mode kotlin-mode magit auctex go-mode reverse-im evil rainbow-delimiters lua-mode nginx-mode gptel rust-mode graphviz-dot-mode docker-compose-mode systemd web-mode pdf-tools ligature haskell-mode slime editorconfig git-gutter eglot)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  )
-(put 'set-goal-column 'disabled nil)

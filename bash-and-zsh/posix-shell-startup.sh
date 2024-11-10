@@ -2,7 +2,7 @@ PS1='$ '
 L5=sdi1900048@linux15.di.uoa.gr
 
 alias vi=nvim
-alias ls=eza
+alias ls='eza -g'
 alias xc='xclip -selection clipboard'
 
 # broot is a terminal file manager, note the `eval' here

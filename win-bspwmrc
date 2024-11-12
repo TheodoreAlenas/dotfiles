@@ -14,5 +14,4 @@ slock-wrapper &
 unclutter --timeout 0.7 &
 picom &
 
-export SCMD_FILE=~/p/c/scmd.sh
 . "$SCMD_FILE" && scmd_init

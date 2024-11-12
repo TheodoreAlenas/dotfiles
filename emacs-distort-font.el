@@ -42,7 +42,8 @@ al/distort-big-func-enable")
 (defvar
   al/distort-variable-hooks
   (append
-   '(text-mode-hook)
+   '(text-mode-hook
+     magit-log-mode-hook)
    (default-value 'al/distortion-hooks))
   "Mode hooks for al/distort-variable-enable")
 

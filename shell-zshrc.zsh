@@ -42,7 +42,7 @@ function zshrc_set_ps1_painted() {
 function zshrc_load_everything_unrelated_to_color() {
     autoload -U compinit && compinit
     source ~/.local/lib/zsh-autosuggestions/zsh-autosuggestions.zsh
-    source ~/p/c/bash-and-zsh/posix-shell-startup.sh
+    source ~/.local/bin/posix-shell-startup.sh
 }
 
 function zshrc_prepare_colors() {

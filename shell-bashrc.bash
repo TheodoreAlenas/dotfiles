@@ -4,7 +4,7 @@
 # I have no idea what this does
 [[ $DISPLAY ]] && shopt -s checkwinsize
 
-. /home/aleena/p/c/bash-and-zsh/posix-shell-startup.sh
+. ~/.local/bin/posix-shell-startup.sh
 PS1="(bash) $PS1"
 
 bashrc_compl=/usr/share/bash-completion/bash_completion

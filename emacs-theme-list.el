@@ -1,4 +1,4 @@
-;;; Made entirely by Chad GPT
+;;; Made largely by Chad GPT
 
 (provide 'theme-list)
 

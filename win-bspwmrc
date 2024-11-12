@@ -14,4 +14,5 @@ slock-wrapper &
 unclutter --timeout 0.7 &
 picom &
 
-. "$SCMD_FILE" && scmd_init
+SCMD_FILE=~/.local/bin/scmd.sh
+. "$SCMD_FILE" && scmd_init || bspc quit

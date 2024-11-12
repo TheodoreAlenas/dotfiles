@@ -5,7 +5,7 @@
 : "${SCMD_SXHKDRC:=$HOME/.config/sxhkd/sxhkdrc}"
 export SCMD_FILE SCMD_TMP SCMD_SXHKDRC
 
-scmd_big__restart_tail() {
+scmd_big_restart_tail() {
     echo "ensuring the log file exists"
     mkdir -p "$SCMD_TMP"
     touch "$SCMD_TMP/log.sh"

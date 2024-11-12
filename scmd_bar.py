@@ -3,7 +3,11 @@
 
 def lemonbar_wrapper():
     while True:
-        raw = input()
+        raw = None
+        try:
+            raw = input()
+        except EOFError:
+            raw = ""
         raw_end = raw.find("; } #")
         raw_len = len(raw)
         escaped = raw.replace("%", "%%")

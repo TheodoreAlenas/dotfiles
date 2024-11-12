@@ -1,6 +1,8 @@
 
-for_each_src_dest() {
-    "$@" init.el ~/.cache/emacs/vanilla/home-emacs-dot-d/init.el
+for_each() {
+    "$@" emacs/init.el ~/.emacs.d/init.el
+    "$@" emacs/distort-font.el ~/.emacs.d/my-pkg/distort-font.el
+    "$@" emacs/theme-list.el ~/.emacs.d/my-pkg/theme-list.el
     "$@" nvim ~/.config/nvim
 
     "$@" bash-and-zsh/dot-bashrc.bash ~/.bashrc
@@ -16,11 +18,13 @@ for_each_src_dest() {
     "$@" other/dot-Xresources ~/.Xdefaults
 }
 
+mkdir_p() { mkdir -p "${2%/*}"; }
 ln_full_path() { ln -sv "$PWD/$1" "$2"; }
 rm_dest() { rm -fv "$2"; }
 
-case "$1" in
-    (ln) for_each_src_dest ln_full_path ;;
-    (rm) for_each_src_dest rm_dest ;;
-    (*) echo "$0 ln" ; echo "$0 rm" >&2 ; exit 1 ;;
+case "$*" in
+    (mkdir) for_each mkdir_p ;;
+    (ln) for_each ln_full_path ;;
+    (rm) for_each rm_dest ;;
+    (*) echo "$0 mkdir|ln|rm" >&2 ; exit 1 ;;
 esac

@@ -6,65 +6,29 @@
 (menu-bar-mode -1)
 (tool-bar-mode -1)
 (toggle-scroll-bar -1)
+(blink-cursor-mode -1)
 (add-to-list 'initial-frame-alist '(fullscreen . maximized))
 (add-to-list 'default-frame-alist '(fullscreen . maximized))
-(defun al/variable-pitch-enable ()
-  "Enables variable-pitch-mode and adjusts the buffer."
-  (interactive)
-  (variable-pitch-mode 1)
-  (setq-local line-spacing 0.3))
-(defun al/variable-pitch-disable ()
-  "Disables variable-pitch-mode and adjusts the buffer."
-  (interactive)
-  (variable-pitch-mode 0)
-  (setq line-spacing (default-value 'line-spacing)))
-(defun al/big-function-names-enable ()
-  "Makes the font bigger for function names in their definition."
-  (interactive)
-  (face-remap-add-relative 'font-lock-function-name-face :height 1.4))
-(defun al/big-function-names-disable ()
-  "See the enable version."
-  (interactive)
-  (face-remap-reset-base 'font-lock-function-name-face))
-(defvar
-  al/distortion-hooks
-  '(js-mode-hook
-    python-mode-hook
-    emacs-lisp-mode-hook)
-  "Mode hooks for
-al/variable-pitch-enable and
-al/big-function-names-enable")
-(defvar
-  al/variable-pitch-hooks
-  (append
-   '(text-mode-hook)
-   (default-value 'al/distortion-hooks))
-  "Mode hooks for al/variable-pitch-enable")
-(defvar
-  al/big-function-names-hooks
-  (append
-   '()
-   (default-value 'al/distortion-hooks))
-  "Mode hooks for al/function-names-enable")
-(dolist (x al/variable-pitch-hooks)
-  (add-hook x #'al/variable-pitch-enable))
-(dolist (x al/big-function-names-hooks)
-  (add-hook x #'al/big-function-names-enable))
-
 (dolist (def-fixpit '(default fixed-pitch))
   (set-face-attribute def-fixpit nil
-                      :family "Source Code Pro"
+                      :family "Monospace"
                       :height 150
                       :weight 'normal))
 (set-face-attribute 'variable-pitch nil
                     :family "Sans Serif"
                     :height 160
                     :weight 'normal)
+(add-to-list
+ 'load-path
+ (expand-file-name "my-pkg" user-emacs-directory))
+(require 'distort-font)
+(al/distort-add-hooks)
 
 ;; buffer look
 (setq split-width-threshold 120)
 (column-number-mode t)
 (load-theme 'mindre 1)
+(require 'theme-list)
 
 ;; indentation
 (setq-default c-basic-offset 4)

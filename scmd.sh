@@ -17,11 +17,15 @@ language_dvorak() { setxkbmap us -variant dvorak; }
 language_serbian() { setxkbmap rs; }
 language_variant() { setxkbmap us "$(localectl list-x11-keymap-variants us | dmenu)"; }
 
-pick_desktop() { v="$(bspc query -D --names|dmenu)" && echo "v = $v"; }
-win_j() { a=$(head "$SCMD_TMP/arg"); bspc node --to-desktop ^$a; echo a = $a; }
-win_m() { v=$(($(head "$SCMD_TMP/arg")*3000)); pactl set-sink-volume 0 $v $v; echo v = $v; }
-win_M() { v=$((1$(head "$SCMD_TMP/arg")*3000)); pactl set-sink-volume 0 $v $v; echo v = $v; }
-win_i() { a=$(head "$SCMD_TMP/arg"); bspc node @parent --ratio 0.$a; echo a = $a; }
+pick_desktop() { v="$(bspc query -D|awk '{print NR}'|dmenu)" && echo "v = $v"; }
+win_j() { pick_desktop; bspc node --to-desktop ^"$v"; }
+
+pick_volume() { v="$(echo 12|dmenu)" && echo "v = $v"; }
+win_m() { pick_volume; pactl set-sink-volume 0 "$v"000 "$v"000; }
+
+pick_mantissa() { v="$(echo 5|dmenu)" && echo "v = $v"; }
+win_i() { pick_mantissa; bspc node @parent --ratio 0.$v; }
+
 win_r() { bspc node @parent --rotate 90; }
 win_R() { bspc node @parent --rotate 180; }
 

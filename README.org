@@ -6,15 +6,17 @@ It's difficult to keep an up-to-date README, but as of now,
 and ~scmd.sh~ is the system's command palette/hotkey configuration.
 The shells share some of their configuration,
 specifically there is a file with POSIX shell code that they both source.
-
 An important part of the system is also the
 [[https://github.com/TheodoreAlenas/widget-blink][clock and battery full screen popups]].
 
-#+caption: A bar shows what command SCMD ran
+A bar shows what command SCMD ran
+
 [[./README-scmd-bar-desktop1.png]]
 
-#+caption: It shows the output as well
+It shows the output as well
+
 [[./README-scmd-bar-test1234.png]]
 
-#+caption: SCMD combines a command palette and hotkeys
+SCMD combines a command palette and hotkeys
+
 [[./README-scmd-palette-xkb.png]]

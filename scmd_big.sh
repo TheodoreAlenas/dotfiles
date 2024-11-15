@@ -30,7 +30,7 @@ scmd_big_sxhkdrc_print() {
 }
 
 scmd_big_wrap() {
-    time="$(date +%H_%M_%S__)"
+    time="$(date +%H%M%S__)"
     def="$(grep "^$1(" "$SCMD_FILE" || echo "$1() { undefined; }")"
     silent="$(command -v ${1}__silent)"
     ("$@" 2>&1; echo $?) \

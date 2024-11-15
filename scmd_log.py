@@ -1,13 +1,19 @@
 #!/bin/python3
 import sys
+import time
+
+
+def get_date():
+    return time.strftime("%H%M%S ")
+
 
 def log_wrapper(prefix, is_silent):
 
     if is_silent:
-        print(prefix + "- silent  |")
+        print(prefix + get_date() + " - silent  |")
         exit(0)
     else:
-        print(prefix + "0 started |")
+        print(prefix + get_date() + " 0 started |")
 
     try:
         n = 1
@@ -17,10 +23,10 @@ def log_wrapper(prefix, is_silent):
             old = cur
             cur = input()
             last = old
-            print(prefix + str(n) + " running |" + cur)
+            print(prefix + get_date() + str(n).rjust(2) + " running |" + cur)
             n += 1
     except Exception:
-        print(prefix + str(n-2) + " err " + cur.ljust(3) + " |" + last)
+        print(prefix + get_date() + str(n-2).rjust(2) + " err=" + cur.ljust(3) + " |" + last)
 
 
 def main(argv):

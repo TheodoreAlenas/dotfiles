@@ -11,17 +11,17 @@ win_7() { bspc desktop ^7 --focus; }
 win_8() { bspc desktop ^8 --focus; }
 win_9() { bspc desktop ^9 --focus; }
 
-win_0() { setxkbmap us; }  # english
-win_l() { setxkbmap gr; }  # greek
+win_0() { setxkbmap us; }
+win_l() { setxkbmap gr; }
 language_dvorak() { setxkbmap us -variant dvorak; }
 language_serbian() { setxkbmap rs; }
 language_variant() { setxkbmap us "$(localectl list-x11-keymap-variants us | dmenu)"; }
 
-pick_desktop() { v="$(bspc query -D|awk '{print NR}'|dmenu)" && echo "v = $v"; }
-win_j() { pick_desktop; bspc node --to-desktop ^"$v"; }
+pick_desktop() { v="$(bspc query -D|awk '{print NR}'|dmenu -l 0)" && echo "v = $v"; }
+win_j() { pick_desktop && bspc node --to-desktop ^"$v"; }
 
-pick_volume() { v="$(echo 12|dmenu)" && echo "v = $v"; }
-win_m() { pick_volume; pactl set-sink-volume 0 "$v"000 "$v"000; }
+pick_volume() { v="$(echo 22|dmenu -l 0)" && [ $((v<100)) = 1 ] && echo "v = $v"; }
+win_m() { pick_volume && pactl set-sink-volume 0 "$v"000 "$v"000; }
 
 pick_mantissa() { v="$(echo 5|dmenu)" && echo "v = $v"; }
 win_i() { pick_mantissa; bspc node @parent --ratio 0.$v; }
@@ -38,7 +38,8 @@ window_ti() { bspc node --state tiled; }
 show_win_rules() { bspc rule -l; }
 show_win_properties() { xprop -id "$(bspc query -N -n)"; }
 show_win_information() { xwininfo -id "$(bspc query -N -n)"; }
-win_v() { xterm -e vim + "$SCMD_TMP/log.sh"; }
+win_v() { awk '{print NR, $0}' "$SCMD_TMP/log.sh" | tac | dmenu; }
+win_v__silent() { :; }
 
 metal_start() { mpv ~/r/music-laptop/hellsinger-fast.mp4 --start=00:00; }
 metal_this()  { mpv ~/r/music-laptop/hellsinger-fast.mp4 --start=05:48; }

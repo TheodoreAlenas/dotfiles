@@ -12,7 +12,7 @@
   "Enables variable-pitch-mode and adjusts the buffer."
   (interactive)
   (variable-pitch-mode 1)
-  (setq-local line-spacing 0.3))
+  (setq-local line-spacing 0.1))
 
 (defun al/distort-variable-disable ()
   "Disables variable-pitch-mode and adjusts the buffer."

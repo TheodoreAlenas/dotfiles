@@ -1,90 +1,20 @@
-* Theodore's System Configuration Tour
 
-Welcome to my iteratively hardened and compacted configuration!
-You may find ~scmd.sh~,
-the self documented command palette and hotkey self generator
+* Theodore's System Configuration
 
-#+begin_src sh
-about_logging() { tail /tmp/scmd.sh; echo "Should have lines that look like: func() { echo hi; } #>>hi"; }
-# [...]
-window_other() { bspc node next.local.leaf --focus; } #o
-# [...]
-volume_set_8() { pactl set-sink-volume 0 48000 48000; } #m8
-volume_set_9() { pactl set-sink-volume 0 54000 54000; } #m9
-volume_set_custom() { pactl set-sink-volume 0 "$(:|dmenu)"; }
-# [...]
-scmd_stands_for_system_command() { :; }
-scmd_run() { c="$(dmenu < "$(this_file)" | cut -d'(' -f1)"; test "$c" && scmd_with_bar_status "$c"; } #x
-scmd_upd() { scmd_sxhkdrc > ~/.config/sxhkd/sxhkdrc; killall sxhkd; sxhkd & } #S
-# [...]
-this_file() { echo ~/p/c/scmd.sh; }
-#+end_src
+It's difficult to keep an up-to-date README, but as of now,
+~install.sh~ symlinks the files in their respective directories
+and ~scmd.sh~ is the system's command palette/hotkey configuration.
+The shells share some of their configuration,
+specifically there is a file with POSIX shell code that they both source.
 
-the zsh configuration formatted like an article with a table of contents
+An important part of the system is also the
+[[https://github.com/TheodoreAlenas/widget-blink][clock and battery full screen popups]].
 
-#+begin_src sh
-function zshrc_main() {
-    zshrc_set_variables
-    zshrc_set_emacs_movement
-    zshrc_load_everything_unrelated_to_color
-    zshrc_prepare_colors
-    zshrc_set_color_scheme
-}
+#+caption: A bar shows what command SCMD ran
+[[./README-scmd-bar-desktop1.png]]
 
-function zshrc_set_variables() {
-    ZDOTDIR=~/.config/zsh
-#+end_src
+#+caption: It shows the output as well
+[[./README-scmd-bar-test1234.png]]
 
-the POSIX ~install.sh~ that doesn't use shell arrays
-
-#+begin_src sh
-case "$1" in
-    (ln) for_each_src_dest ln_full_path ;;
-    (rm) for_each_src_dest rm_dest ;;
-    ('') for_each_src_dest relink ;;
-    (*) echo "$0   or   $0 ln   or   $0 rm" ;;
-esac
-#+end_src
-
-and the two-part concatenated terminal configuration.
-
-#+begin_src
-  drwxr-xr-x   2 aleena aleena 20480 Jan 15 18:33 theming-alacritty
-  -rw-r--r--   1 aleena aleena   283 Jan  6 12:57 alacritty-head.toml
-#+end_src
-
-I used to use NeoVim. Recently I switched to Emacs.
-NeoVim, TMux and ZSH were configured to be similar to the
-experience of using Vi and dash without terminal multiplexing,
-hense ~nvim/colors/desert16.vim~ and ~bash-and-zsh/posix-shell-startup.sh~.
-
-#+begin_src sh
-PS1='$ '
-
-alias vi=nvim
-alias ls=eza
-alias xc='xclip -selection clipboard'
-
-# [...]
-#+end_src
-
-Note that I don't use Doom Emacs, I just use vanilla Emacs.
-I just switch between vanilla and Doom for fun sometimes
-by changing the symlinks to the configuration/cache files.
-
-#+begin_src sh
-switch_emacs_to_vanilla() { rm ~/.emacs.d; ln -s ~/.cache/emacs/vanilla/home-emacs-dot-d/ ~/.emacs.d; }
-switch_emacs_to_doom() { rm ~/.emacs.d; ln -s ~/.cache/emacs/doom/home-emacs-dot-d/ ~/.emacs.d; }
-#+end_src
-
-You may wonder how people have the TMux thing
-with the list that opens a new TMux thing,
-I've made one of these too.
-
-An important part of my system is
-the popup clock and battery windows,
-which are in their own repsective repository,
-[[https://github.com/TheodoreAlenas/widget-blink]].
-
-Thank you for the visit and I hope this repository
-can prove helpful!
+#+caption: SCMD combines a command palette and hotkeys
+[[./README-scmd-palette-xkb.png]]

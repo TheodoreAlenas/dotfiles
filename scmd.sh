@@ -71,6 +71,10 @@ win_W() { nmcli radio wifi off && nmcli radio wifi on; }
 show_wifi_strength() { nmcli device wifi list | sed -n '/^\*/s/  */ /gp'; }
 show_wifi_which() { nmcli connection show --active | awk '/wifi/ {print $1}'; }
 
+alarm_test() { killall albatwid-alarm; albatwid-alarm 100 2000; }
+alarm_relax() { killall albatwid-alarm; albatwid-alarm 30 5000; }
+alarm_reset() { killall albatwid-alarm; albatwid-alarm 50 5000; }
+
 win_P() { xterm -e sudo shutdown now; }
 win_x() { v="$(dmenu < "$SCMD_FILE")" && scmd_big_wrap "${v%%(*}"; }
 win_x__silent() { :; }

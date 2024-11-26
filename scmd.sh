@@ -49,6 +49,11 @@ metal_msg()   { mpv ~/r/music-laptop/hellsinger-fast.mp4 --start=36:18; }
 metal_awake() { mpv ~/r/music-laptop/hellsinger-fast.mp4 --start=41:31; }
 metal_rust()  { mpv ~/r/music-laptop/hellsinger-fast.mp4 --start=45:35; }
 
+pick_video() { . ./tags.sh && v="$(on_all get_tags | dmenu -i | cut -d' ' -f1)" && echo "v = $v"; }
+win_p() { cd ~/2r/vid && pick_video && mpv "$v"; }
+pick_video_src() { . ./tags.sh && v="$(on_all get_src | dmenu)" && echo "v = ${v%% *} ..."; }
+copy_source() { cd ~/2r/vid && pick_video_src && echo "${v##* }" | xclip -in -sel clip; }
+
 win_s() { eval "shotgun $(slop -f '-i %i -g %g') /tmp/s.png"; }
 scshreg3s() { cmd="shotgun $(slop -f '-i %i -g %g') /tmp/s.png"&&sleep 3&&eval "$cmd"; }
 scshfs() { sleep 0.2s && shotgun /tmp/screenshot.png; }

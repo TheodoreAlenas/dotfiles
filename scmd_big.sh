@@ -19,6 +19,7 @@ scmd_big_restart_tail() {
     echo "starting tail"
     tail -f "$SCMD_TMP/log.sh" &
     echo $! >> "$SCMD_TMP/pids"
+    echo
     wait
 }
 

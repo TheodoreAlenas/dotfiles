@@ -49,8 +49,16 @@ metal_msg()   { mpv ~/r/music-laptop/hellsinger-fast.mp4 --start=36:18; }
 metal_awake() { mpv ~/r/music-laptop/hellsinger-fast.mp4 --start=41:31; }
 metal_rust()  { mpv ~/r/music-laptop/hellsinger-fast.mp4 --start=45:35; }
 
-pick_video() { . ./tags.sh && v="$(on_all get_tags | dmenu -i | cut -d' ' -f1)" && echo "v = $v"; }
-win_p() { cd ~/2r/vid && pick_video && mpv "$v"; }
+win_p() { cd ~/2r/vid && vtag_pick && mpv "$v"; }
+vtag_pick() { l="$(vtag_ls | dmenu -i)" && vtag_file "$l" && echo "v = $v"; }
+vtag_ls() { awk 'BEGIN {s = 0} {print s, $0} $0 == "" {s += 1}' tags; }
+vtag_file() { v="$(vtag_ls | awk "/^${1%% *}/ {print \$2; exit}")"; }
+
+metal_hellsinger_messengers() { mpv ~/2r/vid/24112305hscinder.webm --start=00:29 --speed=1.20; }
+metal_hellsinger_you_farted() { mpv ~/2r/vid/24112305hscinder.webm --start=01:00.5; }
+metal_hellsinger_awaken() { mpv ~/2r/vid/24112306hsblood.webm --start=02:12; }
+metal_hellsinger_deep_within() { mpv ~/2r/vid/24112306hsblood.webm --start=03:19 --speed=1.20; }
+
 pick_video_src() { . ./tags.sh && v="$(on_all get_src | dmenu)" && echo "v = ${v%% *} ..."; }
 copy_source() { cd ~/2r/vid && pick_video_src && echo "${v##* }" | xclip -in -sel clip; }
 
@@ -74,6 +82,8 @@ show_wifi_which() { nmcli connection show --active | awk '/wifi/ {print $1}'; }
 alarm_test() { killall albatwid-alarm; albatwid-alarm 100 2000; }
 alarm_relax() { killall albatwid-alarm; albatwid-alarm 30 5000; }
 alarm_reset() { killall albatwid-alarm; albatwid-alarm 50 5000; }
+
+speed_up_keyboard() { xset -display :0.0 r rate 250 40; }
 
 win_P() { xterm -e sudo shutdown now; }
 win_x() { v="$(dmenu < "$SCMD_FILE")" && scmd_big_wrap "${v%%(*}"; }

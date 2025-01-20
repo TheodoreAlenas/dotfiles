@@ -127,6 +127,13 @@
 (add-to-list 'compilation-error-regexp-alist 'al-imported-from)
 (add-to-list 'compilation-error-regexp-alist 'al-line-of)
 
+;; dired
+(setq dired-guess-shell-alist-user '(("\\.pdf" "firefox")))
+
+;; latex
+(with-eval-after-load 'latex
+  (define-key LaTeX-mode-map (kbd ";") "\\"))
+
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.

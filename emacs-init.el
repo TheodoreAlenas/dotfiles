@@ -108,6 +108,7 @@
 
 ;; error messages
 (require 'compile)
+(setq-default compile-command "")
 (add-to-list
  'compilation-error-regexp-alist-alist
  '(al-file

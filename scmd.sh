@@ -9,10 +9,10 @@ win_5() { bspc desktop ^5 --focus; }
 win_6() { bspc desktop ^6 --focus; }
 win_7() { bspc desktop ^7 --focus; }
 win_8() { bspc desktop ^8 --focus; }
-win_9() { bspc desktop ^9 --focus; }
 
-win_0() { setxkbmap us; }
+win_9() { setxkbmap gr; }
 win_l() { setxkbmap gr; }
+win_0() { setxkbmap us; }
 language_dvorak() { setxkbmap us -variant dvorak; }
 language_serbian() { setxkbmap rs; }
 language_variant() { setxkbmap us "$(localectl list-x11-keymap-variants us | dmenu)"; }
@@ -28,6 +28,8 @@ win_i() { pick_mantissa; bspc node @parent --ratio 0.$v; }
 
 win_r() { bspc node @parent --rotate 90; }
 win_R() { bspc node @parent --rotate 180; }
+rotate_vert() { xrandr --output eDP-1 --rotate left; }
+rotate_horizontal() { xrandr --output eDP-1 --rotate normal; }
 
 window_st() { bspc node --flag sticky=on; }
 window_ns() { bspc node --flag sticky=off; }

@@ -132,7 +132,7 @@
 (add-to-list 'compilation-error-regexp-alist 'al-line-of)
 
 ;; dired
-(setq dired-guess-shell-alist-user '(("\\.pdf" "firefox")))
+(setq dired-guess-shell-alist-user '(("\\.pdf" "firefox") ("\\.py" "python")))
 
 ;; latex
 (with-eval-after-load 'latex
@@ -146,7 +146,7 @@
  '(custom-safe-themes t)
  '(elfeed-feeds '("https://www.di.uoa.gr/rss.xml") t)
  '(package-selected-packages
-   '(mindre-theme parchment-theme aircon-theme evil-collection gruber-darker-theme dockerfile-mode markdown-mode kotlin-mode magit auctex go-mode reverse-im evil rainbow-delimiters lua-mode nginx-mode gptel rust-mode graphviz-dot-mode docker-compose-mode systemd web-mode pdf-tools ligature haskell-mode slime editorconfig git-gutter eglot)))
+   '(cmake-mode mindre-theme parchment-theme aircon-theme evil-collection gruber-darker-theme dockerfile-mode markdown-mode kotlin-mode magit auctex go-mode reverse-im evil rainbow-delimiters lua-mode nginx-mode gptel rust-mode graphviz-dot-mode docker-compose-mode systemd web-mode pdf-tools ligature haskell-mode slime editorconfig git-gutter eglot)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.

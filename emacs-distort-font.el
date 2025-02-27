@@ -32,24 +32,23 @@
 
 (defvar
   al/distortion-hooks
-  '(js-mode-hook
-    python-mode-hook
-    emacs-lisp-mode-hook)
+  '()
   "Mode hooks for
-al/variable-pitch-enable and
+al/variable-pitch-enable
+and
 al/distort-big-func-enable")
 
 (defvar
   al/distort-variable-hooks
   (append
-   '(text-mode-hook
+   '(org-mode-hook
      magit-log-mode-hook)
    (default-value 'al/distortion-hooks))
-  "Mode hooks for al/distort-variable-enable")
+  "Mode hooks for only al/distort-variable-enable")
 
 (defvar
   al/distort-big-func-hooks
   (append
    '()
    (default-value 'al/distortion-hooks))
-  "Mode hooks for al/function-names-enable")
+  "Mode hooks for only al/function-names-enable")

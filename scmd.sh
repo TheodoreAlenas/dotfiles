@@ -1,35 +1,31 @@
 win_o() { bspc node next.local.leaf --focus; }
 win_Q() { bspc node --close; }
 
-win_1() { bspc desktop ^1 --focus; }
-win_2() { bspc desktop ^2 --focus; }
-win_3() { bspc desktop ^3 --focus; }
-win_4() { bspc desktop ^4 --focus; }
-win_5() { bspc desktop ^5 --focus; }
-win_6() { bspc desktop ^6 --focus; }
-win_7() { bspc desktop ^7 --focus; }
-win_8() { bspc desktop ^8 --focus; }
+win_j() { bspc desktop ^1 --focus; }
+win_k() { bspc desktop ^2 --focus; }
+win_l() { bspc desktop ^3 --focus; }
 
+win_8() { setxkbmap gr; }
 win_9() { setxkbmap gr; }
-win_l() { setxkbmap gr; }
 win_0() { setxkbmap us; }
 language_dvorak() { setxkbmap us -variant dvorak; }
 language_serbian() { setxkbmap rs; }
 language_variant() { setxkbmap us "$(localectl list-x11-keymap-variants us | dmenu)"; }
 
 pick_desktop() { v="$(bspc query -D|awk '{print NR}'|dmenu -l 0)" && echo "v = $v"; }
-win_j() { pick_desktop && bspc node --to-desktop ^"$v"; }
+win_u() { pick_desktop && bspc node --to-desktop ^"$v"; }
 
 pick_volume() { v="$(echo 22|dmenu -l 0)" && [ $((v<100)) = 1 ] && echo "v = $v"; }
 win_m() { pick_volume && pactl set-sink-volume 0 "$v"000 "$v"000; }
 
 pick_mantissa() { v="$(echo 5|dmenu)" && echo "v = $v"; }
-win_i() { pick_mantissa; bspc node @parent --ratio 0.$v; }
+resize_window() { pick_mantissa; bspc node @parent --ratio 0.$v; }
 
-win_r() { bspc node @parent --rotate 90; }
-win_R() { bspc node @parent --rotate 180; }
+rotate_clockwise() { bspc node @parent --rotate 90; }
+rotate_ccw() { bspc node @parent --rotate 180; }
 rotate_vert() { xrandr --output eDP-1 --rotate left; }
 rotate_horizontal() { xrandr --output eDP-1 --rotate normal; }
+rotate_upside_down() { xrandr --output eDP-1 --rotate inverted; }
 
 window_st() { bspc node --flag sticky=on; }
 window_ns() { bspc node --flag sticky=off; }
@@ -51,7 +47,7 @@ metal_msg()   { mpv ~/r/music-laptop/hellsinger-fast.mp4 --start=36:18; }
 metal_awake() { mpv ~/r/music-laptop/hellsinger-fast.mp4 --start=41:31; }
 metal_rust()  { mpv ~/r/music-laptop/hellsinger-fast.mp4 --start=45:35; }
 
-win_p() { cd ~/2r/vid && vtag_pick && mpv "$v"; }
+vtag_play_tagged_video() { cd ~/2r/vid && vtag_pick && mpv "$v"; }
 vtag_pick() { l="$(vtag_ls | dmenu -i)" && vtag_file "$l" && echo "v = $v"; }
 vtag_ls() { awk 'BEGIN {s = 0} {print s, $0} $0 == "" {s += 1}' tags; }
 vtag_file() { v="$(vtag_ls | awk "/^${1%% *}/ {print \$2; exit}")"; }
@@ -81,9 +77,8 @@ win_W() { nmcli radio wifi off && nmcli radio wifi on; }
 show_wifi_strength() { nmcli device wifi list | sed -n '/^\*/s/  */ /gp'; }
 show_wifi_which() { nmcli connection show --active | awk '/wifi/ {print $1}'; }
 
-alarm_test() { killall albatwid-alarm; albatwid-alarm 100 2000; }
-alarm_relax() { killall albatwid-alarm; albatwid-alarm 30 5000; }
-alarm_reset() { killall albatwid-alarm; albatwid-alarm 50 5000; }
+pick_alarm() { v="$(echo 50|dmenu -l 0)" && [ $((v<100)) = 1 ] && echo "v = $v"; }
+alarm_set() { pick_alarm && killall albatwid-alarm && albatwid-alarm $v 5000; }
 
 speed_up_keyboard() { xset -display :0.0 r rate 250 40; }
 
@@ -92,15 +87,17 @@ win_x() { v="$(dmenu < "$SCMD_FILE")" && scmd_big_wrap "${v%%(*}"; }
 win_x__silent() { :; }
 
 win_t() { xterm; }
-win_h() { head /sys/class/power_supply/BAT1/capacity; albatwid; alclowid; }
+win_h() { alclowid; }
+open_battery_widget() { albatwid; }
 win_e() { emacs; }
-win_E() { emacs --debug-init; }
+open_emacs_bug_fixing() { emacs --debug-init; }
 win_b() { firefox_silent; }
 firefox_silent() { firefox 2>&1 | grep --line-buffered -v mesa_glthread; }
 open_intellij() { _JAVA_AWT_WM_NONREPARENTING=1 idea; }
 open_libreoffice() { libreoffice; }
 open_kdenlive() { kdenlive > /dev/null 2> /dev/null; }
 open_krita() { krita > /dev/null 2> /dev/null; }
+open_inkscape() { inkscape; }
 open_screenkey() { screenkey; }
 open_unclutter() { unclutter; }
 close_screenkey() { killall screenkey; }
@@ -120,8 +117,11 @@ scmd_nop() { :; };    . scmd_big.sh
 scmd_init() { scmd_big_sxhkdrc && scmd_sxhkd && scmd_lemonbar; }
 scmd_init__silent() { :; }
 
+scmd_lemonbar() { scmd_big_restart_tail | shrink_logs | barprint | scmd__bar; }
 scmd_lemonbar__silent() { :; }
-scmd_lemonbar() { scmd_big_restart_tail | scmd_bar.py | scmd__bar; }
+shrink_logs() { sed --unbuffered 's/[^_]*__\([^(]*\).*} #[0-9]*  \(.*\)/\1 \2/'; }
+scmd_lemonbar_old() { scmd_big_restart_tail | scmd_bar.py | scmd__bar; }
+scmd_lemonbar_old__silent() { :; }
 scmd__bar() { lemonbar -f "Source Code Pro-14" -b -B '#222' -F '#ccc'; }
 
 scmd_sxhkd() { killall sxhkd; SXHKD_SHELL=dash sxhkd & }

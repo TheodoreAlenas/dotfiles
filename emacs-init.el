@@ -6,6 +6,7 @@
 (menu-bar-mode -1)
 (tool-bar-mode -1)
 (toggle-scroll-bar -1)
+(setq inhibit-splash-screen t)
 (setq blink-cursor-blinks 1)
 (setq blink-cursor-delay 0.2)
 (setq blink-cursor-interval 0.15)
@@ -26,6 +27,8 @@
  (expand-file-name "my-pkg" user-emacs-directory))
 (require 'distort-font)
 (al/distort-add-hooks)
+(require 'centered-window)  ;; not enabled, it breaks splitting
+(setq cwm-centered-window-width 80)
 
 ;; buffer look
 (setq split-width-threshold 120)
@@ -145,11 +148,44 @@
  ;; If there is more than one, they won't work right.
  '(custom-safe-themes t)
  '(elfeed-feeds '("https://www.di.uoa.gr/rss.xml") t)
+ '(org-preview-latex-process-alist
+   '((dvipng :programs ("lualatex" "dvipng") :description "dvi > png"
+             :message
+             "you need to install the programs: latex and dvipng."
+             :image-input-type "dvi" :image-output-type "png"
+             :image-size-adjust (1.0 . 1.0) :latex-compiler
+             ("lualatex \\\\nonstopmode\\\\input %f \\\\output %o")
+             :image-converter ("dvipng -D %D -T tight -o %O %f")
+             :transparent-image-converter
+             ("dvipng -D %D -T tight -bg Transparent -o %O %f"))
+     (dvisvgm :programs ("latex" "dvisvgm") :description "dvi > svg"
+              :message
+              "you need to install the programs: latex and dvisvgm."
+              :image-input-type "dvi" :image-output-type "svg"
+              :image-size-adjust (1.7 . 1.5) :latex-compiler
+              ("latex -interaction nonstopmode -output-directory %o %f")
+              :image-converter
+              ("dvisvgm %f --no-fonts --exact-bbox --scale=%S --output=%O"))
+     (imagemagick :programs ("latex" "convert") :description
+                  "pdf > png" :message
+                  "you need to install the programs: latex and imagemagick."
+                  :image-input-type "pdf" :image-output-type "png"
+                  :image-size-adjust (1.0 . 1.0) :latex-compiler
+                  ("pdflatex -interaction nonstopmode -output-directory %o %f")
+                  :image-converter
+                  ("convert -density %D -trim -antialias %f -quality 100 %O"))))
  '(package-selected-packages
-   '(cmake-mode mindre-theme parchment-theme aircon-theme evil-collection gruber-darker-theme dockerfile-mode markdown-mode kotlin-mode magit auctex go-mode reverse-im evil rainbow-delimiters lua-mode nginx-mode gptel rust-mode graphviz-dot-mode docker-compose-mode systemd web-mode pdf-tools ligature haskell-mode slime editorconfig git-gutter eglot)))
+   '(aircon-theme auctex centered-window cmake-mode docker-compose-mode
+                  dockerfile-mode editorconfig eglot evil
+                  evil-collection git-gutter go-mode gptel
+                  graphviz-dot-mode gruber-darker-theme haskell-mode
+                  kotlin-mode ligature lua-mode magit markdown-mode
+                  mindre-theme nginx-mode parchment-theme pdf-tools
+                  rainbow-delimiters reverse-im rust-mode slime
+                  systemd web-mode zig-mode)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- )
+ '(fringe ((t (:background "#F5F5F5")))))

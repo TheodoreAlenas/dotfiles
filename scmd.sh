@@ -14,6 +14,7 @@ language_variant() { setxkbmap us "$(localectl list-x11-keymap-variants us | dme
 
 pick_desktop() { v="$(bspc query -D|awk '{print NR}'|dmenu -l 0)" && echo "v = $v"; }
 win_u() { pick_desktop && bspc node --to-desktop ^"$v"; }
+win_U() { pick_desktop && bspc desktop ^"$v" --focus; }
 
 pick_volume() { v="$(echo 22|dmenu -l 0)" && [ $((v<100)) = 1 ] && echo "v = $v"; }
 win_m() { pick_volume && pactl set-sink-volume 0 "$v"000 "$v"000; }
@@ -91,6 +92,8 @@ win_h() { alclowid; }
 open_battery_widget() { albatwid; }
 win_e() { emacs; }
 open_emacs_bug_fixing() { emacs --debug-init; }
+open_obsidian() { Obsidian-1.8.9.AppImage; }
+open_vscode() { code; }
 win_b() { firefox_silent; }
 firefox_silent() { firefox 2>&1 | grep --line-buffered -v mesa_glthread; }
 open_intellij() { _JAVA_AWT_WM_NONREPARENTING=1 idea; }
@@ -117,9 +120,10 @@ scmd_nop() { :; };    . scmd_big.sh
 scmd_init() { scmd_big_sxhkdrc && scmd_sxhkd && scmd_lemonbar; }
 scmd_init__silent() { :; }
 
-scmd_lemonbar() { scmd_big_restart_tail | shrink_logs | barprint | scmd__bar; }
+scmd_lemonbar() { scmd_big_restart_tail | barprint | scmd__bar; }
 scmd_lemonbar__silent() { :; }
-shrink_logs() { sed --unbuffered 's/[^_]*__\([^(]*\).*} #[0-9]*  \(.*\)/\1 \2/'; }
+scmd_lemonbar_recompile() { cd ~/3p/bar && make && (killall barprint; cp barprint ~/.local/bin/); }
+scmd_lemonbar_refresh() { scmd_lemonbar_recompile && scmd_lemonbar; }
 scmd_lemonbar_old() { scmd_big_restart_tail | scmd_bar.py | scmd__bar; }
 scmd_lemonbar_old__silent() { :; }
 scmd__bar() { lemonbar -f "Source Code Pro-14" -b -B '#222' -F '#ccc'; }

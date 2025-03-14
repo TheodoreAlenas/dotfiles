@@ -2,6 +2,7 @@
 function zshrc_main() {
     zshrc_set_variables
     zshrc_set_emacs_movement
+    zshrc_modern_keyboard_navigation
     zshrc_load_everything_unrelated_to_color
     zshrc_prepare_colors
     zshrc_set_color_scheme
@@ -30,6 +31,14 @@ function zshrc_set_emacs_movement() {
     zle -N backward-word
     zle -N forward-word
     set -o emacs
+}
+
+function zshrc_modern_keyboard_navigation() {
+    bindkey "^[[H"  beginning-of-line
+    bindkey "^[[F"  end-of-line
+    bindkey "^[[3~" delete-char
+    bindkey "^[[1;5D" backward-word
+    bindkey "^[[1;5C" forward-word
 }
 
 autoload -U colors && colors

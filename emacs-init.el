@@ -27,14 +27,14 @@
  (expand-file-name "my-pkg" user-emacs-directory))
 (require 'distort-font)
 (al/distort-add-hooks)
-(require 'centered-window)  ;; not enabled, it breaks splitting
-(setq cwm-centered-window-width 80)
 
 ;; buffer look
 (setq split-width-threshold 120)
 (column-number-mode t)
 (load-theme 'mindre 1)
 (require 'theme-list)
+(require 'centered-window)  ;; not enabled
+(setq cwm-centered-window-width 80)
 
 ;; indentation
 (setq-default c-basic-offset 4)
@@ -74,6 +74,11 @@
 (add-to-list 'org-agenda-files "/home/aleena/2p/my-org/2024-05-20.org")
 (add-to-list 'org-agenda-files "/home/aleena/2p/my-org/2024-10-22.org")
 (setq org-default-notes-file "/home/aleena/2p/my-org/2024-10-22.org")
+
+(defun al/org-mode-hook ()
+  (require 'org-appear)
+  (org-appear-mode t))
+(add-hook 'org-mode-hook #'al/org-mode-hook)
 
 ;; eglot
 (setq eldoc-echo-area-use-multiline-p nil)
@@ -148,6 +153,10 @@
  ;; If there is more than one, they won't work right.
  '(custom-safe-themes t)
  '(elfeed-feeds '("https://www.di.uoa.gr/rss.xml") t)
+ '(org-appear-autoentities t)
+ '(org-appear-autokeywords t)
+ '(org-appear-autolinks t)
+ '(org-appear-autosubmarkers t)
  '(org-preview-latex-process-alist
    '((dvipng :programs ("lualatex" "dvipng") :description "dvi > png"
              :message
@@ -180,9 +189,9 @@
                   evil-collection git-gutter go-mode gptel
                   graphviz-dot-mode gruber-darker-theme haskell-mode
                   kotlin-mode ligature lua-mode magit markdown-mode
-                  mindre-theme nginx-mode parchment-theme pdf-tools
-                  rainbow-delimiters reverse-im rust-mode slime
-                  systemd web-mode zig-mode)))
+                  mindre-theme nginx-mode org-appear parchment-theme
+                  pdf-tools rainbow-delimiters reverse-im rust-mode
+                  slime systemd web-mode zig-mode)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.

@@ -1,5 +1,5 @@
 Xcursor.theme: phinger-cursors-light
-Xcursor.size: 128
+Xcursor.size: 64
 
 XTerm.termName: xterm-256color
 XTerm.ttyModes: erase ^?

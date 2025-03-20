@@ -105,7 +105,7 @@ open_screenkey() { screenkey; }
 open_unclutter() { unclutter; }
 close_screenkey() { killall screenkey; }
 close_unclutter() { killall unclutter; }
-close_bspwm() { bspc quit; }
+close_bspwm() { kill $(head /tmp/scmd/pids); killall albatwid-alarm; bspc quit; }
 
 webcam_floating() { webc_rule_sf; mpv av://v4l2:/dev/video0 --vf=lavfi=hflip --profile=low-latency --untimed; }
 webcam_vert() { webc_rule_sf; mpv av://v4l2:/dev/video0 --vf=lavfi=hflip,transpose=1 --profile=low-latency --untimed; }

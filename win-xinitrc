@@ -11,3 +11,4 @@ done
 xset -display :0.0 r rate 250 40
 
 exec bspwm > ~/.cache/bspwm-log-1 2> ~/.cache/bspwm-log-2
+#exec dwm > ~/.cache/dwm-log-1 2> ~/.cache/dwm-log-2

@@ -126,7 +126,7 @@ scmd_lemonbar_recompile() { cd ~/3p/bar && make && (killall barprint; cp barprin
 scmd_lemonbar_refresh() { scmd_lemonbar_recompile && scmd_lemonbar; }
 scmd_lemonbar_old() { scmd_big_restart_tail | scmd_bar.py | scmd__bar; }
 scmd_lemonbar_old__silent() { :; }
-scmd__bar() { lemonbar -f "Source Code Pro-14" -b -B '#222' -F '#ccc'; }
+scmd__bar() { lemonbar -f "Source Code Pro-14" -b -B '#f00' -F '#f00'; }
 
 scmd_sxhkd() { killall sxhkd; SXHKD_SHELL=dash sxhkd & }
 

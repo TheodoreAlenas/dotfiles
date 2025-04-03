@@ -7,7 +7,7 @@ bspc rule --add   'Clock widget:*:*' state=floating focus=off
 bspc rule --add          '*:emacs:*' state=tiled
 bspc monitor eDP-1 -d m1 m2 m3 m4 m5 m6 m7
 
-bspwm-theme glass
+bspwm-theme 2025
 
 albatwid-alarm 50 5000 &
 slock-wrapper &

@@ -7,6 +7,7 @@ bspc_configs() {
 }
 
 case "$1" in
+    (2025)   bspc_configs  0  3 \#0c0c0e \#ddbb33 mod1 true  true  true  ;;
     (autumn) bspc_configs  0  3 \#553322 \#cfaa77 mod1 true  true  true  ;;
     (glass)  bspc_configs  5  4 \#7777aa \#cc3333 mod1 true  true  true  ;;
     (hell)   bspc_configs  0 10 \#af1122 \#ffdddd mod1 true  true  true  ;;

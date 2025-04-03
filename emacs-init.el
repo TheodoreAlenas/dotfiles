@@ -1,6 +1,9 @@
 (require 'package)
 (add-to-list 'package-archives
              '("melpa" . "https://melpa.org/packages/") t)
+(add-to-list 'load-path
+             (expand-file-name "my-pkg" user-emacs-directory))
+(require 'theme-list)
 
 ;; GUI
 (menu-bar-mode -1)
@@ -22,19 +25,11 @@
                     :family "Sans Serif"
                     :height 160
                     :weight 'normal)
-(add-to-list
- 'load-path
- (expand-file-name "my-pkg" user-emacs-directory))
-(require 'distort-font)
-(al/distort-add-hooks)
 
 ;; buffer look
 (setq split-width-threshold 120)
 (column-number-mode t)
 (load-theme 'mindre 1)
-(require 'theme-list)
-(require 'centered-window)  ;; not enabled
-(setq cwm-centered-window-width 80)
 
 ;; indentation
 (setq-default c-basic-offset 4)
@@ -46,67 +41,12 @@
 ;; other functionality
 (setq make-backup-files nil)
 (setq explicit-shell-file-name "/usr/bin/dash")
-;;(setq evil-want-keybinding nil)
-;;(evil-collection-init)
-;;(evil-mode)
 
 ;; https://www.gnu.org/software/auctex/
-(setq TeX-auto-save t)
-(setq TeX-parse-self t)
-(setq-default TeX-engine 'luatex)
-(setq-default TeX-master nil)
-
-;; org
-(require 'org)
-(setq org-hide-emphasis-markers t)
-(setq al/org-faces-fixed-pitch
-      '(org-table org-agenda-date org-date org-block org-code))
-(setq al/org-faces-big
-      '(org-document-title org-level-1 org-level-2))
-(defun al/after-load-theme ()
-  (interactive)
-  (dolist (org-stuff al/org-faces-fixed-pitch)
-    (set-face-attribute org-stuff nil :inherit 'fixed-pitch))
-  (dolist (org-stuff al/org-faces-big)
-    (set-face-attribute org-stuff nil :height 250)))
-(al/after-load-theme)
-
-(add-to-list 'org-agenda-files "/home/aleena/2p/my-org/2024-05-20.org")
-(add-to-list 'org-agenda-files "/home/aleena/2p/my-org/2024-10-22.org")
-(setq org-default-notes-file "/home/aleena/2p/my-org/2024-10-22.org")
-
-(defun al/org-mode-hook ()
-  (require 'org-appear)
-  (org-appear-mode t))
-(add-hook 'org-mode-hook #'al/org-mode-hook)
-
-;; eglot
-(setq eldoc-echo-area-use-multiline-p nil)
-(setq eglot-confirm-server-initiated-edits nil)
-;;(require 'eglot)
-;;(add-to-list
-;; 'eglot-server-programs
-;; '((tsx-ts-mode typescript-ts-mode)
-;;   . ("typescript-language-server" "--stdio")))
-
-;; Haskell ligatures
-
-(defun al/prepare-for-ligatures ()
-  "For Haskell (ligatures are from a package)"
-  (interactive)
-  (set-face-attribute 'default nil :font "Hasklug Nerd Font"))
-
-(use-package haskell-mode :config
-  (add-to-list 'haskell-mode-hook 'al/prepare-for-ligatures)
-  (add-to-list 'haskell-mode-hook 'ligature-mode))
-
-(setq al/haskell-ligature-strings
-      '("<*" "<*>" "<+>" "<$>" "***" "<|" "|>" "<|>" "!!" "||" "==="
-        "==>" "<<<" ">>>" "<>" "+++" "<-" "->" "=>" ">>" "<<" ">>="
-        "=<<" ".." "..." "::" "-<" ">-" "-<<" ">>-" "++" "/=" "=="))
-
-(use-package ligature :config
-  (ligature-set-ligatures '(haskell-mode) al/haskell-ligature-strings))
+;;(setq TeX-auto-save t)
+;;(setq TeX-parse-self t)
+;;(setq-default TeX-engine 'luatex)
+;;(setq-default TeX-master nil)
 
 ;; Greek
 (use-package reverse-im

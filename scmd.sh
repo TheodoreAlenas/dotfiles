@@ -23,7 +23,7 @@ pick_mantissa() { v="$(echo 5|dmenu)" && echo "v = $v"; }
 resize_window() { pick_mantissa; bspc node @parent --ratio 0.$v; }
 
 rotate_clockwise() { bspc node @parent --rotate 90; }
-rotate_ccw() { bspc node @parent --rotate 180; }
+rotate_ccw() { bspc node @parent --rotate 270; }
 rotate_vert() { xrandr --output eDP-1 --rotate left; }
 rotate_horizontal() { xrandr --output eDP-1 --rotate normal; }
 rotate_upside_down() { xrandr --output eDP-1 --rotate inverted; }
@@ -94,6 +94,7 @@ win_e() { emacs; }
 open_emacs_bug_fixing() { emacs --debug-init; }
 open_obsidian() { Obsidian-1.8.9.AppImage; }
 open_vscode() { code; }
+open_the_jai_editor() { focus-linux; }
 win_b() { firefox_silent; }
 firefox_silent() { firefox 2>&1 | grep --line-buffered -v mesa_glthread; }
 open_intellij() { _JAVA_AWT_WM_NONREPARENTING=1 idea; }

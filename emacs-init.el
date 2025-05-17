@@ -27,7 +27,7 @@
                     :weight 'normal)
 
 ;; buffer look
-(setq split-width-threshold 120)
+;;(setq split-width-threshold 120)
 (column-number-mode t)
 (load-theme 'mindre 1)
 
@@ -41,12 +41,13 @@
 ;; other functionality
 (setq make-backup-files nil)
 (setq explicit-shell-file-name "/usr/bin/dash")
+(add-to-list 'auto-mode-alist '("\\.pl\\'" . prolog-mode))
 
 ;; https://www.gnu.org/software/auctex/
-;;(setq TeX-auto-save t)
-;;(setq TeX-parse-self t)
-;;(setq-default TeX-engine 'luatex)
-;;(setq-default TeX-master nil)
+(setq TeX-auto-save t)
+(setq TeX-parse-self t)
+(setq-default TeX-engine 'luatex)
+(setq-default TeX-master nil)
 
 ;; Greek
 (use-package reverse-im
